@@ -49,6 +49,11 @@ string multiply2(string num1, string num2); // 2 pointers
 // 46	Permutations : DFS
 vector<vector<int> > permute(vector<int> &num);
 
+// 48	Rotate Image : array
+void rotate(vector<vector<int> > &matrix); // O(n^2) space
+void rotate2(vector<vector<int> > &matrix); // in-place
 
+// 49	Anagrams : hashtable, Runtime: 59 ms
+vector<string> anagrams(vector<string> &strs);
 
 #endif /* defined(__Leetcode__leetMediumA__) */

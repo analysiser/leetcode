@@ -633,5 +633,58 @@ vector<vector<int> > permute(vector<int> &num) {
     return sol;
 }
 
+void rotate(vector<vector<int> > &matrix) {
+    size_t w = matrix[0].size();
+    size_t h = matrix.size();
+    auto res = matrix;
+    for (size_t i = 0; i < h; i++) {
+        for (size_t j = 0; j < w; j++) {
+            size_t x = w-1-j;
+            size_t y = i;
+            res[i][j] = matrix[x][y];
+        }
+    }
+    matrix = res;
+}
+void rotate2(vector<vector<int> > &matrix) {
+    size_t n = matrix[0].size();
+    for (size_t i = 0; i < n; i++) {
+        for (size_t j = i; j < n - i - 1; j++) {
+            int tmp = matrix[i][j];
+            matrix[i][j] = matrix[n-1-j][i];
+            matrix[n-1-j][i] = matrix[n-1-i][n-1-j];
+            matrix[n-1-i][n-1-j] = matrix[j][n-1-i];
+            matrix[j][n-1-i] = tmp;
+        }
+    }
+}
+
+// 49 Anagrams
+vector<string> anagrams(vector<string> &strs) {
+    unordered_map<string, vector<int> > lut;
+    for (int i = 0; i < strs.size(); i++) {
+        string s = strs[i];
+        sort(s.begin(), s.end());
+        auto it = lut.find(s);
+        if (it != lut.end()) {
+            it->second.push_back(i);
+        }
+        else {
+            vector<int> pos = {i};
+            lut.insert(make_pair(s, pos));
+        }
+    }
+    
+    vector<string> res;
+    for (auto it = lut.begin(); it != lut.end(); it++) {
+        if (it->second.size() > 1) {
+            for (int i : it->second) {
+                res.push_back(strs[i]);
+            }
+        }
+    }
+    
+    return res;
+}
 
 
