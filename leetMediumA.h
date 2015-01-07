@@ -56,4 +56,23 @@ void rotate2(vector<vector<int> > &matrix); // in-place
 // 49	Anagrams : hashtable, Runtime: 59 ms
 vector<string> anagrams(vector<string> &strs);
 
+// 50	Pow(x, n) : numeric binary search, Runtime: 16 ms
+double pow(double x, int n);
+
+// 53	Maximum Subarray : DP, Runtime: 17 ms
+int maxSubArray(int A[], int n);
+
+// 54	Spiral Matrix : Array ops, Runtime: 4 ms
+vector<int> spiralOrder(vector<vector<int> > &matrix);
+
+// 55	Jump Game : array, kindda DP, Runtime: 17 ms
+// I thought it was DFS/BFS first, and got TLE...
+bool canJump(int A[], int n);
+
+// 59	Spiral Matrix II : Array ops, Runtime: 6 ms
+vector<vector<int> > generateMatrix(int n);
+
+
+
+
 #endif /* defined(__Leetcode__leetMediumA__) */

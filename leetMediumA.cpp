@@ -688,3 +688,142 @@ vector<string> anagrams(vector<string> &strs) {
 }
 
 
+// 50 Pow(x, n)
+double pow(double x, int n) {
+    double res = 1;
+    if (n == 0) return 1;
+    bool flag = n < 0;
+    n = abs(n);
+    for(int i = 31; i >= 0; i--) {
+        unsigned int t = 1 << i;
+        if (t <= n) {
+            n -= t;
+            double step = x;
+            for(int j = 0; j < i; j++) {
+                step *= step;
+            }
+            res *= step;
+        }
+    }
+    
+    if (flag) res = double(1)/res;
+    return res;
+}
+
+// 53 Maximum Subarray
+int maxSubArray(int A[], int n) {
+    int max = INT_MIN;
+    int total = 0;
+    for (int i = 0; i < n; i++) {
+        total += A[i];
+        if (total > max)
+            max = total;
+        if (total <= 0)
+            total = 0;
+    }
+    
+    return max;
+}
+
+// 54 Spiral Matrix
+vector<int> spiralOrder(vector<vector<int> > &matrix) {
+    vector<int> sol;
+    if (matrix.size() == 0) return sol;
+    if (matrix[0].size() == 0)  return sol;
+    
+    int left = 0, top = 0;
+    int right = matrix[0].size()-1;
+    int bottom = matrix.size()-1;
+    
+    int count = (right + 1) * (bottom + 1);
+    int finish = 0;
+    
+    while (true) {
+        for (int i = left; i <= right; i++) {
+            sol.push_back(matrix[top][i]);
+            finish += 1;
+        }
+        if (finish == count) break;
+        top += 1;
+        for (int i = top; i <= bottom; i++) {
+            sol.push_back(matrix[i][right]);
+            finish += 1;
+        }
+        if (finish == count) break;
+        right -= 1;
+        for (int i = right; i >= left; i--) {
+            sol.push_back(matrix[bottom][i]);
+            finish += 1;
+            
+        }
+        if (finish == count) break;
+        bottom -= 1;
+        for (int i = bottom; i >= top; i--) {
+            sol.push_back(matrix[i][left]);
+            finish += 1;
+        }
+        if (finish == count) break;
+        left += 1;
+    }
+    
+    return sol;
+}
+
+
+// 55 Jump Game
+bool canJump(int A[], int n) {
+    if (n==0) return false;
+    if (n==1) return true;
+    
+    int l = 0;
+    int max = A[l];
+    for (int i = l+1; i <= max; i++) {
+        if (max >= n-1)
+            return true;
+        if (i + A[i] > max)
+            max = i + A[i];
+    }
+    return false;
+}
+
+
+// 59 Spiral Matrix II
+vector<vector<int> > generateMatrix(int n) {
+    vector<vector<int> > sol;
+    if (n == 0) return sol;
+    int x = 1;
+    int l = 0, t = 0;
+    int r = n-1, b = n-1;
+    sol = vector<vector<int> >(n, vector<int>(n, 0));
+    while(1) {
+        for (int i = l; i <= r; i++) {
+            sol[t][i] = x;
+            x++;
+        }
+        t += 1;
+        if (x > n*n) break;
+        
+        for (int i = t; i <= b; i++) {
+            sol[i][r] = x;
+            x++;
+        }
+        r -= 1;
+        if (x > n*n) break;
+        
+        for (int i = r; i >= l; i--) {
+            sol[b][i] = x;
+            x++;
+        }
+        b -= 1;
+        if (x > n*n) break;
+        
+        for (int i = b; i >= t; i--) {
+            sol[i][l] = x;
+            x++;
+        }
+        l += 1;
+        if (x > n*n) break;
+    }
+    
+    return sol;
+}
