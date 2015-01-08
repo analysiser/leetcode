@@ -827,3 +827,130 @@ vector<vector<int> > generateMatrix(int n) {
     
     return sol;
 }
+
+// 60	Permutation Sequence
+string getPermutation(int n, int k) {
+    // build vector
+    vector<int> v;
+    for (int i = 1; i <= n; i++)
+        v.push_back(i);
+    
+    // build factorial lut
+    int fact[10];
+    fill_n(fact, 10, 1);
+    for (int i = 1; i < 10; i++)
+        fact[i] = i * fact[i-1];
+    
+    string sol = "";
+    while(n > 0) {
+        int index = (k-1)/fact[n-1];
+        sol += '0' + v[index];
+        v.erase(v.begin() + index);
+        k = (k-1)%fact[n-1] + 1;
+        n--;
+    }
+    return sol;
+}
+
+// 61	Rotate List
+ListNode *rotateRight(ListNode *head, int k) {
+    // get list length
+    int n = 0;
+    ListNode *tmp = head;
+    while (tmp != NULL) {
+        tmp = tmp->next;
+        n++;
+    }
+    if (n == 0 || k%n == 0)
+        return head;
+    
+    // get actual move length
+    k = k%n;
+    
+    // move list
+    int stay = n - k;
+    int i = 1;
+    tmp = head;
+    while(i < stay) {
+        tmp = tmp->next;
+        i++;
+    }
+    ListNode *newhead = tmp->next;
+    tmp->next = NULL;
+    tmp = newhead;
+    while(tmp->next != NULL)
+        tmp = tmp->next;
+    tmp->next = head;
+    return newhead;
+}
+
+// 63	Unique Paths II
+int uniquePathsWithObstacles(vector<vector<int> > &obstacleGrid) {
+    int m = obstacleGrid.size();
+    int n = m > 0 ? obstacleGrid[0].size() : 0;
+    if (m == 0 || n == 0)    return 0;
+    vector<int> path(m + 1, 0);
+    path[1] = 1;
+    for (int i = 0; i < n; i++) {
+        for (int j = 1; j < m+1; j++) {
+            if (obstacleGrid[j-1][i] == 0) {
+                path[j] += path[j-1];
+            }
+            else
+                path[j] = 0;
+        }
+    }
+    return path[m];
+}
+
+// 64	Minimum Path Sum
+int dfsMinPath(int x, int y, vector<vector<int> > & grid, vector<vector<int> > &minLUT) {
+    if (x == 0 && y == 0)   return grid[0][0];
+    int v1 = INT_MAX;
+    int v2 = INT_MAX;
+    if (x - 1 >= 0) {
+        if (minLUT[x-1][y] >= 0)
+            v1 = minLUT[x-1][y];
+        else {
+            v1 = dfsMinPath(x-1, y, grid, minLUT);
+            minLUT[x-1][y] = v1;
+        }
+    }
+    if (y - 1 >= 0) {
+        if (minLUT[x][y-1] >= 0)
+            v2 = minLUT[x][y-1];
+        else {
+            v2 = dfsMinPath(x, y-1, grid, minLUT);
+            minLUT[x][y-1] = v2;
+        }
+    }
+    return grid[x][y] + min(v1, v2);
+}
+
+int minPathSum(vector<vector<int> > &grid) {
+    int m = grid.size();
+    int n = m > 0 ? grid[0].size() : 0;
+    if (m == 0 || n == 0)    return 0;
+    vector<vector<int> > minLUT(m, vector<int>(n, -1));
+    return dfsMinPath(m-1, n-1, grid, minLUT);
+}
+
+
+// 69	Sqrt(x)
+int sqrt(int x) {
+    if (x == 0) return 0;
+    if (x == 1) return 1;
+    if (x < 0) return -1;
+    unsigned int total = 0;
+    for (int i = 15; i >= 0; i--) {
+        unsigned int  tmp = total + (1 << i);
+        if (tmp * tmp <= x) {
+            total = tmp;
+        }
+    }
+    
+    
+    return total;
+}
+
+

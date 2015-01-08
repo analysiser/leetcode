@@ -72,6 +72,27 @@ bool canJump(int A[], int n);
 // 59	Spiral Matrix II : Array ops, Runtime: 6 ms
 vector<vector<int> > generateMatrix(int n);
 
+// 60	Permutation Sequence : Math ? Runtime: 10 ms
+string getPermutation(int n, int k);
+
+// 61	Rotate List : Linked List, Runtime: 19 ms
+ListNode *rotateRight(ListNode *head, int k);
+
+// 63	Unique Paths II : DP, Runtime: 9 ms, I think I can use BFS too, but maybe LTE.
+// Same logic with (62	 Unique Paths)
+int uniquePathsWithObstacles(vector<vector<int> > &obstacleGrid);
+
+// 64	Minimum Path Sum : DFS, Runtime: 24 ms
+// 1st I used BFS, got MLE
+// 2nd I used DFS, got TLE
+// 3rd I used a look up table for saving repeated calculations, ACed with 24 ms
+// Although I figured out ppl are using DP for solving this problem
+int minPathSum(vector<vector<int> > &grid);
+
+// 69	Sqrt(x) : Binary search, Runtime: 39 ms
+int sqrt(int x);
+
+
 
 
 
