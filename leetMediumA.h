@@ -92,6 +92,39 @@ int minPathSum(vector<vector<int> > &grid);
 // 69	Sqrt(x) : Binary search, Runtime: 39 ms
 int sqrt(int x);
 
+// 73	Set Matrix Zeroes : array, I used hash table passed with 93 ms.
+void setZeroes(vector<vector<int> > &matrix);
+namespace _alternative {
+    // 73's array only solution, 90 ms
+    void setZeroes(vector<vector<int> > &matrix);
+}
+
+// 74	Search a 2D Matrix : Binary search, 20 ms
+// I used two binary search, cause log(m) + log(n) time complexity
+// If treat the 2-D matrix as a whole list, a binary search is log(mn) = log(m) + log(n), so it is the same
+bool searchMatrix(vector<vector<int> > &matrix, int target);
+
+// 75	Sort Colors : array ? 10ms
+// I used 2*O(n) time, alternative ways are feasible
+void sortColors(int A[], int n);
+
+namespace _alternative {
+    // 12 ms solution. Highest rank on leetcode
+    void sortColors(int A[], int n);
+}
+
+// 77	Combinations : Combination DFS, 12 ms
+vector<vector<int> > combine(int n, int k);
+
+// 78	Subsets
+vector<vector<int> > subsets(vector<int> &S);
+
+// 79	Word Search
+
+// 81	Search in Rotated Sorted Array II
+
+// 82	Remove Duplicates from Sorted List II
+
 
 
 

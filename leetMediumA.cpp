@@ -953,4 +953,197 @@ int sqrt(int x) {
     return total;
 }
 
+// 73	Set Matrix Zeroes
+void setZeroes(vector<vector<int> > &matrix) {
+    unordered_set<int> zeroR, zeroC;
+    for (int i = 0; i < matrix.size(); i++) {
+        for (int j = 0; j < matrix[i].size(); j++) {
+            if (matrix[i][j] == 0) {
+                if (zeroR.find(i) == zeroR.end())
+                    zeroR.insert(i);
+                if (zeroC.find(j) == zeroC.end())
+                    zeroC.insert(j);
+            }
+        }
+    }
+    
+    for (auto it = zeroR.begin(); it != zeroR.end(); it++) {
+        int i = *it;
+        for (int j = 0; j < matrix[i].size(); j++) {
+            matrix[i][j] = 0;
+        }
+    }
+    
+    for (auto it = zeroC.begin(); it != zeroC.end(); it++) {
+        int j = *it;
+        for (int i = 0; i < matrix.size(); i++) {
+            matrix[i][j] = 0;
+        }
+    }
+}
 
+namespace _alternative {
+    void setZeroes(vector<vector<int> > &matrix) {
+        bool isRow0Zero = false;
+        bool isCol0Zero = false;
+        for (int j = 0; j < matrix[0].size(); j++)
+            if (matrix[0][j] == 0) {
+                isRow0Zero = true;
+                break;
+            }
+        
+        for (int i = 0; i < matrix.size(); i++) {
+            if (matrix[i][0] == 0) {
+                isCol0Zero = true;
+                break;
+            }
+        }
+        
+        for (int i = 1; i < matrix.size(); i++) {
+            for (int j = 1; j < matrix[i].size(); j++) {
+                if (matrix[i][j] == 0) {
+                    matrix[i][0] = 0;
+                    matrix[0][j] = 0;
+                }
+            }
+        }
+        
+        // fill 0 to all rows except for the 1st row
+        for (int i = 1; i < matrix.size(); i++) {
+            if (matrix[i][0] == 0)
+                fill_n(&matrix[i][1], matrix[i].size()-1, 0);
+        }
+        
+        // fill 0 to all cols
+        for (int j = 1; j < matrix[0].size(); j++) {
+            if (matrix[0][j] == 0) {
+                for (int i = 1; i < matrix.size(); i++) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        
+        if (isRow0Zero)
+            fill_n(&matrix[0][0], matrix[0].size(), 0);
+        
+        if (isCol0Zero) {
+            for (int i = 0; i < matrix.size(); i++) {
+                matrix[i][0] = 0;
+            }
+        }
+        
+    }
+}
+
+// 74	Search a 2D Matrix
+bool searchMatrix(vector<vector<int> > &matrix, int target){
+    int m = matrix.size();
+    int n = matrix[0].size();
+    int r = -1;
+    if (target < matrix[0][0] || target > matrix[m-1][n-1])
+        return false;
+    int a = 0, b = m-1;
+    while (b>a) {
+        int idx = (a+b)/2;
+        int v = matrix[idx][0];
+        if (target < v) {
+            b = idx-1;
+        }
+        else if (target > v) {
+            if (idx+1 < m) {
+                if (target < matrix[idx+1][0]) {
+                    r = idx;
+                    break;
+                }
+                else
+                    a = idx+1;
+            }
+        }
+        else
+            return true;
+    }
+    if (r == -1 && a == b) {
+        r = a;
+    }
+    
+    int i = 0, j = n-1;
+    while (j >= i) {
+        int idx = (i+j)/2;
+        int v = matrix[r][idx];
+        if (target < v) {
+            j = idx-1;
+        }
+        else if (target > v) {
+            i = idx+1;
+        }
+        else
+            return true;
+    }
+    return false;
+}
+
+// 75	Sort Colors
+void sortColors(int A[], int n) {
+    int r = 0, w = 0, b = 0;
+    for (int i = 0; i < n; i++) {
+        if (A[i] == 0)  r++;
+        else if (A[i] == 1) w++;
+        else if (A[i] == 2) b++;
+    }
+    
+    for (int i = 0; i < r; i++)
+        A[i] = 0;
+    for (int i = r; i < r + w; i++)
+        A[i] = 1;
+    for (int i = r+w; i < n; i++)
+        A[i] = 2;
+}
+
+namespace _alternative {
+    void sortColors(int A[], int n) {
+        int i = -1, j = -1, k = -1;
+        for (int idx = 0; idx < n; idx++) {
+            if (A[idx] == 0) {
+                A[++k] = 2;
+                A[++j] = 1;
+                A[++i] = 0;
+            }
+            else if (A[idx] == 1) {
+                A[++k] = 2;
+                A[++j] = 1;
+            }
+            else if (A[idx] == 2) {
+                A[++k] = 2;
+            }
+        }
+    }
+}
+
+
+// 77	Combinations
+void combineDFS(vector<vector<int> > &sol, vector<int> &res, int l, int n, int k) {
+    if (k==0) {
+        sol.push_back(res);
+    }
+    else {
+        if (n-l+1 < k)  return;
+        for (int i = l; i <= n; i++) {
+            res.push_back(i);
+            combineDFS( sol, res, i+1, n, k-1);
+            res.pop_back();
+        }
+    }
+}
+
+vector<vector<int> > combine(int n, int k) {
+    vector<int> res;
+    vector<vector<int> > sol;
+    combineDFS(sol, res, 1, n, k);
+    return sol;
+}
+
+
+// 78	Subsets
+vector<vector<int> > subsets(vector<int> &S) {
+    
+}
