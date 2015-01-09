@@ -116,10 +116,11 @@ namespace _alternative {
 // 77	Combinations : Combination DFS, 12 ms
 vector<vector<int> > combine(int n, int k);
 
-// 78	Subsets
+// 78	Subsets : Recusion, combination, 13 ms
 vector<vector<int> > subsets(vector<int> &S);
 
-// 79	Word Search
+// 79	Word Search : DFS, 138ms
+bool exist(vector<vector<char> > &board, string word);
 
 // 81	Search in Rotated Sorted Array II
 

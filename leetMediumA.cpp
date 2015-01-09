@@ -1144,6 +1144,71 @@ vector<vector<int> > combine(int n, int k) {
 
 
 // 78	Subsets
+void subsetsDFS(vector<vector<int>> &sol, vector<int> &S, vector<int> &res, int l, int k) {
+    if (k == 0) {
+        sol.push_back(res);
+    }
+    else {
+        for (int i = l; i < S.size(); i++) {
+            res.push_back(S[i]);
+            subsetsDFS(sol, S, res, i+1, k-1);
+            res.pop_back();
+        }
+    }
+}
+
 vector<vector<int> > subsets(vector<int> &S) {
+    sort(S.begin(), S.end());
+    vector<int> res;
+    vector<vector<int>> sol, ret;
+    for (int k = 0; k <= S.size(); k++) {
+        res.clear();
+        sol.clear();
+        subsetsDFS(sol, S, res, 0, k);
+        ret.insert(ret.end(), sol.begin(), sol.end());
+    }
+    return ret;
+}
+
+// 79	Word Search
+bool existDFS(vector<vector<char> > &b, vector<vector<bool> > &path, string& word, int index, int x, int y) {
+    if (index >= word.size())   return true;
+    char c = word[index];
+    vector<pair<int, int> > p;
+    p.push_back(make_pair(x-1,y));
+    p.push_back(make_pair(x,y-1));
+    p.push_back(make_pair(x+1,y));
+    p.push_back(make_pair(x,y+1));
+    for (pair<int, int> cell : p) {
+        int i = cell.first;
+        int j = cell.second;
+        if (i>=0 && j>=0 && i < b.size() && j < b[0].size()) {
+            if (b[i][j] == c && path[i][j]) {
+                path[i][j] = false;
+                bool ret = existDFS(b, path, word, index+1, i, j);
+                path[i][j] = true;
+                if (ret)    return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool exist(vector<vector<char> > &board, string word) {
+    int m = board.size();
+    int n = board[0].size();
+    vector<vector<bool> > path(m, vector<bool>(n, true));
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            char c = board[i][j];
+            if (c == word[0]) {
+                path[i][j] = false;
+                bool ret = existDFS(board, path, word, 1, i, j);
+                path[i][j] = true;
+                if (ret)    return true;
+            }
+        }
+    }
+    return false;
     
 }
