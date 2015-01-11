@@ -1212,3 +1212,147 @@ bool exist(vector<vector<char> > &board, string word) {
     return false;
     
 }
+
+
+// 81	Search in Rotated Sorted Array II
+bool searchRecursive(int A[], int l, int r, int target) {
+    if (l > r) return false;
+    int mid = l + (r-l)/2;
+    if (A[mid] == target)   return true;
+    if (A[l] < A[mid]) {
+        if (A[l] <= target && target <= A[mid]) {
+            return searchRecursive(A, l, mid-1, target);
+        }
+        else {
+            return searchRecursive(A, mid+1, r, target);
+        }
+    }
+    else if (A[mid] < A[r]) {
+        if (A[mid] <= target && target <= A[r]) {
+            return searchRecursive(A, mid+1, r, target);
+        }
+        else {
+            return searchRecursive(A, l, mid-1, target);
+        }
+    }
+    else {
+        bool ret = false;
+        ret = searchRecursive(A, l, mid-1, target);
+        if (!ret)
+            ret = searchRecursive(A, mid+1, r, target);
+        return ret;
+    }
+}
+bool search(int A[], int n, int target) {
+    return searchRecursive(A, 0, n-1, target);
+}
+
+
+// 82	Remove Duplicates from Sorted List II
+ListNode *deleteDuplicates(ListNode *head) {
+    if (!head)  return head;
+    ListNode *vhead = new ListNode(0);
+    vhead->next = head;
+    ListNode *last = vhead;
+    ListNode *tmp = head;
+    ListNode *tmp2 = vhead;
+    int cur = head->val;
+    int count = 0;
+    while (tmp != NULL) {
+        if (tmp->val == cur) {
+            count += 1;
+            tmp2 = tmp;
+            tmp = tmp->next;
+        }
+        else {
+            if (count == 1) {
+                last = tmp2;
+                cur = tmp->val;
+                count = 1;
+                tmp2 = tmp;
+                tmp = tmp->next;
+            }
+            else {
+                last->next = tmp;
+                cur = tmp->val;
+                count = 1;
+                tmp2 = tmp;
+                tmp = tmp->next;
+            }
+        }
+    }
+    if (count > 1) {
+        last->next = tmp;
+    }
+    
+    head = vhead->next;
+    return head;
+}
+
+// 86	Partition List
+ListNode *partition(ListNode *head, int x) {
+    if (!head) return head;
+    ListNode *head1 = NULL;
+    ListNode *head2 = NULL;
+    ListNode *tmp1 = head1;
+    ListNode *tmp2 = head2;
+    ListNode *tmp = head;
+    while(tmp != NULL) {
+        if (tmp->val < x) {
+            if (!head1) {
+                head1 = tmp;
+                tmp1 = head1;
+            }
+            else {
+                tmp1->next = tmp;
+                tmp1 = tmp1->next;
+            }
+        }
+        else {
+            if (!head2) {
+                head2 = tmp;
+                tmp2 = head2;
+            }
+            else {
+                tmp2->next = tmp;
+                tmp2 = tmp2->next;
+            }
+        }
+        tmp = tmp->next;
+    }
+    
+    if (head1) {
+        tmp1->next = head2;
+        if (tmp2) {
+            tmp2->next = NULL;
+        }
+        return head1;
+    }
+    else {
+        if (tmp2) {
+            tmp2->next = NULL;
+        }
+        return head2;
+    }
+}
+
+// 89	Gray Code
+void genGrayCode(vector<int> &sol, int n) {
+    if (n == 0) sol.push_back(0);
+    else {
+        genGrayCode(sol, n-1);
+        vector<int> tmp;
+        int v = 1 << (n-1);
+        for (int i = sol.size()-1; i>=0; i--) {
+            int res = sol[i] | v;
+            tmp.push_back(res);
+        }
+        sol.insert(sol.end(), tmp.begin(), tmp.end());
+    }
+}
+
+vector<int> grayCode(int n) {
+    vector<int> sol;
+    genGrayCode(sol, n);
+    return sol;
+}

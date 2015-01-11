@@ -14,7 +14,11 @@ int main(int argc, const char * argv[]) {
     // insert code here...
     std::cout << "Hello, World!\n";
     
-    std::cout<<sqrt(INT_MAX)<<endl;
+//    vector<vector<char> > a = {{'C','A','A'},{'A','A','A'},{'B','C','D'}};
+//    std::cout<<exist(a, "AAB")<<endl;
+    
+    int A[2] = {1, 3};
+    std::cout<<search(A, 2, 1)<<endl;
     
                            
     return 0;

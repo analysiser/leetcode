@@ -122,9 +122,17 @@ vector<vector<int> > subsets(vector<int> &S);
 // 79	Word Search : DFS, 138ms
 bool exist(vector<vector<char> > &board, string word);
 
-// 81	Search in Rotated Sorted Array II
+// 81	Search in Rotated Sorted Array II : Binary search, array, recursion, 11 ms
+bool search(int A[], int n, int target);
 
-// 82	Remove Duplicates from Sorted List II
+// 82	Remove Duplicates from Sorted List II : Linked List, 15 ms
+ListNode *deleteDuplicates(ListNode *head);
+
+// 86	Partition List : Linked List
+ListNode *partition(ListNode *head, int x);
+
+// 89	Gray Code : Combination, Backtracing, annoying like hell, 8ms
+vector<int> grayCode(int n);
 
 
 
