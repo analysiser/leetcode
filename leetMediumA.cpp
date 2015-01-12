@@ -1356,3 +1356,218 @@ vector<int> grayCode(int n) {
     genGrayCode(sol, n);
     return sol;
 }
+
+
+// 90	Subsets II
+void subsetsWithDupDFS(vector<int> &S, vector<vector<int>> &sol, vector<int> &res, int n, int l) {
+    if (n == 0)
+        sol.push_back(res);
+    else {
+        for (int i = l; i < S.size(); i++) {
+            res.push_back(S[i]);
+            subsetsWithDupDFS(S, sol, res, n-1, i+1);
+            res.pop_back();
+            while (i+1 < S.size() && S[i+1] == S[i])
+                i += 1;
+        }
+    }
+}
+
+vector<vector<int> > subsetsWithDup(vector<int> &S) {
+    sort(S.begin(), S.end());
+    
+    vector<vector<int>> sol;
+    
+    for (int i = 0; i <= S.size(); i++) {
+        vector<int> res;
+        subsetsWithDupDFS(S, sol, res, i, 0);
+    }
+    
+    return sol;
+}
+
+// 91	Decode Ways
+void numDecodingsRecur(set<int> &os, set<int> &ts, int cur, int n, int &total) {
+    if (cur == n)
+        total += 1;
+    else {
+        if (os.find(cur) != os.end()) {
+            numDecodingsRecur(os, ts, cur + 1, n, total);
+        }
+        if (ts.find(cur) != ts.end()) {
+            numDecodingsRecur(os, ts, cur + 2, n, total);
+        }
+    }
+}
+
+int numDecodings(string s) {
+    if (s.size() == 0)
+        return 0;
+    if (s[0] == '0')
+        return 0;
+    
+    vector<int> ways(s.size(), 0);
+    ways[0] = 1;
+    for (int i = 1; i < s.size(); i++) {
+        // 1. one step
+        bool canOneStep = false;
+        int v = s[i] - '0';
+        if (v > 0 && v < 10) {
+            canOneStep = true;
+        }
+        
+        // 2. two steps
+        bool canTwoStep = false;
+        int x = s[i-1]-'0';
+        int y = s[i] - '0';
+        if (x > 0 && x < 3 && y >= 0 && y < 10 && x * 10 + y <= 26) {
+            canTwoStep = true;
+        }
+        
+        // judge
+        if (canOneStep)
+            ways[i] += ways[i-1];
+        if (canTwoStep) {
+            if (i-2>=0)
+                ways[i] += ways[i-2];
+            else
+                ways[i] += 1;
+        }
+    }
+    
+    return ways[s.size()-1];
+    
+}
+
+// 92	Reverse Linked List II	26.2%	Medium
+ListNode *reverseBetween(ListNode *head, int m, int n) {
+    if (!head)  return head;
+    if (m == n) return head;
+    ListNode *a = NULL;
+    ListNode *b = NULL;
+    ListNode *preva = NULL;
+    ListNode *nextb = NULL;
+    ListNode *tmp = head;
+    ListNode *prevtmp = NULL;
+    int i = 1;
+    while (tmp != NULL) {
+        if (i < m || i > n) {
+            i+=1;
+            prevtmp = tmp;
+            tmp = tmp->next;
+        }
+        else {
+            if (i == m) {
+                a = tmp;
+                preva = prevtmp;
+            }
+            else if (i == n) {
+                b = tmp;
+                nextb = tmp->next;
+            }
+            
+            ListNode *x = prevtmp;
+            prevtmp = tmp;
+            tmp = tmp->next;
+            prevtmp->next = x;
+            i+=1;
+        }
+    }
+    
+    if (preva)
+        preva->next = b;
+    else
+        head = b;
+    
+    a->next = nextb;
+    return head;
+}
+
+// 93	Restore IP Addresses
+void restoreRecur(string s, int n, vector<string> &sol, vector<string> &res) {
+    if (n <= (int)s.size() && (int)s.size() <= 3*n) {
+        if (n == 1 && stoi(s) >= 0 && stoi(s) <= 255) {
+            if (s.size() > 1 && s[0] == '0')    return;
+            
+            string asol = "";
+            for (string part : res) {
+                asol += part;
+                asol += '.';
+            }
+            asol += s;
+            sol.push_back(asol);
+        }
+        else {
+            for (int i = 0; i < 3; i++) {
+                int restLen = (int)s.size()-i-1;
+                if (restLen >= 0) {
+                    string tmp = s.substr(0, i+1);
+                    if (stoi(tmp) >= 0 && stoi(tmp) <= 255) {
+                        
+                        if (tmp.size() > 1 && tmp[0] == '0')    continue;
+                        
+                        res.push_back(tmp);
+                        restoreRecur(s.substr(i+1, s.size()-i-1), n-1, sol, res);
+                        res.pop_back();
+                    }
+                }
+            }
+        }
+    }
+}
+
+vector<string> restoreIpAddresses(string s) {
+    vector<string> sol;
+    vector<string> res;
+    restoreRecur(s, 4, sol, res);
+    return sol;
+}
+
+
+// 94	Binary Tree Inorder Traversal
+void inorderRecur(vector<int> &sol, TreeNode *node) {
+    if (node) {
+        if (node->left) {
+            inorderRecur(sol, node->left);
+        }
+        sol.push_back(node->val);
+        if (node->right) {
+            inorderRecur(sol, node->right);
+        }
+    }
+}
+
+vector<int> inorderTraversal(TreeNode *root) {
+    vector<int> sol;
+    inorderRecur(sol, root);
+    return sol;
+}
+
+namespace _alternative {
+    vector<int> inorderTraversal(TreeNode *root) {
+        // Morris Traversal
+        vector<int> sol;
+        while(root) {
+            if (!root->left) {
+                sol.push_back(root->val);
+                root = root->right;
+            }
+            else {
+                TreeNode *pre = root->left;
+                while(pre->right && pre->right != root) {
+                    pre = pre->right;
+                }
+                if (pre->right == NULL) {
+                    pre->right = root;
+                    root = root->left;
+                }
+                else {
+                    pre->right = NULL;
+                    sol.push_back(root->val);
+                    root = root->right;
+                }
+            }
+        }
+        return sol;
+    }
+}

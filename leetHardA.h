@@ -12,8 +12,12 @@
 #include <stdio.h>
 #include "core.h"
 
-// 33	Search in Rotated Sorted Array : Binary search, Runtime 9 ms
-// Weirdly, O(n) solution could also pass the test cases
-int search(int A[], int n, int target);
+
+namespace _hard {
+    // 33	Search in Rotated Sorted Array : Binary search, Runtime 9 ms
+    // Weirdly, O(n) solution could also pass the test cases
+    int search(int A[], int n, int target);
+}
+
 
 #endif /* defined(__Leetcode__leetHardA__) */

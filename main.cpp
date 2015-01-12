@@ -17,8 +17,14 @@ int main(int argc, const char * argv[]) {
 //    vector<vector<char> > a = {{'C','A','A'},{'A','A','A'},{'B','C','D'}};
 //    std::cout<<exist(a, "AAB")<<endl;
     
-    int A[2] = {1, 3};
-    std::cout<<search(A, 2, 1)<<endl;
+//    int A[2] = {1, 3};
+//    std::cout<<numDecodings("4757562545844617494555774581341211511296816786586787755257741178599337186486723247528324612117156948")<<endl;
+    
+    vector<string> ret = restoreIpAddresses("010010");
+    cout<<ret.size()<<endl;
+    for (string s:ret) {
+        cout<<s<<endl;
+    }
     
                            
     return 0;

@@ -134,6 +134,28 @@ ListNode *partition(ListNode *head, int x);
 // 89	Gray Code : Combination, Backtracing, annoying like hell, 8ms
 vector<int> grayCode(int n);
 
+// 90	Subsets II : Combination, Recursion, 14ms
+vector<vector<int> > subsetsWithDup(vector<int> &S);
+
+// 91	Decode Ways : DP, 5ms, took almost 1.5 hours...
+// my recusion implementation got LTE
+int numDecodings(string s);
+
+// 92	Reverse Linked List II, Linked List, 4ms, annoying question
+ListNode *reverseBetween(ListNode *head, int m, int n);
+
+// 93	Restore IP Addresses, string, DFS, Edge cases, 9ms
+vector<string> restoreIpAddresses(string s);
+
+// 94	Binary Tree Inorder Traversal
+// Solution 1: recursive, 6ms
+vector<int> inorderTraversal(TreeNode *root);
+
+namespace _alternative {
+    // Solution 2: Iterative, Morris Traversal, 6 ms
+    vector<int> inorderTraversal(TreeNode *root);
+}
+
 
 
 
