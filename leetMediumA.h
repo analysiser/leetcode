@@ -156,7 +156,17 @@ namespace _alternative {
     vector<int> inorderTraversal(TreeNode *root);
 }
 
+// 95	Unique Binary Search Trees II, DFS, 25ms
+vector<TreeNode *> generateTrees(int n);
 
+// 96	Unique Binary Search Trees, DP, Combinations, 1ms
+int numTrees(int n);
+
+// 98	Validate Binary Search Tree, Recursion, DFS, 22 ms
+bool isValidBST(TreeNode *root);
+
+// 103	Binary Tree Zigzag Level Order Traversal, BFS, 7ms
+vector<vector<int> > zigzagLevelOrder(TreeNode *root);
 
 
 

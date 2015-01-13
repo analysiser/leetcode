@@ -1571,3 +1571,105 @@ namespace _alternative {
         return sol;
     }
 }
+
+// 95	Unique Binary Search Trees II
+vector<TreeNode *> generateSubTrees(int l, int r) {
+    vector<TreeNode *> list;
+    if (l > r) {
+        list.push_back(NULL);
+    }
+    else if (l == r) {
+        TreeNode *node = new TreeNode(l);
+        list.push_back(node);
+    }
+    else {
+        for (int i = l; i <= r; i++) {
+            vector<TreeNode *> leftset = generateSubTrees(l, i-1);
+            vector<TreeNode *> rightset = generateSubTrees(i+1, r);
+            for (TreeNode *left : leftset) {
+                for (TreeNode *right : rightset) {
+                    TreeNode *node = new TreeNode(i);
+                    node->left = left;
+                    node->right = right;
+                    list.push_back(node);
+                }
+            }
+        }
+    }
+    
+    return list;
+}
+
+vector<TreeNode *> generateTrees(int n) {
+    return generateSubTrees(1, n);
+}
+
+// 96	Unique Binary Search Trees
+int findCombinationBST(int A[], int n) {
+    if (A[n] != -1) return A[n];
+    else {
+        int total = 0;
+        for (int i = 0; i < n; i++) {
+            int l = findCombinationBST(A, i);
+            int r = findCombinationBST(A, n-i-1);
+            total += l * r;
+        }
+        A[n] = total;
+        return total;
+    }
+}
+
+int numTrees(int n) {
+    int *lut = new int[n+1];
+    fill_n(lut, n+1, -1);
+    lut[0] = 1;
+    lut[1] = 1;
+    lut[2] = 2;
+    lut[3] = 5;
+    return findCombinationBST(lut, n);
+}
+
+// 98	Validate Binary Search Tree
+bool isValidBSTRecur(TreeNode *node, int64_t min, int64_t max) {
+    bool res = true;
+    if (node) {
+        int64_t v = (int64_t)node->val;
+        if (v <= min || v >= max)   return false;
+        res = isValidBSTRecur(node->left, min, v);
+        if (res)
+            res = isValidBSTRecur(node->right, v, max);
+    }
+    return res;
+}
+
+bool isValidBST(TreeNode *root) {
+    return isValidBSTRecur(root, INT_MIN-1LL, INT_MAX+1LL);
+}
+
+// 103	Binary Tree Zigzag Level Order Traversal
+vector<vector<int> > zigzagLevelOrder(TreeNode *root) {
+    vector<vector<int>> sol;
+    vector<TreeNode *> next, cur;
+    if (root) {
+        next.push_back(root);
+        while(!next.empty()) {
+            vector<int> vals;
+            for (auto node : next) {
+                vals.push_back(node->val);
+                if (node->left)
+                    cur.push_back(node->left);
+                if (node->right)
+                    cur.push_back(node->right);
+            }
+            sol.push_back(vals);
+            next.clear();
+            next = cur;
+            cur.clear();
+        }
+        
+        for (int i = 1; i < sol.size(); i+=2) {
+            std::reverse(sol[i].begin(), sol[i].end());
+        }
+    }
+    return sol;
+}
