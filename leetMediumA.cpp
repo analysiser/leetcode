@@ -1673,3 +1673,241 @@ vector<vector<int> > zigzagLevelOrder(TreeNode *root) {
     }
     return sol;
 }
+
+// 105	Construct Binary Tree from Preorder and Inorder Traversal
+TreeNode *buildSubTree(vector<int> &pre, vector<int> &in, int pl, int pr, int il, int ir) {
+    if (pl > pr || il > ir) {
+        return NULL;
+    }
+    else if (pl == pr) {
+        TreeNode *node = new TreeNode(pre[pl]);
+        return node;
+    }
+    else {
+        int val = pre[pl];
+        TreeNode *node = new TreeNode(val);
+        int index = -1;
+        for (int i = il; i <= ir; i++) {
+            if (in[i] == val) {
+                index = i;
+                break;
+            }
+        }
+        int sl = index-il;
+        int sr = ir-index;
+        node->left = buildSubTree(pre, in, pl+1, pl+sl, il, index-1);
+        node->right = buildSubTree(pre, in, pl+sl+1, pr, index+1, ir);
+        return node;
+    }
+}
+
+TreeNode *buildTree(vector<int> &preorder, vector<int> &inorder) {
+    return buildSubTree(preorder, inorder, 0, (int)preorder.size()-1, 0, (int)inorder.size()-1);
+}
+
+
+// 106	Construct Binary Tree from Inorder and Postorder Traversal
+TreeNode *buildTreeDFS(vector<int> &in, vector<int> &po, int il, int ir, int pl, int pr) {
+    if (il > ir)    return NULL;
+    else if (il == ir) {
+        TreeNode *node = new TreeNode(in[il]);
+        return node;
+    }
+    else {
+        int val = po[pr];
+        int index = -1;
+        for (int i = il; i <= ir; i++) {
+            if (in[i] == val) {
+                index = i;
+                break;
+            }
+        }
+        
+        TreeNode *node = new TreeNode(val);
+        int sizel = index-il;
+        int sizer = ir-index;
+        node->left = buildTreeDFS(in, po, il, index-1, pl, pl+sizel-1);
+        node->right = buildTreeDFS(in, po, index+1, ir, pr-sizer, pr-1);
+        return node;
+    }
+}
+
+TreeNode *buildTree106(vector<int> &inorder, vector<int> &postorder) {
+    return buildTreeDFS(inorder, postorder, 0, (int)inorder.size()-1, 0, (int)postorder.size()-1);
+}
+
+namespace _alternative {
+    
+    TreeNode *buildTree106(vector<int> &inorder, vector<int> &postorder) {
+        if (!inorder.size())    return NULL;
+        
+        stack<TreeNode *> st;
+        TreeNode *root, *p;
+        root = new TreeNode(postorder.back());
+        st.push(root);
+        postorder.pop_back();
+        while (1) {
+            if (inorder.back() == st.top()->val) {
+                p = st.top();
+                st.pop();
+                inorder.pop_back();
+                if (inorder.size() == 0)    break;
+                if (st.size() && inorder.back() == st.top()->val) continue;
+                TreeNode *node = new TreeNode(postorder.back());
+                p->left = node;
+                st.push(node);
+                postorder.pop_back();
+            }
+            else {
+                TreeNode *node = new TreeNode(postorder.back());
+                st.top()->right = node;
+                st.push(node);
+                postorder.pop_back();
+            }
+        }
+        
+        return root;
+    }
+}
+
+// 109	Convert Sorted List to Binary Search Tree
+TreeNode *sortedListToBSTRecur(ListNode *head, int size) {
+    if (size == 0)  return NULL;
+    else if (size == 1) {
+        TreeNode *node = new TreeNode(head->val);
+        return node;
+    }
+    else {
+        int half = size/2+1;
+        int count = 1;
+        auto tmp = head;
+        while (count < half) {
+            tmp = tmp->next;
+            count += 1;
+        }
+        int lsize = half - 1;
+        int rsize = size - half;
+        TreeNode *node = new TreeNode(tmp->val);
+        node->left = sortedListToBSTRecur(head, lsize);
+        node->right = sortedListToBSTRecur(tmp->next, rsize);
+        return node;
+    }
+}
+
+TreeNode *sortedListToBST(ListNode *head) {
+    if (!head) return NULL;
+    auto tmp = head;
+    int size = 1;
+    while (tmp->next != NULL) {
+        tmp = tmp->next;
+        size += 1;
+    }
+    return sortedListToBSTRecur(head, size);
+}
+
+
+namespace _alternative {
+    
+    TreeNode *dfsConstructBST(ListNode **list, int size) {
+        if (size == 0)  return NULL;
+        TreeNode *node = new TreeNode(0);
+        node->left = dfsConstructBST(list, size/2);
+        node->val = (*list)->val;
+        *list = (*list)->next;
+        node->right = dfsConstructBST(list, size - size/2 - 1);
+        return node;
+    }
+    
+    TreeNode *sortedListToBST(ListNode *head) {
+        if (!head) return NULL;
+        auto tmp = head;
+        int size = 1;
+        while (tmp->next != NULL) {
+            tmp = tmp->next;
+            size += 1;
+        }
+        return dfsConstructBST(&head, size);
+    }
+}
+
+
+// 114	Flatten Binary Tree to Linked List
+void flatten(TreeNode *root) {
+    TreeNode *node = root;
+    while (node != NULL) {
+        if (!node->left) {
+            node = node->right;
+            continue;
+        }
+        TreeNode *tmp = node->left;
+        while (tmp->right) tmp = tmp->right;
+        tmp->right = node->right;
+        node->right = node->left;
+        node->left = NULL;
+        node = node->right;
+    }
+}
+
+
+// 116	Populating Next Right Pointers in Each Node
+void connect(TreeLinkNode *root) {
+    if (root) {
+        vector<TreeLinkNode *> next;
+        vector<TreeLinkNode *> cur;
+        next.push_back(root);
+        while (!next.empty()) {
+            for (int i = 0; i < next.size(); i++) {
+                TreeLinkNode *node = next[i];
+                if (i+1 < next.size())
+                    node->next = next[i+1];
+                if (node->left)
+                    cur.push_back(node->left);
+                if (node->right)
+                    cur.push_back(node->right);
+            }
+            next.clear();
+            next = cur;
+            cur.clear();
+        }
+    }
+}
+
+namespace _alternative {
+    void connect(TreeLinkNode *root) {
+        TreeLinkNode *head = root;
+        TreeLinkNode *cur = NULL;
+        TreeLinkNode *pre = NULL;
+        while (head) {
+            cur = head;
+            head = pre = NULL;
+            while (cur) {
+                
+                if (cur->left) {
+                    if (pre) {
+                        pre = pre->next = cur->left;
+                    }
+                    else {
+                        head = pre = cur->left;
+                    }
+                }
+                
+                if (cur->right) {
+                    pre = pre->next = cur->right;
+                }
+                cur = cur->next;
+            }
+        }
+    }
+}
+
+// 120	Triangle
+int minimumTotal(vector<vector<int> > &triangle) {
+    if (!triangle.size())   return 0;
+    vector<int> res = triangle[triangle.size()-1];
+    for (int j = triangle.size()-1; j >= 1; j--) {
+        for (int i = 0; i < triangle[j-1].size(); i++) {
+            res[i] = triangle[j-1][i] + min(res[i], res[i+1]);
+        }
+    }
+    return res[0];
+}

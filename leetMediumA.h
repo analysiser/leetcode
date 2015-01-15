@@ -168,6 +168,36 @@ bool isValidBST(TreeNode *root);
 // 103	Binary Tree Zigzag Level Order Traversal, BFS, 7ms
 vector<vector<int> > zigzagLevelOrder(TreeNode *root);
 
+// 105	Construct Binary Tree from Preorder and Inorder Traversal, DFS, Two pointers, 43 ms
+TreeNode *buildTree(vector<int> &preorder, vector<int> &inorder);
 
+// 106	Construct Binary Tree from Inorder and Postorder Traversal, DFS, 43 ms
+TreeNode *buildTree106(vector<int> &inorder, vector<int> &postorder);
+
+namespace _alternative {
+    // 106 Iterative solution, 27 ms
+    TreeNode *buildTree106(vector<int> &inorder, vector<int> &postorder);
+}
+
+// 109	Convert Sorted List to Binary Search Tree, DFS, BST, 48 ms
+TreeNode *sortedListToBST(ListNode *head);
+
+namespace _alternative {
+    // 109, iterative, O(n) solution, 38 ms
+    TreeNode *dfsConstructBST(ListNode **list, int size);
+}
+
+// 114	Flatten Binary Tree to Linked List, Binary Tree, Morris Traversal?, 12 ms
+void flatten(TreeNode *root);
+
+// 116	Populating Next Right Pointers in Each Node, BFS, 28 ms
+void connect(TreeLinkNode *root);
+namespace _alternative {
+    // 116, O(1) space iterative, BFS, 31 ms
+    void connect(TreeLinkNode *root);
+}
+
+// 120	Triangle, DP, O(n) space solution, 11 ms
+int minimumTotal(vector<vector<int> > &triangle);
 
 #endif /* defined(__Leetcode__leetMediumA__) */
