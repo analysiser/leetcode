@@ -1911,3 +1911,155 @@ int minimumTotal(vector<vector<int> > &triangle) {
     }
     return res[0];
 }
+
+// 122	Best Time to Buy and Sell Stock II
+int maxProfit(vector<int> &prices) {
+    int profit = 0;
+    for (int i = 1; i < prices.size(); i++) {
+        int income = prices[i] - prices[i-1];
+        if (income > 0) {
+            profit += income;
+        }
+    }
+    return profit;
+}
+
+// 127	Word Ladder
+unordered_set<string> genNext(string word, unordered_set<string> &tested, unordered_set<string> &dict) {
+    unordered_set<string> next;
+    for (int i = 0; i < word.size(); i++) {
+        for (int j = 0; j < 26; j++) {
+            string s = word;
+            s[i] = 'a' + j;
+            if (dict.find(s) != dict.end() && tested.find(s) == tested.end())
+                next.insert(s);
+        }
+    }
+    return next;
+}
+
+int ladderLength(string start, string end, unordered_set<string> &dict) {
+    unordered_set<string> cur, next, tested;
+    int length = 1;
+    tested.insert(start);
+    next = genNext(start, tested, dict);
+    while(!next.empty()) {
+        if (next.find(end) != next.end())
+            return length + 1;
+        for (string word : next) {
+            tested.insert(word);
+            decltype(cur) wordNext = genNext(word, tested, dict);
+            cur.insert(wordNext.begin(), wordNext.end());
+        }
+        next.clear();
+        next = cur;
+        cur.clear();
+        length += 1;
+    }
+    return 0;
+}
+
+// 130	Surrounded Regions
+struct PairHash {
+public:
+    size_t operator()(const std::pair<int, int> &x) const {
+        return x.first * 10000 + x.second;
+    }
+};
+
+void solve(vector<vector<char>> &board) {
+    for (int i = 0; i < board.size(); i++) {
+        for (int j = 0; j < board[i].size(); j++) {
+            if (board[i][j] == 'O') {
+                unordered_set<pair<int, int>, PairHash> next, cur, res;
+                next.insert(make_pair(i, j));
+                res.insert(next.begin(), next.end());
+                bool surround = true;
+                if (i == 0 || j == 0 || i == board.size()-1 || j == board[i].size()-1)
+                    surround = false;
+                while(!next.empty()) {
+                    for (auto pos : next) {
+                        // do 4 directions tests
+                        int x = pos.first;
+                        int y = pos.second;
+                        // UP
+                        if (x - 1 >= 0 && board[x-1][y] == 'O' && res.find(make_pair(x-1, y)) == res.end()) {
+                            if (x - 1 == 0) surround = false;
+                            cur.insert(make_pair(x-1,y));
+                        }
+                        // DOWN
+                        if (x + 1 < board.size() && board[x+1][y] == 'O' && res.find(make_pair(x+1, y)) == res.end()) {
+                            if (x + 1 == board.size()-1) surround = false;
+                            cur.insert(make_pair(x+1,y));
+                        }
+                        // Left
+                        if (y - 1 >= 0 && board[x][y-1] == 'O' && res.find(make_pair(x, y-1)) == res.end()) {
+                            if (y - 1 == 0) surround = false;
+                            cur.insert(make_pair(x,y-1));
+                        }
+                        // right
+                        if (y + 1 < board[x].size() && board[x][y+1] == 'O' && res.find(make_pair(x, y+1)) == res.end()) {
+                            if (y+1 == board[x].size()-1) surround = false;
+                            cur.insert(make_pair(x,y+1));
+                        }
+                    }
+                    next.clear();
+                    next = cur;
+                    cur.clear();
+                    res.insert(next.begin(), next.end());
+                }
+                if (surround) {
+                    for (auto pos : res) {
+                        board[pos.first][pos.second] = 'X';
+                    }
+                }
+                else {
+                    for (auto pos : res) {
+                        board[pos.first][pos.second] = '-';
+                    }
+                }
+            }
+        }
+    }
+    
+    for (int i = 0; i < board.size(); i++) {
+        for (int j = 0; j < board[i].size(); j++) {
+            if (board[i][j] == '-') board[i][j] = 'O';
+        }
+    }
+}
+
+
+// 131	Palindrome Partitioning
+bool isPalindromeHelper(string &s, int l, int r) {
+    while (l < r) {
+        if (s[l] != s[r])
+            return false;
+        l++;
+        r--;
+    }
+    return true;
+}
+
+void partitionDFS(string &s, int l, vector<vector<string> > &sol, vector<string> &res) {
+    int remainSize = s.size()-l;
+    if (remainSize <= 0 && res.size() > 0) {
+        sol.push_back(res);
+    }
+    else {
+        for (int i = 1; i <= remainSize; i++) {
+            if (isPalindromeHelper(s, l, l+i-1)) {
+                res.push_back(s.substr(l, i));
+                partitionDFS(s, l+i, sol, res);
+                res.pop_back();
+            }
+        }
+    }
+}
+
+vector<vector<string>> partition(string s) {
+    vector<vector<string>> sol;
+    vector<string> res;
+    partitionDFS(s, 0, sol, res);
+    return sol;
+}

@@ -25,8 +25,9 @@ int main(int argc, const char * argv[]) {
 //    for (string s:ret) {
 //        cout<<s<<endl;
 //    }
-    TreeNode *node = new TreeNode(0);
-    cout<<isValidBST(node)<<endl;
+//    TreeNode *node = new TreeNode(0);
+//    vector<string> test = {"OXOOOX","OOXXXO","XXXXXO","OOOOXX","XXOOXO","OOXXXX"};
+//    solve(test);
     
                            
     return 0;

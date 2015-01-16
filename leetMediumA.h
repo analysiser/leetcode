@@ -200,4 +200,16 @@ namespace _alternative {
 // 120	Triangle, DP, O(n) space solution, 11 ms
 int minimumTotal(vector<vector<int> > &triangle);
 
+// 122	Best Time to Buy and Sell Stock II, DP, Greedy, 14 ms
+int maxProfit(vector<int> &prices);
+
+// 127	Word Ladder, BFS, Graph, 1031 ms, TODO: too slow I think...
+int ladderLength(string start, string end, unordered_set<string> &dict);
+
+// 130	Surrounded Regions, BFS, too low...
+void solve(vector<vector<char>> &board);
+
+// 131	Palindrome Partitioning, DFS, 15 ms
+vector<vector<string>> partition(string s);
+
 #endif /* defined(__Leetcode__leetMediumA__) */
