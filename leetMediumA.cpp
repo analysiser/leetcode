@@ -2063,3 +2063,138 @@ vector<vector<string>> partition(string s) {
     partitionDFS(s, 0, sol, res);
     return sol;
 }
+
+
+
+// 133 Clone Graph
+typedef UndirectedGraphNode UGN;
+UndirectedGraphNode *cloneGraph(UndirectedGraphNode *node) {
+    if (!node)   return nullptr;
+    
+    unordered_map<int, vector<int> > relationship;
+    vector<UGN*> next, cur;
+    next.push_back(node);
+    
+    // BFS building relationship
+    while(!next.empty()) {
+        for (UGN *anode : next) {
+            if (relationship.find(anode->label) != relationship.end())
+                continue;
+            
+            vector<int> nbrs;
+            relationship.insert(make_pair(anode->label, nbrs));
+            auto it = relationship.find(anode->label);
+            
+            for (UGN *n : anode->neighbors) {
+                int id = n->label;
+                it->second.push_back(id);
+                if (relationship.find(id) == relationship.end()) {
+                    cur.push_back(n);
+                }
+            }
+        }
+        next.clear();
+        next = cur;
+        cur.clear();
+    }
+    
+    // make relationship to be fully copied graph
+    // initialize all copied nodes
+    UGN *root = nullptr;
+    unordered_map<int, UGN*> lut;
+    for (auto it = relationship.begin(); it != relationship.end(); it++) {
+        int label = it->first;
+        UGN *copy = new UGN(label);
+        if (label == node->label)    root = copy;
+        lut.insert(make_pair(label, copy));
+    }
+    
+    // build actual relationship of all copied nodes
+    for (auto it = relationship.begin(); it != relationship.end(); it++) {
+        int label = it->first;
+        UGN *copy = lut.find(label)->second;
+        for (int id : it->second) {
+            auto itLocator = lut.find(id);
+            copy->neighbors.push_back(itLocator->second);
+        }
+    }
+    
+    return root;
+    
+}
+
+
+// 134	Gas Station
+int canCompleteCircuit(vector<int> &gas, vector<int> &cost) {
+    int n = gas.size();
+    vector<int> net(n, 0);
+    int total = 0;
+    int index = 0;
+    for (int i = 0; i < n; i++) {
+        net[i] = gas[i] - cost[i];
+        total += net[i];
+    }
+    if (total < 0)  return -1;
+    total = 0;
+    for (int i = 0; i < n; i++) {
+        total += net[i];
+        if (total < 0) {
+            total = 0;
+            index = i+1;
+        }
+    }
+    return index;
+}
+
+// 137	Single Number II
+int singleNumber(int A[], int n) {
+    // count occurences of 1s for each bit
+    int ec1 = 0, ec2 = 0, ec3 = 0;
+    for (int i = 0; i < n; i++) {
+        ec3 = ec2 & A[i];
+        ec2 = (ec2 | (ec1 & A[i])) & (~ec3);
+        ec1 = (ec1 | A[i]) & (~ec2) & (~ec3);
+    }
+    return ec1;
+}
+
+
+// 139	Word Break, DFS, 6 ms
+bool wordBreakRecur(string s, unordered_set<string> &dict, set<int> &len) {
+    if (dict.find(s) != dict.end()) {
+        return true;
+    }
+    else {
+        for (auto it = len.begin(); it != len.end(); it++) {
+            int subSize = *it;
+            if (subSize <= s.size()) {
+                string sub = s.substr(0, subSize);
+                if (dict.find(sub) != dict.end()) {
+                    bool found = wordBreakRecur(s.substr(subSize, s.size()-subSize), dict, len);
+                    if (found)
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
+}
+
+bool wordBreak(string s, unordered_set<string> &dict) {
+    set<int> len;
+    unordered_set<char> dictchars;
+    
+    for (auto word : dict) {
+        for (char c : word) {
+            dictchars.insert(c);
+        }
+        int size = word.size();
+        len.insert(size);
+    }
+    
+    for (char c : s) {
+        if (dictchars.find(c) == dictchars.end())   return false;
+    }
+    
+    return wordBreakRecur(s, dict, len);
+}

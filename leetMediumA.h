@@ -212,4 +212,17 @@ void solve(vector<vector<char>> &board);
 // 131	Palindrome Partitioning, DFS, 15 ms
 vector<vector<string>> partition(string s);
 
+// 133	Clone Graph, Graph, BFS, 136 ms
+UndirectedGraphNode *cloneGraph(UndirectedGraphNode *node);
+
+// 134	Gas Station, DP, 16 ms
+int canCompleteCircuit(vector<int> &gas, vector<int> &cost);
+
+// 137	Single Number II, DP 12 ms
+int singleNumber(int A[], int n);
+
+// 139	Word Break, DFS, 6 ms
+// code is a bit messy... cuz in bad mood...
+bool wordBreak(string s, unordered_set<string> &dict);
+
 #endif /* defined(__Leetcode__leetMediumA__) */
