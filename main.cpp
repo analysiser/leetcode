@@ -29,6 +29,18 @@ int main(int argc, const char * argv[]) {
 //    vector<string> test = {"OXOOOX","OOXXXO","XXXXXO","OOOOXX","XXOOXO","OOXXXX"};
 //    solve(test);
     
+    TreeNode *node1 = new TreeNode(1);
+    TreeNode *node2 = new TreeNode(2);
+    TreeNode *node3 = new TreeNode(3);
+    
+    node3->left = node1;
+    node1->right = node2;
+    
+    vector<int> res = preorderTraversal(node3);
+    
+    for (int v : res) {
+        cout<<v<<endl;
+    }
                            
     return 0;
 }

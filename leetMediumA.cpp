@@ -2198,3 +2198,153 @@ bool wordBreak(string s, unordered_set<string> &dict) {
     
     return wordBreakRecur(s, dict, len);
 }
+
+// 141	Linked List Cycle
+bool hasCycle(ListNode *head) {
+    if (!head) return false;
+    ListNode *t1 = head;
+    ListNode *t2 = head->next;
+    while (t1 && t2) {
+        if (t1 == t2) {
+            return true;
+        }
+        t1 = t1->next;
+        t2 = t2->next;
+        if (!t2)    return false;
+        else
+            t2 = t2->next;
+    }
+    return false;
+}
+
+// 142	Linked List Cycle II
+ListNode *detectCycle(ListNode *head) {
+    if (!head)  return nullptr;
+    auto t1 = head;
+    auto t2 = head->next;
+    ListNode *p = nullptr;
+    while (t1 && t2) {
+        if (t1 == t2) {
+            p = t1;
+            break;
+        }
+        t1 = t1->next;
+        t2 = t2->next;
+        if (!t2)    return nullptr;
+        else t2 = t2->next;
+    }
+    if (!p) return nullptr;
+    
+    // test cycles
+    int cycle = 1;
+    t1 = p;
+    t2 = p->next;
+    while (t1 != t2) {
+        t1 = t1->next;
+        t2 = t2->next->next;
+        cycle++;
+    }
+    
+    
+    t1 = head;
+    t2 = t1;
+    for (int i = 0; i < cycle; i++) {
+        t2 = t2->next;
+    }
+    
+    while (t1 != t2) {
+        t1 = t1->next;
+        t2 = t1;
+        for (int i = 0; i < cycle; i++) {
+            t2 = t2->next;
+        }
+    }
+    
+    return t1;
+}
+
+// 142
+namespace _alternative {
+    ListNode *detectCycle(ListNode *head) {
+        if (head == NULL || head->next == NULL) return NULL;
+        
+        ListNode* firstp = head;
+        ListNode* secondp = head;
+        bool isCycle = false;
+        
+        while(firstp != NULL && secondp != NULL) {
+            firstp = firstp->next;
+            if (secondp->next == NULL) return NULL;
+            secondp = secondp->next->next;
+            if (firstp == secondp) { isCycle = true; break; }
+        }
+        
+        if(!isCycle) return NULL;
+        firstp = head;
+        while( firstp != secondp) {
+            firstp = firstp->next;
+            secondp = secondp->next;
+        }
+        
+        return firstp;
+    }
+}
+
+// 143	Reorder List
+void reorderList(ListNode *head) {
+    auto p = head;
+    vector<ListNode *>nodes;
+    
+    while (p) {
+        nodes.push_back(p);
+        p = p->next;
+    }
+    
+    if (nodes.size() < 3)   return;
+    
+    int tailI = -1;
+    int tailJ = -1;
+    for (int i = 0; i < nodes.size(); i++) {
+        int j = nodes.size() - i - 1;
+        if (i < j) {
+            nodes[i]->next = nodes[j];
+            nodes[j]->next = nodes[i+1];
+            tailI = i;
+            tailJ = j;
+        }
+        else {
+            break;
+        }
+    }
+    
+    if (nodes.size()%2) nodes[tailI+1]->next = nullptr;
+    else nodes[tailJ]->next = nullptr;
+}
+
+// 144	Binary Tree Preorder Traversal
+vector<int> preorderTraversal(TreeNode *root) {
+    vector<int> sol;
+    TreeNode *cur = root, *prev = nullptr;
+    while (cur != nullptr) {
+        if (cur->left == nullptr) {
+            sol.push_back(cur->val);
+            cur = cur->right;
+        }
+        else {
+            prev = cur->left;
+            while(prev->right && prev->right != cur) {
+                prev = prev->right;
+            }
+            if (prev->right == nullptr) {
+                sol.push_back(cur->val);
+                prev->right = cur;
+                cur = cur->left;
+            }
+            else {
+                prev->right = nullptr;
+                cur = cur->right;
+            }
+        }
+    }
+    return sol;
+}

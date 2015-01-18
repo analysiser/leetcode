@@ -225,4 +225,28 @@ int singleNumber(int A[], int n);
 // code is a bit messy... cuz in bad mood...
 bool wordBreak(string s, unordered_set<string> &dict);
 
+// 141	Linked List Cycle, Linked List, 2 pointers, 19 ms
+bool hasCycle(ListNode *head);
+
+// 142	Linked List Cycle II, Linked List, two pointers, 76 ms
+ListNode *detectCycle(ListNode *head);
+
+namespace _alternative {
+    // 142 super good math solution, 17 ms
+    // Idea: let first meet of two pointers, slow pointer went k steps, then fast pointer goes 2k steps.
+    // Let cycle length = r, then 2k-k=k=n*r
+    // Let head to first cycle node step = s, let first cycle node to first overlap steps = m, then s + m = k = n*r
+    // s = nr - m = (n-1)*r + (m-r). If let n = 1, then s = m - r, which means the distance of first cycle node from head
+    // is the same with the rest of the cycle
+    ListNode *detectCycle(ListNode *head);
+}
+
+// 143	Reorder List, LinkedList, 75 ms
+void reorderList(ListNode *head);
+
+// 144	Binary Tree Preorder Traversal, Binary Tree Morris Traversal, 3 ms
+vector<int> preorderTraversal(TreeNode *root);
+
+
+
 #endif /* defined(__Leetcode__leetMediumA__) */
