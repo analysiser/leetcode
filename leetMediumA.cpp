@@ -2348,3 +2348,184 @@ vector<int> preorderTraversal(TreeNode *root) {
     }
     return sol;
 }
+
+// 147	Insertion Sort List
+ListNode *insertionSortList(ListNode *head) {
+    if (!head)  return nullptr;
+    ListNode *newhead = head;
+    ListNode *cur = head->next;
+    ListNode *prev = head;
+    while (cur) {
+        while (cur && cur->val >= prev->val) {
+            prev = cur;
+            cur = cur->next;
+        }
+        if (!cur)   break;
+        else {
+            ListNode *toInsert = cur;
+            prev->next = cur->next;
+            cur = cur->next;
+            toInsert->next = nullptr;
+            ListNode *tmp = newhead;
+            ListNode *pretmp = nullptr;
+            while (tmp != cur && tmp->val < toInsert->val) {
+                pretmp = tmp;
+                tmp = tmp->next;
+            }
+            if (!pretmp) {
+                newhead = toInsert;
+                toInsert->next = tmp;
+            }
+            else {
+                toInsert->next = tmp;
+                pretmp->next = toInsert;
+            }
+        }
+        
+    }
+    return newhead;
+}
+
+// 148	Sort List
+ListNode *mergePhase(ListNode *head1, ListNode *head2) {
+    ListNode *newhead = nullptr;
+    auto t1 = head1;
+    auto t2 = head2;
+    ListNode *cur = nullptr;
+    if (!t1)    return t2;
+    else if (!t2)   return t1;
+    else {
+        if (t1->val <= t2->val) {
+            newhead = t1;
+            cur = newhead;
+            t1 = t1->next;
+        }
+        else {
+            newhead = t2;
+            cur = newhead;
+            t2 = t2->next;
+        }
+    }
+    while(t1 || t2) {
+        if (t1 && !t2) {
+            cur->next = t1;
+            break;
+        }
+        else if (t2 && !t1) {
+            cur->next = t2;
+            break;
+        }
+        else {
+            if (t1->val <= t2->val) {
+                cur->next = t1;
+                auto tmp = t1;
+                t1 = t1->next;
+                tmp->next = t2;
+                cur = cur->next;
+            }
+            else {
+                cur->next = t2;
+                auto tmp = t2;
+                t2 = t2->next;
+                tmp->next = t1;
+                cur = cur->next;
+            }
+        }
+    }
+    
+    return newhead;
+}
+
+ListNode *mergeSort(ListNode *list) {
+    ListNode *head1 = nullptr, *head2 = nullptr;
+    if (!list)  return nullptr;
+    else if (list && !list->next) {
+        return list;
+    }
+    else if (list && list->next && !list->next->next) {
+        head1 = list;
+        head2 = list->next;
+        if (head1->val <= head2->val)    return head1;
+        else {
+            head2->next = head1;
+            head1->next = nullptr;
+            return head2;
+        }
+    }
+    else {
+        auto t1 = list;
+        auto t2 = list;
+        while(t2->next && t2->next->next) {
+            t1 = t1->next;
+            t2 = t2->next->next;
+        }
+        
+        head1 = list;
+        head2 = t1->next;
+        t1->next = nullptr;
+        
+        auto h1 = mergeSort(head1);
+        auto h2 = mergeSort(head2);
+        return mergePhase(h1, h2);
+    }
+}
+
+
+ListNode *sortList(ListNode *head) {
+    return mergeSort(head);
+}
+
+// 150	Evaluate Reverse Polish Notation
+int evalRPN(vector<string> &tokens) {
+    stack<int> ops;
+    for (size_t i = 0; i < tokens.size(); i++) {
+        if (tokens[i] == "+" || tokens[i] == "-" || tokens[i] == "*" || tokens[i] == "/") {
+            int v1 = ops.top();
+            ops.pop();
+            int v2 = ops.top();
+            ops.pop();
+            if (tokens[i] == "+")
+                ops.push(v2+v1);
+            else if (tokens[i] == "-")
+                ops.push(v2-v1);
+            else if (tokens[i] == "*")
+                ops.push(v2*v1);
+            else
+                ops.push(v2/v1);
+        }
+        else {
+            int v = stoi(tokens[i]);
+            ops.push(v);
+        }
+    }
+    return ops.top();
+}
+
+// 151	Reverse Words in a String
+void reverseWords(string &s) {
+    vector<string> words;
+    for (size_t i = 0; i < s.size(); i++) {
+        if (s[i] != '\u0020') {
+            int count = 1;
+            for (size_t j = i + 1; j < s.size(); j++) {
+                if (s[j] == '\u0020') {
+                    break;
+                }
+                count += 1;
+            }
+            words.push_back(s.substr(i, count));
+            i = i + count;
+        }
+        
+    }
+    
+    string ret = "";
+    if (words.size() > 0) {
+        for (size_t i = words.size() - 1; i > 0; i--) {
+            ret += words[i];
+            ret += ' ';
+        }
+        ret += words[0];
+    }
+    s = ret;
+}

@@ -247,6 +247,19 @@ void reorderList(ListNode *head);
 // 144	Binary Tree Preorder Traversal, Binary Tree Morris Traversal, 3 ms
 vector<int> preorderTraversal(TreeNode *root);
 
+// 147	Insertion Sort List : Linked List, 1 submission, 35 ms
+// Not sure when using a second list, is it considered as insertion sort
+ListNode *insertionSortList(ListNode *head);
+
+// 148	Sort List: Linked List, Merge Sort, 3 submissions, 65 ms
+ListNode *sortList(ListNode *head);
+
+// 150	Evaluate Reverse Polish Notation : Stack, 1 submission, 22 ms
+int evalRPN(vector<string> &tokens);
+
+// 151	Reverse Words in a String : String, 1 submission, 10 ms
+void reverseWords(string &s);
+
 
 
 #endif /* defined(__Leetcode__leetMediumA__) */
