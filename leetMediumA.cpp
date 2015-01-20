@@ -2529,3 +2529,75 @@ void reverseWords(string &s) {
     }
     s = ret;
 }
+
+
+// 152	Maximum Product Subarray
+int maxProduct(int A[], int n) {
+    int max = INT_MIN;
+    int product = 1;
+    int l = 0;
+    for (int i = 0; i < n; i++) {
+        int v = product * A[i];
+        max = v > max ? v : max;
+        if (v > 0) {
+            product = v;
+        }
+        else if (v < 0) {
+            if (l == 0) {
+                l = v;
+            }
+            else {
+                int value = v/l;
+                max = value > max ? value : max;
+            }
+            product = v;
+        }
+        else {
+            product = 1;
+            l = 0;
+        }
+    }
+    
+    return max;
+}
+
+// 153	Find Minimum in Rotated Sorted Array
+int findMin(vector<int> &num) {
+    int l = 0, r = num.size()-1;
+    while (l < r) {
+        if (num[l] < num[r])    break;
+        else {
+            int mid = l + (r-l)/2;
+            if (num[l] < num[mid]) {
+                l = mid + 1;
+            }
+            else {
+                r = mid;
+                l += 1;
+            }
+        }
+    }
+    
+    return num[l];
+}
+
+// 162	Find Peak Element
+int findPeakElement(const vector<int> &num) {
+    int l = 0, r = num.size()-1;
+    while (l < r) {
+        if (num[l+1] < num[l])  return l;
+        if (num[r-1] < num[r])  return r;
+        int m = l + (r-l)/2;
+        int64_t ln = m-1 < 0 ? INT64_MIN : (int64_t)num[m-1];
+        int64_t rn = m+1 > num.size()-1 ? INT64_MIN : (int64_t)num[m+1];
+        if ((int64_t)num[m] > ln && (int64_t)num[m] > rn)
+            return m;
+        else if ((int64_t)num[m] < ln) {
+            r = m;
+        }
+        else {
+            l = m;
+        }
+    }
+    return l;
+}

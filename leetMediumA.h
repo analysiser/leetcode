@@ -261,5 +261,19 @@ int evalRPN(vector<string> &tokens);
 void reverseWords(string &s);
 
 
+// 152	Maximum Product Subarray : DP, 6 submissions, 11 ms
+int maxProduct(int A[], int n);
+
+// 153	Find Minimum in Rotated Sorted Array, Binary Search, 1 submission, 7 ms
+int findMin(vector<int> &num);
+
+// 162	Find Peak Element, Binary search,
+// 6 Submissions (wrong operator, int64 edge case, replicated variable name), 9 ms
+int findPeakElement(const vector<int> &num);
+
+// 166	Fraction to Recurring Decimal
+// 173	Binary Search Tree Iterator
+// 179	Largest Number
+
 
 #endif /* defined(__Leetcode__leetMediumA__) */
