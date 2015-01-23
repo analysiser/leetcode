@@ -2601,3 +2601,100 @@ int findPeakElement(const vector<int> &num) {
     }
     return l;
 }
+
+// 166	Fraction to Recurring Decimal
+string fractionToDecimal(int numerator, int denominator) {
+    int64_t n = static_cast<int64_t>(numerator);
+    int64_t d = static_cast<int64_t>(denominator);
+    
+    if (n == 0) return "0";
+    if (d == 0) {
+        if (n > 0)  return "inf";
+        else return "-inf";
+    }
+    
+    bool positive = (n&(1LL << 63)) == (d&(1LL << 63));
+    n = abs(n);
+    d = abs(d);
+    
+    int64_t intpart = n/d;
+    n = n % d;
+    string fraction = "";
+    unordered_map<string, int> repeats;
+    int count = 0;
+    
+    while(n != 0) {
+        int q = (n*10)/d;
+        int r = (n*10)%d;
+        
+        string key = to_string(q) + to_string(r);
+        
+        auto it = repeats.find(key);
+        if (it == repeats.end()) {
+            repeats.insert(make_pair(key, count));
+        }
+        else {
+            if (repeats.size() < d) {
+                int index = it->second;
+                string repeatpart = "(" + fraction.substr(index, fraction.size()-index) + ")";
+                fraction = fraction.substr(0, index) + repeatpart;
+                break;
+            }
+        }
+        
+        fraction += to_string(q);
+        n = static_cast<int64_t>(r);
+        count += 1;
+    }
+    
+    string ret = positive ? "" : "-";
+    ret += to_string(intpart);
+    if (fraction.size() > 0) {
+        ret += "." + fraction;
+    }
+    
+    return ret;
+}
+
+// 179	Largest Number
+//struct LargestNumberComparator {
+//    bool operator()(const string &x, const string &y) const
+//    {
+//        if (x == y)     return true;
+//        string v1 = (x+y);
+//        string v2 = (y+x);
+//        if (v1 >= v2)   return true;
+//        else return false;
+//    }
+//};
+
+bool LargestNumberComparator(string &x, string &y) {
+    if (x == y)     return true;
+    string v1 = (x+y);
+    string v2 = (y+x);
+    if (v1 >= v2)   return true;
+    else return false;
+
+}
+
+string largestNumber(vector<int> &num) {
+    // actual insert
+    bool isAllZero = true;
+    vector<string> result;
+    for (int v : num) {
+        string s = to_string(v);
+        if (isAllZero && s[0] != '0') {
+            isAllZero = false;
+        }
+        result.push_back(s);
+    }
+    if (isAllZero)  return "0";
+    
+    std::sort(result.begin(), result.end(), LargestNumberComparator);
+    
+    string ret = "";
+    for (auto it = result.begin(); it != result.end(); it++) {
+        ret += *it;
+    }
+    return ret;
+}

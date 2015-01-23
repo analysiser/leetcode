@@ -271,9 +271,44 @@ int findMin(vector<int> &num);
 // 6 Submissions (wrong operator, int64 edge case, replicated variable name), 9 ms
 int findPeakElement(const vector<int> &num);
 
-// 166	Fraction to Recurring Decimal
-// 173	Binary Search Tree Iterator
-// 179	Largest Number
+// 166	Fraction to Recurring Decimal, Division, lots of edge cases, 11 subs, 8 ms
+string fractionToDecimal(int numerator, int denominator);
 
+// 173	Binary Search Tree Iterator, BST Tree Inorder traversal with stack, 1 sub, 37 ms
+class BSTIterator {
+public:
+    BSTIterator(TreeNode *root) {
+        auto tmp = root;
+        while(tmp) {
+            st.push(tmp);
+            tmp = tmp->left;
+        }
+    }
+    
+    /** @return whether we have a next smallest number */
+    bool hasNext() {
+        return (!st.empty());
+    }
+    
+    /** @return the next smallest number */
+    int next() {
+        auto cur = st.top();
+        st.pop();
+        if (cur->right) {
+            auto tmp = cur->right;
+            while (tmp) {
+                st.push(tmp);
+                tmp = tmp->left;
+            }
+        }
+        return cur->val;
+    }
+    
+    stack<TreeNode *> st;
+};
+
+
+// 179	Largest Number
+string largestNumber(vector<int> &num);
 
 #endif /* defined(__Leetcode__leetMediumA__) */
