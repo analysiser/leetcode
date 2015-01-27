@@ -174,5 +174,225 @@ namespace _hard {
     }
     
     
+    namespace _030 {
+        bool examineSubstring(int index, unordered_map<int, vector<string> > &candidates, unordered_map <string, int> &lut, int totalLen) {
+            if (totalLen == 0)  return true;
+            auto it = candidates.find(index);
+            if (it == candidates.end()) return false;
+            else {
+                for (int i = 0;i < it->second.size(); i++) {
+                    string word = it->second[i];
+                    auto wordIt = lut.find(word);
+                    if (wordIt->second > 0) {
+                        wordIt->second -= 1;
+                        bool found = examineSubstring(index + word.size(), candidates, lut, totalLen - word.size());
+                        wordIt->second += 1;
+                        if (found)  return true;
+                    }
+                }
+                return false;
+            }
+            
+        }
+        
+        vector<int> findSubstring(string S, vector<string> &L) {
+            unordered_map <string, int> lut;
+            unordered_set<int> lens;
+            int totalLen = 0;
+            int minLen = INT_MAX;
+            int maxLen = INT_MIN;
+            
+            for (string word:L) {
+                totalLen += word.size();
+                minLen = (int)word.size() < minLen ? (int)word.size() : minLen;
+                maxLen = (int)word.size() > maxLen ? (int)word.size() : maxLen;
+                auto it = lut.find(word);
+                if (it == lut.end()) {
+                    lut.insert(make_pair(word, 1));
+                }
+                else {
+                    it->second += 1;
+                }
+                lens.insert((int)word.size());
+            }
+            
+            if (totalLen > S.size()) {
+                vector<int> empty;
+                return empty;
+            }
+            
+            // make candidates
+            unordered_map<int, vector<string> > candidates;
+            for (int i = 0; i < S.size(); i++) {
+                for (auto itLens = lens.begin(); itLens != lens.end(); itLens ++) {
+                    int len = *itLens;
+                    if (i+len <= S.size()) {
+                        string sub = S.substr(i, len);
+
+                        if (lut.find(sub) != lut.end()) {
+                            auto it = candidates.find(i);
+                            if (it == candidates.end()) {
+                                vector<string> subs = { sub };
+                                candidates.insert(make_pair(i, subs));
+                            }
+                            else {
+                                it->second.push_back(sub);
+                            }
+                        }
+                        
+                    }
+                }
+            }
+            
+            // final examine
+            vector<int> sol;
+            for (auto it = candidates.begin(); it != candidates.end(); it++) {
+                if (examineSubstring(it->first, candidates, lut, totalLen)) {
+                    int index = it->first;
+                    if (index + totalLen > S.size())
+                        continue;
+                    sol.push_back(index);
+                }
+            }
+            
+            return sol;
+        }
+    }
+    
+    
+    namespace _032 {
+        // 32	Longest Valid Parentheses
+        int longestValidParentheses(string s) {
+            vector<int> st;
+            for (int i = 0; i < s.size(); i++) {
+                if (s[i] == '(') {
+                    st.push_back(i);
+                }
+                else {
+                    if (!st.empty()) {
+                        s[i] = '#';
+                        s[st.back()] = '#';
+                        st.pop_back();
+                    }
+                }
+            }
+            
+            int len = 0;
+            int cnt = 0;
+            for (int i = 0; i < s.size(); i++) {
+                if (s[i] == '#') {
+                    cnt += 1;
+                    len = cnt > len ? cnt : len;
+                }
+                else {
+                    cnt = 0;
+                }
+            }
+            
+            return len;
+        }
+    }
+    
+    
+    namespace _037 {
+        // 37	Sudoku Solver
+        typedef vector<unordered_set<char> > hashtable;
+        
+        void insertCell(char c, int i, int j, hashtable &rows, hashtable &cols, hashtable &boxes) {
+            rows[i].insert(c);
+            cols[j].insert(c);
+            int ii = i/3;
+            int jj = j/3;
+            boxes[3*ii+jj].insert(c);
+        }
+        
+        bool canInsertCell(char c, int i, int j, hashtable &rows, hashtable &cols, hashtable &boxes) {
+            int ii = i/3;
+            int jj = j/3;
+            int k = 3*ii+jj;
+            return (rows[i].find(c) == rows[i].end()) &&
+            (cols[j].find(c) == cols[j].end()) &&
+            (boxes[k].find(c) == boxes[k].end());
+        }
+        
+        void eraseCell(char c, int i, int j, hashtable &rows, hashtable &cols, hashtable &boxes) {
+            int ii = i/3;
+            int jj = j/3;
+            int k = 3*ii+jj;
+            
+            rows[i].erase(c);
+            cols[j].erase(c);
+            boxes[k].erase(c);
+        }
+        
+        bool doSolveSudoku(vector<vector<char> > &board,
+                           hashtable &rows,
+                           hashtable &cols,
+                           hashtable &boxes,
+                           vector<pair<int, int> > &cells,
+                           int index) {
+            if (index == cells.size()) {
+                return true;
+            }
+            
+            int i = cells[index].first;
+            int j = cells[index].second;
+            
+            for (char c = '1'; c <= '9'; c++) {
+                if (canInsertCell(c, i, j, rows, cols, boxes)) {
+                    board[i][j] = c;
+                    insertCell(c, i, j, rows, cols, boxes);
+                    if (doSolveSudoku(board, rows, cols, boxes, cells, index+1) )
+                        return true;
+                    eraseCell(c, i, j, rows, cols, boxes);
+                    board[i][j] = '.';
+                }
+            }
+            return false;
+        }
+        
+        void solveSudoku(vector<vector<char> > &board) {
+            unordered_set<char> empty;
+            hashtable rows(9, empty);
+            hashtable cols(9, empty);
+            hashtable boxes(9, empty);
+            vector<pair<int, int> > cells;
+            for (int i = 0; i < board.size(); i++) {
+                for (int j = 0; j < board[i].size(); j++) {
+                    char v = board[i][j];
+                    if (v != '.') {
+                        insertCell(v, i, j, rows, cols, boxes);
+                    }
+                    else {
+                        cells.push_back(make_pair(i, j));
+                    }
+                }
+            }
+            
+            doSolveSudoku(board, rows, cols, boxes, cells, 0);
+        }
+    }
+    
+    
+    namespace _041 {
+        // 41	First Missing Positive
+        int firstMissingPositive(int A[], int n) {
+            for (int i = 0; i < n; i++) {
+                int v = A[i];
+                while ((v != (i+1)) && v > 0 && v <= n && (A[i] != A[v-1])) {
+                    swap(A[i], A[v-1]);
+                    v = A[i];
+                }
+            }
+            
+            for (int i = 0; i < n; i++) {
+                if (A[i] != i+1) {
+                    return i+1;
+                }
+            }
+            return (n+1);
+        }
+    }
+    
 }
 
