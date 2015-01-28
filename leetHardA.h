@@ -58,6 +58,27 @@ namespace _hard {
         // 41	First Missing Positive : Array used as storage, 6 ms
         int firstMissingPositive(int A[], int n);
     }
+    
+    namespace _042 {
+        // 42   Trapping Rain Water : Array, 1 sub, 20 ms
+        int trap(int A[], int n);
+    }
+    
+    namespace _044 {
+        // 44	Wildcard Matching : DP? Greedy? Not my solution
+        // explain: http://yucoding.blogspot.com/2013/02/leetcode-question-123-wildcard-matching.html
+        bool isMatch(const char *s, const char *p);
+    }
+    
+    namespace _045 {
+        // 45	Jump Game II : DP, 6 sub, 18 ms
+        int jump(int A[], int n);
+    }
+    
+    namespace _047 {
+        // 47	Permutations II : DFS, 3 sub, 36 ms
+        vector<vector<int> > permuteUnique(vector<int> &num);
+    }
 }
 
 

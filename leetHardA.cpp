@@ -394,5 +394,135 @@ namespace _hard {
         }
     }
     
+    
+    namespace _042 {
+        
+        int trap(int A[], int n) {
+            int l = 0, r = n - 1;
+            int res = 0;
+            while (l < r) {
+                while (A[l] <= 0)   l++;
+                while (A[r] <= 0)   r--;
+                if (l < r) {
+                    int min = A[l] < A[r] ? A[l] : A[r];
+                    int total = (r+1-l)*min;
+                    
+                    for (int i = l; i <= r; i++) {
+                        int deduct = A[i] < min ? A[i] : min;
+                        total -= deduct;
+                        A[i] -= deduct;
+                    }
+                    res += total;
+                }
+            }
+            
+            return res;
+        }
+    }
+    
+    
+    namespace _044 {
+        
+        bool isMatch(const char *s, const char *p) {
+
+            const char *star = NULL;
+            const char *ss = s;
+            while(*s) {
+                if (*s == *p || *p == '?') {
+                    s++;
+                    p++;
+                    continue;
+                }
+                
+                if (*p == '*') {
+                    star = p;
+                    ss = s;
+                    p++;
+                    continue;
+                }
+                
+                if (star) {
+                    p = star+1;
+                    s = ++ss;
+                    continue;
+                }
+                
+                return false;
+            }
+            
+            while (*p=='*'){p++;}
+            return !*p;
+        }
+        
+        
+    }
+    
+    namespace _045 {
+        
+        int jump(int A[], int n) {
+
+            if (n<2)    return 0;
+            
+            int *steps = new int[n];
+            fill_n(steps, n, INT_MAX);
+            steps[0] = 0;
+            
+            int right = 0;
+            for (int i = 0; i < n; i++) {
+                int m = i+A[i];
+                if (m >= n-1)
+                    return steps[i]+1;
+                else {
+                    if (m > right) {
+                        fill_n(steps + right + 1, m-right, steps[i]+1);
+                        right = m;
+                    }
+                }
+            }
+            
+            return steps[n-1];
+        }
+    }
+    
+    namespace _047 {
+        void dfs(vector<vector<int> > &res, vector<int> &sol, unordered_map<int, int> &lut, int total) {
+            if (sol.size() == total) {
+                res.push_back(sol);
+            }
+            else {
+                for (auto it = lut.begin(); it != lut.end(); it++) {
+                    if (it->second > 0) {
+                        it->second -= 1;
+                        sol.push_back(it->first);
+                        dfs(res, sol, lut, total);
+                        sol.pop_back();
+                        it->second += 1;
+                    }
+                }
+            }
+        }
+        
+        vector<vector<int> > permuteUnique(vector<int> &num) {
+            int total = num.size();
+            unordered_map<int, int> lut;
+            for (int n : num) {
+                auto it = lut.find(n);
+                if (it == lut.end()) {
+                    lut.insert(make_pair(n, 1));
+                }
+                else {
+                    it->second += 1;
+                }
+            }
+            
+            vector<int> sol;
+            vector<vector<int> > res;
+            
+            dfs(res, sol, lut, total);
+            
+            return res;
+        }
+    }
+    
 }
 
