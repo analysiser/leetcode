@@ -79,6 +79,26 @@ namespace _hard {
         // 47	Permutations II : DFS, 3 sub, 36 ms
         vector<vector<int> > permuteUnique(vector<int> &num);
     }
+    
+    namespace _051 {
+        // 51	N-Queens : DFS, 4 subs, 20 ms
+        vector<vector<string> > solveNQueens(int n);
+    }
+    
+    namespace _052 {
+        // 52	N-Queens II : DFS, 2 subs, 50 ms
+        int totalNQueens(int n);
+    }
+    
+    namespace _056 {
+        // 56	Merge Intervals : Sort, 1 sub, 21 ms
+        vector<Interval> merge(vector<Interval> &intervals);
+    }
+    
+    namespace _057 {
+        // 57	Insert Interval : Array, bounding box test, 1 sub, 18 ms
+        vector<Interval> insert(vector<Interval> &intervals, Interval newInterval);
+    }
 }
 
 

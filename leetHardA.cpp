@@ -524,5 +524,184 @@ namespace _hard {
         }
     }
     
+    
+    namespace _051 {
+        const int steps[4][2] = { {-1, -1}, {-1, 1}, {1, -1}, {1, 1} };
+        
+        void insertQueen(vector<string> &sol, int r, int c, int n) {
+            for (int j = 0; j < n; j++) {
+                sol[r][j] = '*';
+            }
+            for (int i = 0; i < n; i++) {
+                sol[i][c] = '*';
+            }
+            for (int i = 0; i < 4; i++) {
+                int p = r+steps[i][0];
+                int q = c+steps[i][1];
+                while(p >= 0 && q >= 0 && p < n && q < n) {
+                    sol[p][q] = '*';
+                    p += steps[i][0];
+                    q += steps[i][1];
+                }
+            }
+            sol[r][c] = 'Q';
+        }
+        
+        void nqueenDFS(vector<vector<string> > &res, vector<string> sol, int r, int c, int n, int k) {
+            
+            insertQueen(sol, r, c, n);
+            k -= 1;
+            if ( k == 0) {
+                for (string &s : sol) {
+                    for (char &c : s) {
+                        if (c == '*')
+                            c = '.';
+                    }
+                }
+                res.push_back(sol);
+                return;
+            }
+            else {
+                for (int i = 0; i < n; i++) {
+                    if (sol[r+1][i] == '.') {
+                        nqueenDFS(res, sol, r+1, i, n, k);
+                    }
+                }
+            }
+        }
+        
+        vector<vector<string> > solveNQueens(int n) {
+            string line(n, '.');
+            vector<string> board(n, line);
+            vector<vector<string> > res;
+            
+            for (int i = 0; i < n; i++) {
+                nqueenDFS(res, board, 0, i, n, n);
+            }
+            
+            return res;
+        }
+    }
+    
+    namespace _052 {
+        const int steps[4][2] = {{-1,-1}, {-1, 1}, {1, -1}, {1, 1}};
+        
+        void insertQueen(vector<vector<int> > &board, int r, int c, int n) {
+            for (int i = 0; i < n; i++) {
+                board[i][c] = 0;
+            }
+            for (int i = 0; i < 4; i++) {
+                int p = r;
+                int q = c;
+                while (p >= 0 && q >= 0 && q < n && p < n) {
+                    board[p][q] = 0;
+                    p += steps[i][0];
+                    q += steps[i][1];
+                }
+            }
+        }
+        
+        void nqueenDFS(vector<vector<int> > board, int r, int c, int n, int k, int &total) {
+            insertQueen(board, r, c, n);
+            k -= 1;
+            if (k == 0) {
+                total += 1;
+                return;
+            }
+            
+            for (int j = 0; j < n; j++) {
+                if (board[r+1][j] == 1) {
+                    nqueenDFS(board, r+1, j, n, k, total);
+                }
+            }
+        }
+        
+        int totalNQueens(int n) {
+            if (n == 0) return 0;
+            if (n == 1) return 1;
+            
+            vector<int> line(n, 1);
+            vector<vector<int> > board(n, line);
+            int total = 0;
+            for (int j = 0; j < n; j++) {
+                nqueenDFS(board, 0, j, n, n, total);
+            }
+            return total;
+        }
+    }
+    
+    
+    namespace _056 {
+        
+        static bool comparator(const Interval &a, const Interval &b) {
+            return a.start < b.start;
+        }
+        
+        vector<Interval> merge(vector<Interval> &intervals) {
+            if (intervals.size() < 2)   return intervals;
+            
+            std::sort(intervals.begin(), intervals.end(), comparator);
+            vector<Interval> res;
+            Interval cur = intervals[0];
+            for (int i = 1; i < intervals.size() - 1; i++) {
+                if (intervals[i].start <= cur.end) {
+                    cur.end = intervals[i].end > cur.end ? intervals[i].end : cur.end;
+                }
+                else {
+                    res.push_back(cur);
+                    cur = intervals[i];
+                }
+            }
+            
+            Interval last = intervals.back();
+            if (last.start <= cur.end) {
+                cur.end = last.end > cur.end ? last.end : cur.end;
+                res.push_back(cur);
+            }
+            else {
+                res.push_back(cur);
+                res.push_back(last);
+            }
+            
+            return res;
+        }
+    }
+    
+    namespace _057 {
+        vector<Interval> insert(vector<Interval> &intervals, Interval newInterval) {
+            int l = newInterval.start;
+            int r = newInterval.end;
+            vector<Interval> res;
+            bool inserted = false;
+            for (int i = 0; i < intervals.size(); i++) {
+                if (intervals[i].end < l) {
+                    res.push_back(intervals[i]);
+                    continue;
+                }
+                else if (intervals[i].start > r) {
+                    if (!inserted) {
+                        newInterval.start = l;
+                        newInterval.end = r;
+                        res.push_back(newInterval);
+                        inserted = true;
+                    }
+                    res.push_back(intervals[i]);
+                }
+                else {
+                    l = min(intervals[i].start, l);
+                    r = max(intervals[i].end, r);
+                }
+            }
+            
+            if (!inserted) {
+                newInterval.start = l;
+                newInterval.end = r;
+                res.push_back(newInterval);
+            }
+            
+            return res;
+        }
+    }
+    
 }
 
