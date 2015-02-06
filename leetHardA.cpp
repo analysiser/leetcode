@@ -228,7 +228,7 @@ namespace _hard {
                     int len = *itLens;
                     if (i+len <= S.size()) {
                         string sub = S.substr(i, len);
-
+                        
                         if (lut.find(sub) != lut.end()) {
                             auto it = candidates.find(i);
                             if (it == candidates.end()) {
@@ -424,7 +424,7 @@ namespace _hard {
     namespace _044 {
         
         bool isMatch(const char *s, const char *p) {
-
+            
             const char *star = NULL;
             const char *ss = s;
             while(*s) {
@@ -460,7 +460,7 @@ namespace _hard {
     namespace _045 {
         
         int jump(int A[], int n) {
-
+            
             if (n<2)    return 0;
             
             int *steps = new int[n];
@@ -703,5 +703,191 @@ namespace _hard {
         }
     }
     
+    
+    namespace _068 {
+        vector<string> fullJustify(vector<string> &words, int L) {
+            vector<string> res;
+            if (words.size() == 0) {
+                string sp(L, ' ');
+                res.push_back(sp);
+                return res;
+            }
+            
+            for (int i = 0; i < words.size();) {
+                int size = 0;
+                int last = -1;
+                for (int j = i; j < words.size(); j++) {
+                    size += words[j].size();
+                    // j - i: how many single spaces needed
+                    if (size + j - i > L) {
+                        last = j-1 > i ? j-1 : i;
+                        size -= words[j].size();
+                        break;
+                    }
+                }
+                if (last != -1) {
+                    int count = last-i+1;
+                    int spaces = L - size;
+                    if (spaces >= 0) {
+                        int spCount = count > 2 ? spaces/(count-1) : spaces;
+                        int spSurplus = count > 2 ? spaces%(count - 1) : 0;
+                        string line = "";
+                        for (int j = i; j <= last; j++) {
+                            string tmp = words[j];
+                            string sp(spCount + (spSurplus > 0 ? 1 : 0), ' ');
+                            if (i != last && j == last) {
+                                sp = "";
+                            }
+                            line += tmp + sp;
+                            spSurplus -= 1;
+                        }
+                        res.push_back(line);
+                    }
+                    else {
+                        // the word cannot fit in a single line
+                        string word = words[i];
+                        for (int k = 0; k < word.size(); k += L) {
+                            int len = std::min(L, int(word.size()-k));
+                            string tmp = word.substr(k, len);
+                            if (len < L) {
+                                // this is hacky...
+                                string sp(L-len, ' ');
+                                tmp += sp;
+                            }
+                            res.push_back(tmp);
+                        }
+                    }
+                    
+                    i = last + 1;
+                    
+                }
+                else {
+                    // end of words
+                    last = words.size()-1;
+                    string line = "";
+                    for (int j = i; j <= last; j++) {
+                        line += words[j] + " ";
+                    }
+                    if (line.size() > L) {
+                        line = line.substr(0, line.size()-1);
+                    }
+                    else if (line.size() < L) {
+                        string sp(L-line.size(), ' ');
+                        line += sp;
+                    }
+                    
+                    res.push_back(line);
+                    break;
+                }
+            }
+            
+            return res;
+        }
+    }
+    
+    
+    namespace _072 {
+        namespace _sol1 {
+            int minDistance(string word1, string word2) {
+                
+                if (word1 == word2) {
+                    return 0;
+                }
+                if ( (word1.size() == 0) || (word2.size() == 0) ) {
+                    return (int)word1.size() ^ (int)word2.size();
+                }
+                if (word1.size() > word2.size()) {
+                    swap(word1, word2);
+                }
+                
+                int steps = (int)word2.size();
+                int len = (int)word1.size();
+                for (; len >= 1; len--) {
+                    unordered_map<string, vector<int>> mapw1, mapw2;
+                    for (int i = 0; i < word1.size() - len + 1; i++) {
+                        string sub = word1.substr(i, len);
+                        auto it= mapw1.find(sub);
+                        if (it == mapw1.end()) {
+                            vector<int> indices = {i};
+                            mapw1.insert(make_pair(sub, indices));
+                        }
+                        else {
+                            it->second.push_back(i);
+                        }
+                    }
+                    for (int i = 0; i < word2.size() - len + 1; i++) {
+                        string sub = word2.substr(i, len);
+                        auto it= mapw2.find(sub);
+                        if (it == mapw2.end()) {
+                            vector<int> indices = {i};
+                            mapw2.insert(make_pair(sub, indices));
+                        }
+                        else {
+                            it->second.push_back(i);
+                        }
+                    }
+                    
+                    for (auto it = mapw1.begin(); it != mapw1.end(); it++) {
+                        string sub = it->first;
+                        auto it2 = mapw2.find(sub);
+                        if (it2 != mapw2.end()) {
+                            
+                            for (int index1 : it->second) {
+                                for (int index2 : it2->second) {
+                                    
+                                    int step = 0;
+                                    step += minDistance(word1.substr(0, index1), word2.substr(0, index2));
+                                    int m = index1 + len;
+                                    int n = index2 + len;
+                                    step += minDistance(word1.substr(m, word1.size()-m), word2.substr(n, word2.size()-n));
+                                    if (step < steps) {
+                                        steps = step;
+                                    }
+                                }
+                            }
+                        }
+                    } // end for auto it
+                    
+                    if (steps < word2.size()) {
+                        return steps;
+                    }
+                }
+                
+                return (int)word2.size();
+            }
+        }
+        
+        namespace _sol2 {
+            int minDistance(string word1, string word2) {
+                int m = int(word1.size());
+                int n = int(word2.size());
+                if ((m == 0) || (n == 0)) {
+                    return m ^ n;
+                }
+                
+                int A[m+1][n+1];
+                for (int i = 0; i <= m; i++) {
+                    A[i][0] = i;
+                }
+                for (int j = 0; j <= n; j++) {
+                    A[0][j] = j;
+                }
+                
+                for (int i = 1; i <= m; i++) {
+                    char c = word1[i-1];
+                    for (int j = 1; j <= n; j++) {
+                        int cost = 1;
+                        if (c == word2[j-1]) {
+                            cost = 0;
+                        }
+                        A[i][j] = std::min(A[i-1][j] + 1, A[i][j-1] + 1);
+                        A[i][j] = std::min(A[i][j], A[i-1][j-1]+cost);
+                    }
+                }
+                
+                return A[m][n];
+             }
+        }
+    }
 }
 

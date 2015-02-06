@@ -348,6 +348,36 @@ int strStr(char *haystack, char *needle) {
     else
         return -1;
     
+    // my 2nd version
+//    if (!haystack || !needle)   return -1;
+//    int m = strlen(haystack);
+//    int n = strlen(needle);
+//    
+//    if (m == 0 && n == 0) return 0;
+//    else if (m == 0)    return -1;
+//    else if (n == 0)    return 0;
+//    else if (m < n)     return -1;
+//    
+//    int index = 0;
+//    while ((index < m) && (m-index >= n)) {
+//        if (haystack[index] == needle[0]) {
+//            int l = 1;
+//            bool found = true;
+//            while (l < n && index + l < m) {
+//                if (haystack[index+l] != needle[l]) {
+//                    found = false;
+//                    break;
+//                }
+//                ++l;
+//            }
+//            if (found)  return index;
+//        }
+//        ++index;
+//    }
+//    return -1;
+    
+    
+    // my 1st version
 //    if (!haystack || !needle)   return -1;
 //    if (*haystack == '\0' && *needle == '\0')   return 0;
 //    else if (*haystack == '\0') return -1;

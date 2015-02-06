@@ -99,6 +99,23 @@ namespace _hard {
         // 57	Insert Interval : Array, bounding box test, 1 sub, 18 ms
         vector<Interval> insert(vector<Interval> &intervals, Interval newInterval);
     }
+    
+    namespace _068 {
+        vector<string> fullJustify(vector<string> & words, int L);
+    }
+    
+    namespace _072 {
+        // 72   Min Distance : I used DFS, 7 subs, 125 ms
+        namespace _sol1 {
+            int minDistance(string word1, string word2);
+        }
+        
+        // 72 DP solution
+        namespace _sol2 {
+            int minDistance(string word1, string word2);
+        }
+    }
+    
 }
 
 
