@@ -9,12 +9,12 @@
 #ifndef Leetcode_reference_hpp
 #define Leetcode_reference_hpp
 
-#include "leetEasy.h"
+#include "Leetcode/leetEasy.h"
 
-#include "leetMediumA.h"
+#include "Leetcode/leetMediumA.h"
 
-#include "leetHardA.h"
-#include "leetHardB.h"
+#include "Leetcode/leetHardA.h"
+#include "Leetcode/leetHardB.h"
 
 
 #endif
