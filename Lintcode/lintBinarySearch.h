@@ -17,6 +17,7 @@ using namespace std;
 
 namespace _lintcode {
     
+    // Problems mostly with in Binary Search Category
     namespace _BinarySearch {
         
         /****** Easy: direct binary search problems ******/
