@@ -116,6 +116,12 @@ namespace _hard {
         }
     }
     
+    namespace _154 {
+        // 154	Find Minimum in Rotated Sorted Array II, 1 sub, 16 ms
+        int findMin(vector<int> &num);
+        
+    }
+    
 }
 
 

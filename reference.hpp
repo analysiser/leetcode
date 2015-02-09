@@ -16,5 +16,7 @@
 #include "Leetcode/leetHardA.h"
 #include "Leetcode/leetHardB.h"
 
+#include "Lintcode/lintBinarySearch.h"
+
 
 #endif

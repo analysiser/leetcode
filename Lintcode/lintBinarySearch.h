@@ -19,6 +19,7 @@ namespace _lintcode {
     
     namespace _BinarySearch {
         
+        /****** Easy: direct binary search problems ******/
         // Binary search, find first position
         int binarySearch(vector<int> &array, int target);
         
@@ -32,6 +33,32 @@ namespace _lintcode {
         int sqrt(int x);
         
         
+        /****** Medium: direct binary search problems ******/
+        // Search for a Range : 2 binary searches, find a range
+        vector<int> searchRange(vector<int> &A, int target);
+        
+        // Find first bad version
+        int findFirstBadVersion(int n);
+        
+        // Search in Rotated Sorted Array
+        // Search in Rotated Sorted Array II: would lead to best complexity to be O(n)
+        int search(vector<int> &A, int target);
+        
+        // Find Minimum in Rotated Sorted Array
+        // Find Minimum in Rotated Sorted Array II: similar idea, O(n) solution
+        int findMin(vector<int> &num);
+        
+        // Wood cut, annoying binary search, with /0 edge cases
+        int woodCut(vector<int> L, int k);
+        
+        // Search for mid, when mid has 4 states
+        int findPeak(vector<int> A);
+        
+        // Merge two sorted array I
+        vector<int> mergeSortedArray(vector<int> &A, vector<int> &B);
+        
+        // Merge two sorted array II : not creating new spaces, but copy to A
+        void mergeSortedArray(int A[], int m, int B[], int n);
     }
     
 }

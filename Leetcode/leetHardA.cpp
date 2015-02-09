@@ -888,6 +888,18 @@ namespace _hard {
                 return A[m][n];
              }
         }
+        
+        namespace _154 {
+            // 154	Find Minimum in Rotated Sorted Array II
+            int findMin(vector<int> &num) {
+                int min = INT_MAX;
+                for (int i = 0; i < num.size(); i++) {
+                    min = num[i] < min ? num[i] : min;
+                }
+                return min;
+            }
+            
+        }
     }
 }
 

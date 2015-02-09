@@ -60,5 +60,13 @@ struct Interval {
     Interval(int s, int e) : start(s), end(e) { }
 };
 
+class VersionControl {
+public:
+    // definition to silence compiler
+    static bool isBadVersion(int k) {
+        return true;
+    }
+};
+
 
 #endif /* defined(__Leetcode__core__) */
