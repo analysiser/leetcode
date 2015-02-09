@@ -19,6 +19,15 @@ namespace _lintcode {
     
     namespace _LintSearch {
         
+        // Permutation, find all permutations of array of non-duplicates
+        // Without recursion version, used BFS
+        vector<vector<int> > permute(vector<int> nums);
+        
+        // Find next of permution in ascending order with array of duplicates
+        vector<int> nextPermuation(vector<int> &nums);
+        
+        // Find the previous permutation in ascending order with array with duplicates
+        vector<int> previousPermuation(vector<int> &nums);
     }
     
 }
