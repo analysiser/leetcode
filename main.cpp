@@ -22,6 +22,16 @@ int main(int argc, const char * argv[]) {
     vector<int> A = {232, 124, 456};
     cout<<_lintcode::_BinarySearch::woodCut(A, 7)<<endl;
     
+    vector<int> num = {-1, 0, 1, 2, -1, -4};
+    vector<vector<int>> res = _lintcode::_LintArrayStringTwoPointer::threeSum(num);
+    for (auto vec : res) {
+        for (int i = 0; i < vec.size(); i++) {
+            cout<<vec[i]<<" ";
+        }
+        cout<<endl;
+    
+    }
+    
 
     
     return 0;

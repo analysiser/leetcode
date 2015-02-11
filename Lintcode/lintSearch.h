@@ -17,6 +17,7 @@ using namespace std;
 
 namespace _lintcode {
     
+    // DFS, BFS, Permuation, Combination related problems
     namespace _LintSearch {
         
         // Permutation, find all permutations of array of non-duplicates

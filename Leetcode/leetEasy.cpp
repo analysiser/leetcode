@@ -316,6 +316,7 @@ void getNext(char *p, int next[])
         else
         {
             k = next[k];
+            
         }
     }
 }

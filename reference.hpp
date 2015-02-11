@@ -17,6 +17,8 @@
 #include "Leetcode/leetHardB.h"
 
 #include "Lintcode/lintBinarySearch.h"
+#include "Lintcode/lintArrayStringTwoPointer.h"
+#include "Lintcode/lintDaC.h"
 
 
 #endif
