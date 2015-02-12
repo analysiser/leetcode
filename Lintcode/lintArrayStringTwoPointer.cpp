@@ -114,5 +114,31 @@ namespace _lintcode {
 //            
 //            return ret;
         }
+        
+        string reverseWords(string s) {
+            vector<string> tmp;
+            for (int i = 0; i < s.size(); i++) {
+                if (s[i] != ' ') {
+                    int j = i+1;
+                    while (j < s.size() && s[j] != ' ') {
+                        j++;
+                    }
+                    tmp.push_back(s.substr(i, j-i));
+                    i = j;
+                }
+            }
+            
+            string ret = "";
+            if (tmp.size() == 0) {
+                return ret;
+            }
+            reverse(tmp.begin(), tmp.end());
+            for (int i = 0; i < tmp.size(); i++) {
+                string ss = tmp[i];
+                ret += ss + " ";
+            }
+            
+            return ret.substr(0, ret.size()-1);
+        }
     }
 }

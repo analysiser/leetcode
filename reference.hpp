@@ -19,6 +19,7 @@
 #include "Lintcode/lintBinarySearch.h"
 #include "Lintcode/lintArrayStringTwoPointer.h"
 #include "Lintcode/lintDaC.h"
+#include "Lintcode/lintDataStructures.h"
 
 
 #endif

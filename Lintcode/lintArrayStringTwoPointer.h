@@ -20,6 +20,9 @@ namespace _lintcode {
         
         // 3 sum = 0
         vector<vector<int> > threeSum(vector<int> &nums);
+        
+        // Reverse Words in a String
+        string reverseWords(string s);
     }
 }
 

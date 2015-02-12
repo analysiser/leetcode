@@ -127,6 +127,79 @@ namespace _hard {
         }
     }
     
+    namespace _023 {
+        
+        ListNode *merge2(ListNode *l1, ListNode *l2) {
+            if (!l1) {
+                return l2;
+            }
+            if (!l2) {
+                return l1;
+            }
+            
+            ListNode *head = NULL;
+            ListNode *cur = NULL;
+            
+            while (l1 && l2) {
+                ListNode *tmp = NULL;
+                if (l1->val <= l2->val) {
+                    tmp = l1;
+                    l1 = l1->next;
+                    tmp->next = NULL;
+                }
+                else {
+                    tmp = l2;
+                    l2 = l2->next;
+                    tmp->next = NULL;
+                }
+                if (!head) {
+                    head = tmp;
+                    cur = head;
+                }
+                else {
+                    cur->next = tmp;
+                    cur = cur->next;
+                }
+            }
+            if (l1) {
+                cur->next = l1;
+            }
+            if (l2) {
+                cur->next = l2;
+            }
+            
+            return head;
+        }
+        
+        ListNode *mergeKLists(vector<ListNode *> &lists) {
+            if (lists.size() == 0) {
+                return nullptr;
+            }
+            if (lists.size() == 1) {
+                return lists[0];
+            }
+            
+            vector<ListNode *> next = lists;
+            decltype(next) cur;
+            
+            while (next.size() > 1) {
+                if (next.size()%2) {
+                    next.push_back(NULL);
+                }
+                for (int i = 0; i < next.size()-1; i +=2) {
+                    ListNode *merged = merge2(next[i], next[i+1]);
+                    if (merged) {
+                        cur.push_back(merged);
+                    }
+                }
+                next = cur;
+                cur.clear();
+            }
+            
+            return next[0];
+        }
+    }
+    
     namespace _025 {
         // 25   Reverse Nodes in k-Group
         ListNode *reverseKGroup(ListNode *head, int k) {

@@ -14,12 +14,6 @@
 
 
 namespace _hard {
-   
-    namespace _033 {
-        // 33	Search in Rotated Sorted Array : Binary search, Runtime 9 ms
-        // Weirdly, O(n) solution could also pass the test cases
-        int search(int A[], int n, int target);
-    }
     
     namespace _004 {
         // 4	Median of Two Sorted Arrays : Quick Selection, 11 subs, 64 ms
@@ -30,6 +24,11 @@ namespace _hard {
     namespace _010 {
         // 10	Regular Expression Matching
         bool isMatch(const char *s, const char *p);
+    }
+    
+    namespace _023 {
+        // 23	Merge k Sorted Lists : Linked List, merge sort, DaC, 47 ms
+        ListNode *mergeKLists(vector<ListNode *> &lists);
     }
     
     namespace _025 {
@@ -47,6 +46,12 @@ namespace _hard {
     namespace _032 {
         // 32	Longest Valid Parentheses : DP, string, 4 subs, 15 ms
         int longestValidParentheses(string s);
+    }
+    
+    namespace _033 {
+        // 33	Search in Rotated Sorted Array : Binary search, Runtime 9 ms
+        // Weirdly, O(n) solution could also pass the test cases
+        int search(int A[], int n, int target);
     }
     
     namespace _037 {

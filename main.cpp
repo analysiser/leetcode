@@ -32,6 +32,8 @@ int main(int argc, const char * argv[]) {
     
     }
     
+    
+    cout<<_lintcode::_LintArrayStringTwoPointer::reverseWords("the sky is blue")<<endl;
 
     
     return 0;
