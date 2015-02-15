@@ -197,6 +197,22 @@ namespace _lintcode {
         }
         
         
+        string rotateString(string A, int offset) {
+            if ((offset == 0) || (A.size() < 2)) {
+                return A;
+            }
+            
+            // this is the tricky edge case
+            offset = offset % A.size();
+            
+            reverse(A.begin(), A.end());
+            reverse(A.begin(), A.begin() + offset);
+            reverse(A.begin() + offset, A.end());
+            
+            return A;
+        } // end rotateString
+        
+        
         vector<int> searchRange(vector<int> &A, int target) {
             // write your code here
             vector<int> ret = {-1, -1};

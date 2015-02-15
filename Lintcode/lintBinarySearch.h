@@ -38,6 +38,11 @@ namespace _lintcode {
         // Challenge is to use O(1) space, O(n) time, 3-step-reverse
         void recoverRotatedSortedArray(vector<int> &nums);
         
+        // Rotate String
+        // Given a string and an offset, rotate string by offset. (rotate from left to right)
+        // 3-step-revers
+        string rotateString(string A, int offset);
+        
         
         /****** Medium: direct binary search problems ******/
         // Search for a Range : 2 binary searches, find a range

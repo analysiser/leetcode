@@ -19,7 +19,7 @@ namespace _lintcode {
     namespace _LintDataStructures {
         
         // Min Stack
-        // Asked in bloomberg campus interview
+        // Asked in bloomberg campus interview, round 2
         // 15 ms
         class MinStack {
         public:
@@ -73,6 +73,18 @@ namespace _lintcode {
         };
         
         
+        // BST
+        namespace _BSTPreorderTraversal {
+            
+            // recursion
+            vector<int> recurPreorderTraversal(TreeNode *root);
+            
+            // stack
+            vector<int> stackPreorderTraversal(TreeNode *root);
+            
+            // morris
+            vector<int> morrisPreorderTraversal(TreeNode *root);
+        }
 
         
     }
