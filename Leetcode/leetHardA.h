@@ -127,6 +127,12 @@ namespace _hard {
         
     }
     
+    namespace _132 {
+        // 132
+        // Palindrome paritioning II
+        int minCut(string s);
+    }
+    
 }
 
 

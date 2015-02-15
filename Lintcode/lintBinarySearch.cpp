@@ -129,6 +129,31 @@ namespace _lintcode {
             return false;
         }
         
+        int searchMatrix2(vector<vector<int> > &matrix, int target) {
+            if (matrix.size() == 0 || matrix[0].size() == 0) {
+                return 0;
+            }
+            
+            int m = matrix.size();
+            int n = matrix[0].size();
+            int i = m-1, j = 0;
+            int count = 0;
+            while((i >= 0) && (j < n)) {
+                int v = matrix[i][j];
+                if (target == v) {
+                    count += 1;
+                }
+                if (target <= v) {
+                    i--;
+                }
+                else {
+                    j++;
+                }
+            }
+            
+            return count;
+        }
+        
         /**
          * @param x: An integer
          * @return: The sqrt of x
@@ -154,6 +179,21 @@ namespace _lintcode {
             
             return l;
             
+        }
+        
+        void recoverRotatedSortedArray(vector<int> &nums) {
+            int minIdx = -1;
+            for (int i = 1; i < nums.size(); i++) {
+                if (nums[i] < nums[i-1]) {
+                    minIdx = i;
+                    break;
+                }
+            }
+            if (minIdx != -1) {
+                reverse(nums.begin(), nums.begin() + minIdx);
+                reverse(nums.begin() + minIdx, nums.end());
+                reverse(nums.begin(), nums.end());
+            }
         }
         
         
@@ -280,7 +320,6 @@ namespace _lintcode {
             return -1;
         }
         
-        
         int findMin(vector<int> &num) {
             // write your code here
             int n = int(num.size());
@@ -404,84 +443,48 @@ namespace _lintcode {
             return -1;
         }
         
-        vector<int> mergeSortedArray(vector<int> &A, vector<int> &B) {
-            // write your code here
-            if (A.size() == 0) {
-                return B;
+        // find the first kth element in A, B
+        double findKthElement(vector<int> &A, int startA, vector<int> &B, int startB, int k) {
+            if (startA >= A.size()) {
+                return B[startB + k - 1];
             }
-            if (B.size() == 0) {
-                return A;
+            if (startB >= B.size()) {
+                return A[startA + k - 1];
             }
-            
-            int ia = 0;
-            int ib = 0;
-            
-            vector<int> C;
-            C.reserve(A.size() + B.size());
-            
-            while((ia < A.size()) && (ib < B.size())) {
-                int lena = 0;
-                int lenb = 0;
-                while (A[ia+lena] <= B[ib]) {
-                    lena++;
-                    if (ia + lena == A.size()) {
-                        break;
-                    }
-                }
-                if (lena > 0) {
-                    C.insert(C.end(), A.begin() + ia, A.begin() + ia + lena);
-                    ia += lena;
-                }
-                
-                while ((ia < A.size()) && (ib+lenb < B.size()) && (A[ia] >= B[ib+lenb])) {
-                    lenb++;
-                    if (ib + lenb == B.size()) {
-                        break;
-                    }
-                }
-                if (lenb > 0) {
-                    C.insert(C.end(), B.begin() + ib, B.begin() + ib + lenb);
-                    ib += lenb;
-                }
+            if (k == 1) {
+                return min(A[startA], B[startB]);
             }
             
-            if (ia < A.size()) {
-                C.insert(C.end(), A.begin() + ia, A.end());
+            int idxA = startA + k/2 - 1;
+            int idxB = startB + k/2 - 1;
+            int va = idxA < A.size() ? A[idxA] : INT_MAX;
+            int vb = idxB < B.size() ? B[idxB] : INT_MAX;
+            
+            if (va < vb) {
+                return findKthElement(A, idxA+1, B, startB, k-k/2);
             }
-            if (ib < B.size()) {
-                C.insert(C.end(), B.begin() + ib, B.end());
+            else {
+                return findKthElement(A, startA, B, idxB+1, k-k/2);
             }
-            return C;
         }
         
-        /**
-         * @param A: sorted integer array A which has m elements,
-         *           but size of A is m+n
-         * @param B: sorted integer array B which has n elements
-         * @return: void
-         */
-        void mergeSortedArray(int A[], int m, int B[], int n) {
+        double findMedianSortedArrays(vector<int> A, vector<int> B) {
             // write your code here
-            if (n == 0) {
-                return;
+            int len = A.size() + B.size();
+            if (len % 2) {
+                return findKthElement(A, 0, B, 0, len/2+1);
             }
-            int i = m-1, j = n-1, k = m+n-1;
-            while ((i >= 0) && (j >= 0)) {
-                if (A[i] >= B[j]) {
-                    A[k] = A[i];
-                    i--;
-                    k--;
-                }
-                else {
-                    A[k] = B[j];
-                    j--;
-                    k--;
-                }
+            else {
+                double v1 = findKthElement(A, 0, B, 0, len/2);
+                double v2 = findKthElement(A, 0, B, 0, len/2 + 1);
+                return (v1 + v2)/2.0;
             }
-            if (j >= 0) {
-                std::copy(B, B+j+1, A);
-            }
+            
         }
-    }
+        
+        
+        
+        
+    } // end namespace _BinarySearch
     
 }

@@ -962,17 +962,78 @@ namespace _hard {
              }
         }
         
-        namespace _154 {
-            // 154	Find Minimum in Rotated Sorted Array II
-            int findMin(vector<int> &num) {
-                int min = INT_MAX;
-                for (int i = 0; i < num.size(); i++) {
-                    min = num[i] < min ? num[i] : min;
-                }
-                return min;
             }
+    namespace _154 {
+        // 154	Find Minimum in Rotated Sorted Array II
+        int findMin(vector<int> &num) {
+            int min = INT_MAX;
+            for (int i = 0; i < num.size(); i++) {
+                min = num[i] < min ? num[i] : min;
+            }
+            return min;
+        }
+        
+    }
+    
+    namespace _132 {
+        bool isPalindrome(string s, int l, int r) {
+            while (l < r) {
+                if (s[l] != s[r]) {
+                    return false;
+                }
+                l++;
+                r--;
+            }
+            return true;
+        }
+        
+        pair<int, int> longestPalindrome(string s) {
+            if (s.size() == 0) {
+                return make_pair(0, 0);
+            }
+            if (s.size() == 1) {
+                return make_pair(0, 1);
+            }
+            
+            int i = 0;
+            int l = 0;
+            for (int j = 0; j < s.size(); j++) {
+                if ((j-l-1) >= 0 && isPalindrome(s, j-l-1, j)) {
+                    i = j-l-1;
+                    l += 2;
+                }
+                else if (isPalindrome(s, j-l, j)) {
+                    i = j-l;
+                    l += 1;
+                }
+            }
+            return make_pair(i, i+l-1);
+        }
+        
+        int minCut(string s) {
+            if (s.size() < 2) {
+                return 0;
+            }
+            pair<int, int> info = longestPalindrome(s);
+            int count = 2;
+            // left
+            if (info.first == 0) {
+                count -= 1;
+            }
+            else {
+                count += minCut(s.substr(0, info.first));
+            }
+            //right
+            if (info.second == s.size()-1) {
+                count -= 1;
+            }
+            else {
+                count += minCut(s.substr(info.second+1, s.size()-info.second-1));
+            }
+            return count;
             
         }
     }
+
 }
 

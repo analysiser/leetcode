@@ -11,7 +11,14 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <sstream>
+
 #include <algorithm>
+
+#include <typeinfo>
+#include <memory>
+#include <thread>
+
 
 #include <map>
 #include <set>
@@ -66,6 +73,58 @@ public:
     static bool isBadVersion(int k) {
         return true;
     }
+};
+
+struct AVLNode {
+    int val;
+    unsigned char height;       //!< height is bottom up height
+    AVLNode *left;
+    AVLNode *right;
+    AVLNode(int v) {
+        val = v;
+        left = nullptr;
+        right = nullptr;
+        height = 0;
+    }
+};
+
+class AVLTree {
+public:
+    AVLTree() { root = nullptr; }
+    AVLNode * insert(AVLNode *p, int val);
+    AVLNode * remove(AVLNode *p, int val);
+    
+    static unsigned char height(AVLNode *p) {
+        return p ? p->height : 0;
+    }
+    
+    static int bfactor(AVLNode *p) {
+        return height(p->right) - height(p->left);
+    }
+    
+    static void fixheight(AVLNode *p) {
+        auto lh = height(p->left);
+        auto rh = height(p->right);
+        p->height = (lh > rh ? lh : rh) + 1;
+    }
+    
+    // rotate right
+    AVLNode *rotateRight(AVLNode *p);
+    
+    // rotate left
+    AVLNode *rotateLeft(AVLNode *p);
+    
+    // balance operation
+    AVLNode *balance(AVLNode *p);
+    
+    // find min val node in AVL tree
+    AVLNode *findmin(AVLNode *p);
+    
+    // remove the min value of tree
+    AVLNode *removemin(AVLNode *p);
+    
+//private:
+    AVLNode *root;
 };
 
 

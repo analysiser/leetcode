@@ -33,10 +33,20 @@ namespace _lintcode {
         // Sqrt(x), binary search, pay attention to overflow
         int sqrt(int x);
         
+        // Recover Rotated Sorted Array
+        // Given a rotated sorted array, recover it to sorted array in-place.
+        // Challenge is to use O(1) space, O(n) time, 3-step-reverse
+        void recoverRotatedSortedArray(vector<int> &nums);
+        
         
         /****** Medium: direct binary search problems ******/
         // Search for a Range : 2 binary searches, find a range
         vector<int> searchRange(vector<int> &A, int target);
+        
+        // Search in a 2D matrix ii, but, the values increase in both row and col
+        // there are no dupliates inside the same row or col, the matrix is not
+        // incremental itself
+        int searchMatrix2(vector<vector<int> > &matrix, int target);
         
         // Find first bad version
         int findFirstBadVersion(int n);
@@ -55,11 +65,14 @@ namespace _lintcode {
         // Search for mid, when mid has 4 states
         int findPeak(vector<int> A);
         
-        // Merge two sorted array I
-        vector<int> mergeSortedArray(vector<int> &A, vector<int> &B);
         
-        // Merge two sorted array II : not creating new spaces, but copy to A
-        void mergeSortedArray(int A[], int m, int B[], int n);
+        /****** Hard: hard to think out ******/
+        // Find median of two sorted array, with complexity of O(log(m+n))
+        // I have another solution in leetcode part. That one uses kth-element selection
+        // algorithm, this one is more like binary search. Due to the fact that
+        // the arrays are alreayd sorted, binary search should run faster.
+        double findMedianSortedArrays(vector<int> A, vector<int> B);
+
     }
     
 }

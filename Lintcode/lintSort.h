@@ -19,7 +19,19 @@ namespace _lintcode {
     
     namespace _LintSort {
         
-    }
+        // Remove Duplicates from Sorted Array
+        int removeDuplicates(vector<int> &nums);
+        
+        // Merge two sorted array I
+        vector<int> mergeSortedArray(vector<int> &A, vector<int> &B);
+        
+        // Merge two sorted array II : not creating new spaces, but copy to A
+        void mergeSortedArray(int A[], int m, int B[], int n);
+        
+        
+        
+        
+    } // end namespace _LintSort
     
 }
 
