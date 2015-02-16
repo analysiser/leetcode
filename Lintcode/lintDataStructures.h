@@ -101,7 +101,8 @@ namespace _lintcode {
             vector<vector<int>> zigzagLevelOrder(TreeNode *root);
         }
 
-        
+        // insert node into BST, iterative
+        TreeNode* insertNode(TreeNode* root, TreeNode* node);
     }
     
 }

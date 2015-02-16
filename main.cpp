@@ -110,12 +110,6 @@ int main(int argc, const char * argv[]) {
     vector<int> range = {5, 5, 5, 5, 5, 5, 5, 5, 5, 5};
     _lintcode::_BinarySearch::searchRange(range, 5);
     
-    TreeNode *root = new TreeNode(-2);
-    TreeNode *one = new TreeNode(1);
-    TreeNode *three = new TreeNode(3);
-    
-    root->left = one;
-    root->right = three;
     
     return 0;
 }

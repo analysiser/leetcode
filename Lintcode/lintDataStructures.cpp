@@ -177,6 +177,41 @@ namespace _lintcode {
             
         } // end _BFS
         
+        TreeNode* insertNode(TreeNode* root, TreeNode* node) {
+            // write your code here
+            if (!root) {
+                return node;
+            }
+            if (!node) {
+                return root;
+            }
+            TreeNode *newRoot = root;
+            while(root) {
+                if (node->val < root->val) {
+                    auto tmp = root->left;
+                    if (!tmp) {
+                        root->left = node;
+                        break;
+                    }
+                    else {
+                        root = tmp;
+                    }
+                }
+                else {
+                    auto tmp = root->right;
+                    if (!tmp) {
+                        root->right = node;
+                        break;
+                    }
+                    else {
+                        root = tmp;
+                    }
+                }
+            }
+            return newRoot;
+        } // end insertNode
+        
+        
         
     } // end _LintDataStructures
 }

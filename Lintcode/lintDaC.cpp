@@ -158,5 +158,29 @@ namespace _lintcode {
             return nullptr;
         }
         
+        vector<int> searchRange(TreeNode* root, int k1, int k2) {
+            // write your code here
+            vector<int> res;
+            if (!root || k2 < k1) {
+                return res;
+            }
+            vector<int> left, right;
+            if (root->val > k1) {
+                left = searchRange(root->left, k1, k2);
+            }
+            if (root->val < k2) {
+                right = searchRange(root->right, k1, k2);
+            }
+            
+            res.insert(res.end(), left.begin(), left.end());
+            
+            if (root->val >= k1 && root->val <= k2) {
+                res.push_back(root->val);
+            }
+            res.insert(res.end(), right.begin(), right.end());
+            
+            return res;
+        }
+        
     } // end namespace DaC
 }

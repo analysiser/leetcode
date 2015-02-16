@@ -33,6 +33,9 @@ namespace _lintcode {
         // LCA in DaC
         TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *A, TreeNode *B);
         
+        // search a range in BST
+        vector<int> searchRange(TreeNode* root, int k1, int k2);
+        
     }
 }
 
