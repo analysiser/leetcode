@@ -87,6 +87,96 @@ namespace _lintcode {
             
         } // end _BSTPreorderTraversal
         
+        namespace _BFS {
+            
+            vector<vector<int>> levelOrderTwoArray(TreeNode *root) {
+                // write your code here
+                vector<vector<int>> res;
+                if (root) {
+                    
+                    vector<TreeNode *> next, cur;
+                    next.push_back(root);
+                    
+                    while (!next.empty()) {
+                        vector<int> level;
+                        for (int i = 0; i < next.size(); i++) {
+                            level.push_back(next[i]->val);
+                            if (next[i]->left) {
+                                cur.push_back(next[i]->left);
+                            }
+                            if (next[i]->right) {
+                                cur.push_back(next[i]->right);
+                            }
+                        }
+                        res.push_back(level);
+                        next = cur;
+                        cur.clear();
+                    }
+                    
+                }
+                return res;
+            }
+            
+            vector<vector<int>> levelOrderOneArray(TreeNode *root) {
+                vector<vector<int>> res;
+                if (root) {
+                    vector<TreeNode *> next = { root };
+                    int i = 0;
+                    while (i < next.size()) {
+                        vector<int> level;
+                        int size = next.size();
+                        
+                        for (; i < size; i++) {
+                            
+                            level.push_back(next[i]->val);
+                            
+                            if (next[i]->left) {
+                                next.push_back(next[i]->left);
+                            }
+                            if (next[i]->right) {
+                                next.push_back(next[i]->right);
+                            }
+                        }
+                        
+                        res.push_back(level);
+                    }
+                    
+                }
+                return res;
+            }
+            
+            vector<vector<int>> zigzagLevelOrder(TreeNode *root) {
+                // write your code here
+                vector<vector<int>> res;
+                if (root) {
+                    vector<TreeNode *> next = {root};
+                    int i = 0;
+                    while (i < next.size()) {
+                        vector<int> level;
+                        int size = next.size();
+                        for (; i < size; i++) {
+                            TreeNode *node = next[i];
+                            level.push_back(node->val);
+                            if (node->left) {
+                                next.push_back(node->left);
+                            }
+                            if (node->right) {
+                                next.push_back(node->right);
+                            }
+                        }
+                        res.push_back(level);
+                    }
+                    
+                    for (int i = 1; i < res.size(); i += 2) {
+                        auto &level = res[i];
+                        reverse(level.begin(), level.end());
+                    }
+                }
+                return res;
+            }
+            
+        } // end _BFS
+        
         
     } // end _LintDataStructures
 }

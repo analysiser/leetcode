@@ -135,5 +135,28 @@ namespace _lintcode {
             maxPathHelper(root, maxsum);
             return maxsum;
         }
-    }
+        
+        // LCA
+        TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *A, TreeNode *B) {
+            if (!root || root == A || root == B) {
+                return root;
+            }
+            
+            TreeNode *left = lowestCommonAncestor(root->left, A, B);
+            TreeNode *right = lowestCommonAncestor(root->right, A, B);
+            
+            if (left && right) {
+                return root;
+            }
+            if (left) {
+                return left;
+            }
+            if (right) {
+                return right;
+            }
+            
+            return nullptr;
+        }
+        
+    } // end namespace DaC
 }

@@ -30,6 +30,9 @@ namespace _lintcode {
         // Binary Tree Maximum Path Sum
         int maxPathSum(TreeNode *root);
         
+        // LCA in DaC
+        TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *A, TreeNode *B);
+        
     }
 }
 

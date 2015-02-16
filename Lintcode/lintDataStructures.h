@@ -85,6 +85,21 @@ namespace _lintcode {
             // morris
             vector<int> morrisPreorderTraversal(TreeNode *root);
         }
+        
+        // BFS
+        namespace _BFS {
+            
+            // 2 additional arrays BFS solution
+            vector<vector<int>> levelOrderTwoArray(TreeNode *root);
+            
+            // 1 additional array BFS solution
+            vector<vector<int>> levelOrderOneArray(TreeNode *root);
+            
+            // for bottom up version, just call reverse
+            
+            // zigzag level traversal
+            vector<vector<int>> zigzagLevelOrder(TreeNode *root);
+        }
 
         
     }
