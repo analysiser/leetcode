@@ -133,6 +133,12 @@ namespace _hard {
         int minCut(string s);
     }
     
+    namespace _124 {
+        
+        // 124	Binary Tree Maximum Path Sum, DaC, 1 sub, 42 ms
+        int maxPathSum(TreeNode *root);
+    }
+    
 }
 
 

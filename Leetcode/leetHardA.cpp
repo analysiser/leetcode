@@ -1033,7 +1033,45 @@ namespace _hard {
             return count;
             
         }
+        
+        
+        
+    } // end namesapce
+    
+    namespace _124 {
+        int maxPathHelper(TreeNode *node, int &res) {
+            if (!node) {
+                return INT_MIN;
+            }
+            else {
+                int lpath = maxPathHelper(node->left, res);
+                int rpath = maxPathHelper(node->right, res);
+                
+                if (lpath == INT_MIN && rpath == INT_MIN) {
+                    res = node->val > res ? node->val : res;
+                    return node->val;
+                }
+                else {
+                    int maxPath = max(lpath, rpath) + node->val;
+                    maxPath = max(maxPath, node->val);
+                    res = maxPath > res ? maxPath : res;
+                    
+                    if (lpath != INT_MIN && rpath != INT_MIN) {
+                        int pathOver = lpath + rpath + node->val;
+                        res = pathOver > res ? pathOver : res;
+                    }
+                    
+                    return maxPath;
+                }
+            }
+        }
+        
+        int maxPathSum(TreeNode *root) {
+            int maxPath = INT_MIN;
+            maxPathHelper(root, maxPath);
+            return maxPath;
+        }
     }
 
-}
+} // end namepace _leethard
 

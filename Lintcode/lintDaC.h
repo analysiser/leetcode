@@ -21,6 +21,15 @@ namespace _lintcode {
         // Validate BST
         bool isValidBST(TreeNode *root);
         
+        // return max depth of binary tree
+        int maxDepth(TreeNode *root);
+        
+        // judge if a binary tree is balanced
+        bool isBalanced(TreeNode *root);
+        
+        // Binary Tree Maximum Path Sum
+        int maxPathSum(TreeNode *root);
+        
     }
 }
 

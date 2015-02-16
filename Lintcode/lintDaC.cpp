@@ -52,6 +52,88 @@ namespace _lintcode {
             return isValidBSTHelpr(root, max, min);
         }
         
+        //
+        int maxDepth(TreeNode *root) {
+            // write your code here
+            if (!root) {
+                return 0;
+            }
+            return max(maxDepth(root->left), maxDepth(root->right)) + 1;
+        }
         
+        int treeHeight(TreeNode *root) {
+            if (!root) {
+                return 0;
+            }
+            return max(treeHeight(root->left), treeHeight(root->right)) + 1;
+        }
+        
+        bool isBalanced(TreeNode *root) {
+            // write your code here
+            if (!root) {
+                return true;
+            }
+            bool l = isBalanced(root->left);
+            bool r = isBalanced(root->right);
+            if (l && r) {
+                int lh = treeHeight(root->left);
+                int rh = treeHeight(root->right);
+                if (abs(lh - rh) <= 1) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+            else {
+                return false;
+            }
+            
+        }
+        
+        int maxPathHelper(TreeNode *node, int &res) {
+            if (node) {
+                int leftMax = maxPathHelper(node->left, res);
+                int rightMax = maxPathHelper(node->right, res);
+                
+                if (leftMax == INT_MIN && rightMax == INT_MIN) {
+                    if (node->val > res) {
+                        res = node->val;
+                    }
+                    return node->val;
+                }
+                else if (leftMax == INT_MIN || rightMax == INT_MIN) {
+                    int maxLen = max(leftMax, rightMax) + node->val;
+                    maxLen = max(maxLen, node->val);
+                    if (maxLen > res) {
+                        res = maxLen;
+                    }
+                    return maxLen;
+                }
+                else {
+                    int maxLen = max(leftMax, rightMax) + node->val;
+                    maxLen = max(maxLen, node->val);
+                    int maxOverLen = max(leftMax + rightMax + node->val, node->val);
+                    
+                    if (maxLen > res) {
+                        res = maxLen;
+                    }
+                    if (maxOverLen > res) {
+                        res = maxOverLen;
+                    }
+                    return maxLen;
+                    
+                }
+                
+            }
+            return INT_MIN;
+        }
+        
+        int maxPathSum(TreeNode *root) {
+            // write your code here
+            int maxsum = INT_MIN;
+            maxPathHelper(root, maxsum);
+            return maxsum;
+        }
     }
 }
