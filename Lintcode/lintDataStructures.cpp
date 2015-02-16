@@ -211,6 +211,82 @@ namespace _lintcode {
             return newRoot;
         } // end insertNode
         
+        namespace _BSTIterator {
+            
+            // O(h) solution using stack
+            BSTIteratorOh::BSTIteratorOh(TreeNode *root) {
+                while(root) {
+                    st.push(root);
+                    root = root->left;
+                }
+            }
+            
+            bool BSTIteratorOh::hasNext() {
+                return !st.empty();
+            }
+            
+            TreeNode* BSTIteratorOh::next() {
+                TreeNode *cur = st.top();
+                st.pop();
+                TreeNode *node = cur->right;
+                while(node) {
+                    st.push(node);
+                    node = node->left;
+                }
+                return cur;
+            }
+            
+            // O(1) solution with Morris Traversal
+            BSTIteratorO1::BSTIteratorO1(TreeNode *root) {
+                // write your code here
+                while (root && root->left) {
+                    TreeNode *tmp = root->left;
+                    while (tmp->right && tmp->right != root) {
+                        tmp = tmp->right;
+                    }
+                    if (!tmp->right) {
+                        tmp->right = root;
+                        root = root->left;
+                    }
+                    else {
+                        break;
+                    }
+                }
+                
+                cur = root;
+            }
+            
+            bool BSTIteratorO1::hasNext() {
+                return (cur != nullptr);
+            }
+            
+            TreeNode* BSTIteratorO1::next() {
+                TreeNode *ret = cur;
+                
+                cur = cur->right;
+                
+                while (cur && cur->left) {
+                    TreeNode *tmp = cur->left;
+                    while(tmp->right && tmp->right != cur) {
+                        tmp = tmp->right;
+                    }
+                    
+                    if (!tmp->right) {
+                        tmp->right = cur;
+                        cur = cur->left;
+                    }
+                    else {
+                        tmp->right = nullptr;
+                        break;
+                    }
+                    
+                }
+                
+                return ret;
+            }
+            
+        } // end namespce _BSTIterator
+        
         
         
     } // end _LintDataStructures

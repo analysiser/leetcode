@@ -103,6 +103,40 @@ namespace _lintcode {
 
         // insert node into BST, iterative
         TreeNode* insertNode(TreeNode* root, TreeNode* node);
+        
+        namespace _BSTIterator {
+            
+            // O(h) additional space solution
+            class BSTIteratorOh {
+                
+            public:
+
+                BSTIteratorOh(TreeNode *root);
+                
+                bool hasNext();
+                
+                TreeNode* next();
+                
+            private:
+                stack<TreeNode *> st;
+                
+            };
+            
+            // O(1) additional space solution
+            class BSTIteratorO1 {
+                
+            public:
+                BSTIteratorO1(TreeNode *root);
+                
+                bool hasNext();
+                
+                TreeNode* next();
+                
+            private:
+                TreeNode *cur;
+            };
+            
+        }
     }
     
 }
