@@ -288,6 +288,61 @@ namespace _lintcode {
         } // end namespce _BSTIterator
         
         
+        namespace _BSTDeleteNode {
+            
+            TreeNode *findMin(TreeNode *p) {
+                if (p->left) {
+                    return findMin(p->left);
+                }
+                return p;
+            }
+            
+            TreeNode *removeMin(TreeNode *p) {
+                if (p->left) {
+                    p->left = removeMin(p->left);
+                    return p;
+                }
+                return p->right;
+            }
+            
+            TreeNode* removeNode(TreeNode* root, int value) {
+                // write your code here
+                if (!root) {
+                    return nullptr;
+                }
+                if (value < root->val) {
+                    root->left = removeNode(root->left, value);
+                }
+                else if (value > root->val) {
+                    root->right = removeNode(root->right, value);
+                }
+                else {
+                    TreeNode *l = root->left;
+                    TreeNode *r = root->right;
+                    
+                    delete root;
+                    
+                    if (!l) {
+                        return r;
+                    }
+                    if (!r) {
+                        return l;
+                    }
+                    
+                    TreeNode *minNode = findMin(r);
+                    minNode->right = removeMin(r);
+                    minNode->left = l;
+                    
+                    return minNode;
+                }
+                
+                return root;
+            }
+            
+        } // end namespace _BSTDeleteNode
+
+        
+        
         
     } // end _LintDataStructures
 }

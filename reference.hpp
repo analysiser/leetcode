@@ -21,5 +21,42 @@
 #include "Lintcode/lintDaC.h"
 #include "Lintcode/lintDataStructures.h"
 
+// C style functions
+int strcmp(const char *s1, const char *s2) {
+    while (*s1 == *s2 && *s1) {
+        s1++; s2++;
+    }
+    return *s1-*s2;
+}
+
+char *strtok(char *str, const char *delimiters) {
+    static char *_buffer;
+    if (str != NULL) {
+        _buffer = str;
+    }
+    if (_buffer[0] == '\0') {
+        return NULL;
+    }
+    
+    char *ret = _buffer, *b;
+    const char *d;
+    
+    for (b = _buffer; *b; b++) {
+        for (d = delimiters; *d; d++) {
+            if (*b == *d) {
+                *b = '\0';
+                _buffer = b+1;
+                
+                if (b == ret) {
+                    continue;
+                }
+                return ret;
+            }
+        }
+    }
+    
+    return ret;
+}
+
 
 #endif

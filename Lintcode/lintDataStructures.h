@@ -18,6 +18,8 @@ namespace _lintcode {
     
     namespace _LintDataStructures {
         
+#pragma mark - Stack
+        /**** Stack ****/
         // Min Stack
         // Asked in bloomberg campus interview, round 2
         // 15 ms
@@ -72,8 +74,9 @@ namespace _lintcode {
             stack<pair<int, int>> minst;
         };
         
-        
-        // BST
+#pragma mark - BST
+        /**** BST ****/
+        // BST preorder traversal
         namespace _BSTPreorderTraversal {
             
             // recursion
@@ -86,7 +89,7 @@ namespace _lintcode {
             vector<int> morrisPreorderTraversal(TreeNode *root);
         }
         
-        // BFS
+        // BST BFS
         namespace _BFS {
             
             // 2 additional arrays BFS solution
@@ -136,7 +139,22 @@ namespace _lintcode {
                 TreeNode *cur;
             };
             
-        }
+        } // end namespace _BSTIterator
+        
+        
+        // Delete a node in BST, recursive
+        // Reference: AVL Tree removal, in core.h
+        namespace _BSTDeleteNode {
+            
+            TreeNode *findMin(TreeNode *p);
+            
+            TreeNode *removeMin(TreeNode *p);
+        
+            TreeNode* removeNode(TreeNode* root, int value);
+            
+        } // end namespace _BSTDeleteNode
+        
+        
     }
     
 }
