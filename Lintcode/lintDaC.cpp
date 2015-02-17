@@ -182,5 +182,33 @@ namespace _lintcode {
             return res;
         }
         
+        int64_t doPower(int a, int b, int n) {
+            if (n == 0) {
+                return 1%b;
+            }
+            if (n == 1) {
+                return a%b;
+            }
+            if (a == 1) {
+                return 1;
+            }
+            
+            int64_t ret = doPower(a, b, n/2);
+            ret *= ret;
+            ret %= b;
+            
+            if (n % 2) {
+                ret *= doPower(a, b, 1);
+                ret %= b;
+            }
+            
+            return ret;
+        }
+        
+        int fastPower(int a, int b, int n) {
+            return static_cast<int>(doPower(a, b, n));
+        }
+        
+        
     } // end namespace DaC
 }

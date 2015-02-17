@@ -36,6 +36,10 @@ namespace _lintcode {
         // search a range in BST
         vector<int> searchRange(TreeNode* root, int k1, int k2);
         
+        // Fast Power
+        // O(logn) return a^n%b, n > 0
+        int fastPower(int a, int b, int n);
+        
     }
 }
 
