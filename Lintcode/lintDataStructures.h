@@ -76,9 +76,10 @@ namespace _lintcode {
         
 #pragma mark - BST
         /**** BST ****/
-        // BST preorder traversal
-        namespace _BSTPreorderTraversal {
+        // BST traversal
+        namespace _BSTTraversal {
             
+            // preorder
             // recursion
             vector<int> recurPreorderTraversal(TreeNode *root);
             
@@ -87,6 +88,21 @@ namespace _lintcode {
             
             // morris
             vector<int> morrisPreorderTraversal(TreeNode *root);
+            
+            // inorder
+            // stack, hard, current pointer
+            // idea: only push right children when current is null
+            vector<int> stackInorderTraversal(TreeNode *root);
+            
+            // morris
+            vector<int> morrisInorderTraversal(TreeNode *root);
+            
+            // postorder
+            // stack, reverse of preorder stack
+            vector<int> stackPostorderTraversal(TreeNode *root);
+            
+            // morris postorder is tricky... 
+            
         }
         
         // BST BFS

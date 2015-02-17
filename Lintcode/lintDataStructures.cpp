@@ -12,7 +12,7 @@ namespace _lintcode {
     
     namespace _LintDataStructures {
         
-        namespace _BSTPreorderTraversal {
+        namespace _BSTTraversal {
             
             void preorderTraversalHelper(TreeNode *node, vector<int> &res) {
                 if (node) {
@@ -84,8 +84,89 @@ namespace _lintcode {
                 return res;
             }
             
+            // BST inorder stack traversal
+            vector<int> stackInorderTraversal(TreeNode *root) {
+                TreeNode *current = root;
+                vector<int> res;
+                stack<TreeNode *> st;
+                
+                while (!st.empty() || current) {
+                    if (current) {
+                        st.push(current);
+                        current = current->left;
+                    }
+                    else {
+                        current = st.top();
+                        st.pop();
+                        res.push_back(current->val);
+                        if (current->right) {
+                            current = current->right;
+                        }
+                    }
+                }
+                
+                return res;
+            }
             
-        } // end _BSTPreorderTraversal
+            // inorder morris
+            vector<int> morrisInorderTraversal(TreeNode *root) {
+                vector<int> res;
+                
+                while (root) {
+                    if (root->left) {
+                        auto tmp = root->left;
+                        while(tmp->right && tmp->right != root) {
+                            tmp = tmp->right;
+                        }
+                        if (!tmp->right) {
+                            tmp->right = root;
+                            root = root->left;
+                        }
+                        else {
+                            res.push_back(root->val);
+                            tmp->right = nullptr;
+                            root = root->right;
+                        }
+                    }
+                    else {
+                        res.push_back(root->val);
+                        root = root->right;
+                    }
+                }
+                
+                return res;
+            }
+            
+            
+            // post order stack
+            vector<int> stackPostorderTraversal(TreeNode *root) {
+                // write your code here
+                vector<int> res;
+                stack<TreeNode *> st;
+                
+                if (root) {
+                    st.push(root);
+                    
+                    while(!st.empty()) {
+                        TreeNode *node = st.top();
+                        st.pop();
+                        res.push_back(node->val);
+                        
+                        if (node->left) {
+                            st.push(node->left);
+                        }
+                        if (node->right) {
+                            st.push(node->right);
+                        }
+                    }
+                    
+                    reverse(res.begin(), res.end());
+                }
+                
+                return res;
+            }
+            
+        } // end _BSTTraversal
         
         namespace _BFS {
             
