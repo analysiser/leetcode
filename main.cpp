@@ -9,6 +9,7 @@
 #include "core.h"
 #include "reference.hpp"
 #include "testcases.h"
+#include "experiments.h"
 
 mutex m;
 
@@ -47,15 +48,6 @@ int get_hits_five_min() {
     }
     return count;
 }
-
-int strcmp1(const char *s1, const char *s2) {
-    while ((*s1 == *s2) && (*s1)) {
-        ++s1;
-        ++s2;
-    }
-    return *s1-*s2;
-}
-
 
 int main(int argc, const char * argv[]) {
     // insert code here...
@@ -110,6 +102,8 @@ int main(int argc, const char * argv[]) {
     vector<int> range = {5, 5, 5, 5, 5, 5, 5, 5, 5, 5};
     _lintcode::_BinarySearch::searchRange(range, 5);
     
+    
+    _exp::expMain();
     
     return 0;
 }
