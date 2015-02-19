@@ -109,7 +109,7 @@ namespace _exp {
             try {
                 ds->doProcess();
             } catch (...) {
-                cout<<"I caught an exception LOL"<<endl;
+                cerr<<"I caught an exception LOL"<<endl;
             }
         }
     }

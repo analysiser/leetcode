@@ -139,6 +139,13 @@ namespace _hard {
         int maxPathSum(TreeNode *root);
     }
     
+    namespace _128 {
+        
+        // 128  Longest Consecutive Sequence, make table, N sub, 30 ms
+        int longestConsecutive(vector<int> &num);
+        
+    }
+    
 }
 
 

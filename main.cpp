@@ -102,8 +102,11 @@ int main(int argc, const char * argv[]) {
     vector<int> range = {5, 5, 5, 5, 5, 5, 5, 5, 5, 5};
     _lintcode::_BinarySearch::searchRange(range, 5);
     
+    vector<int> nums = {2147483646,-2147483647,0,2,2147483644,-2147483645,2147483645};
+    cout<<"128: "<<_hard::_128::longestConsecutive(nums)<<endl;
     
-    _exp::expMain();
+    
+//    _exp::expMain();
     
     return 0;
 }

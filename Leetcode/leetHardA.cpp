@@ -1071,7 +1071,44 @@ namespace _hard {
             maxPathHelper(root, maxPath);
             return maxPath;
         }
-    }
+    } // end namespace _124
+    
+    
+    namespace _128 {
+        
+        int consecutiveHelper(int v, unordered_map<int, int> &myset, int &longest) {
+            auto it = myset.find(v);
+            if (it == myset.end()) {
+                return 0;
+            }
+            if (it->second != -1) {
+                return it->second;
+            }
+            else {
+                int len = consecutiveHelper(v-1, myset, longest) + 1;
+                if (len > longest) {
+                    longest = len;
+                }
+                it->second = len;
+                return len;
+            }
+        }
+        
+        int longestConsecutive(vector<int> &num) {
+            
+            int length = 0;
+            unordered_map<int, int> myset;
+            for (auto i : num) {
+                myset.insert(make_pair(i, -1));
+            }
+            for (auto v : num) {
+                consecutiveHelper(v, myset, length);
+            }
+            
+            return length;
+        }
+        
+    } // end namespace _128
 
 } // end namepace _leethard
 

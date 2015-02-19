@@ -423,6 +423,244 @@ namespace _lintcode {
         } // end namespace _BSTDeleteNode
 
         
+        namespace _LinkedList {
+            
+            // remove duplicates
+            ListNode *deleteDuplicates(ListNode *head) {
+                // write your code here
+                if (!head || !head->next) {
+                    return head;
+                }
+                ListNode *cur = head;
+                
+                while (cur->next) {
+                    if (cur->val == cur->next->val) {
+                        auto tmp = cur->next;
+                        cur->next = tmp->next;
+                        delete tmp;
+                    }
+                    else {
+                        cur = cur->next;
+                    }
+                }
+                
+                return head;
+            }
+            
+            // Remove Duplicates from Sorted List II
+            ListNode *deleteDuplicates2(ListNode *head) {
+                if (!head || !head->next) {
+                    return head;
+                }
+                
+                ListNode *dummy = new ListNode(0);
+                dummy->next = head;
+                ListNode *cur = dummy;
+                while (cur->next) {
+                    auto start = cur->next;
+                    auto end = start;
+                    while (end->next && end->next->val == start->val) {
+                        end = end->next;
+                    }
+                    
+                    if (start != end) {
+                        cur->next = end->next;
+                        end->next = nullptr;
+                        while (start != nullptr) {
+                            auto tmp = start;
+                            start = start->next;
+                            delete tmp;
+                        }
+                    }
+                    else {
+                        cur = start;
+                    }
+                }
+                
+                auto newHead = dummy->next;
+                delete dummy;
+                
+                return newHead;
+            }
+            
+            // Reverse
+            ListNode *reverse(ListNode *head) {
+                // write your code here
+                if (!head || !head->next) {
+                    return head;
+                }
+                
+                ListNode *newHead = head;
+                ListNode *a = head;
+                ListNode *b = a->next;
+                
+                while (b) {
+                    a->next = b->next;
+                    b->next = newHead;
+                    newHead = b;
+                    b = a->next;
+                }
+                
+                return newHead;
+            } // end reverse
+            
+            ListNode *reverseBetween(ListNode *head, int m, int n) {
+                // write your code here
+                if (!head || !head->next || n <= m) {
+                    return head;
+                }
+                
+                decltype(head) ls, rs, be, en, a, b, newHead;
+                ListNode *dummy = new ListNode(0);
+                dummy->next = head;
+                
+                ListNode *tmp = dummy;
+                int count = 0;
+                while (tmp) {
+                    if (count + 1 == m) {
+                        ls = tmp;
+                        be = tmp->next;
+                    }
+                    
+                    if (count == n) {
+                        en = tmp;
+                        rs = tmp->next;
+                        
+                        // begin reverse
+                        en->next = nullptr;
+                        a = be;
+                        b = a->next;
+                        newHead = a;
+                        while (b) {
+                            a->next = b->next;
+                            b->next = newHead;
+                            newHead = b;
+                            b = a->next;
+                        }
+                        a->next = rs;
+                        ls->next = newHead;
+                        
+                        break;
+                        // end reverse
+                    }
+                    count++;
+                    tmp = tmp->next;
+                }
+                
+                newHead = dummy->next;
+                delete dummy;
+                return newHead;
+            } // end Reverse II
+            
+            
+            ListNode *partition(ListNode *head, int x) {
+                if (!head || !head->next) {
+                    return head;
+                }
+                
+                // write your code here
+                ListNode *dummy1 = new ListNode(0);
+                dummy1->next = head;
+                ListNode *dummy2 = new ListNode(0);
+                
+                ListNode *cur1 = head;
+                ListNode *cur2 = dummy2;
+                ListNode *prev = dummy1;
+                
+                while (cur1) {
+                    if (cur1->val >= x) {
+                        prev->next = cur1->next;
+                        cur1->next = nullptr;
+                        
+                        cur2->next = cur1;
+                        cur2 = cur2->next;
+                        
+                        cur1 = prev->next;
+                        
+                    }
+                    else {
+                        prev = cur1;
+                        cur1 = cur1->next;
+                    }
+                }
+                
+                prev->next = dummy2->next;
+                ListNode *newHead = dummy1->next;
+                delete dummy1;
+                delete dummy2;
+                
+                return newHead;
+            } // end Partition
+            
+            
+            ListNode *mergeList(ListNode *l1, ListNode *l2) {
+                if (!l1) {
+                    return l2;
+                }
+                if (!l2) {
+                    return l1;
+                }
+                
+                ListNode *dummy = new ListNode(0);
+                ListNode *cur = dummy;
+                while (l1 && l2) {
+                    if (l1->val <= l2->val) {
+                        cur->next = l1;
+                        l1 = l1->next;
+                    }
+                    else {
+                        cur->next = l2;
+                        l2 = l2->next;
+                    }
+                    cur = cur->next;
+                    cur->next = nullptr;
+                }
+                
+                if (l1) {
+                    cur->next = l1;
+                }
+                if (l2) {
+                    cur->next = l2;
+                }
+                
+                auto head = dummy->next;
+                delete dummy;
+                return head;
+            }
+            
+            ListNode *splitList(ListNode *head) {
+                if (!head || !head->next) {
+                    return nullptr;
+                }
+                
+                auto cur = head;
+                auto cur2 = head;
+                while (cur2 && cur2->next && cur2->next->next) {
+                    cur = cur->next;
+                    cur2 = cur2->next->next;
+                }
+                
+                cur2 = cur->next;
+                cur->next = nullptr;
+                return cur2;
+            }
+            
+            
+            ListNode *sortList(ListNode *head) {
+                // write your code here
+                if (!head || !head->next) {
+                    return head;
+                }
+                
+                ListNode *another = splitList(head);
+                auto l1 = sortList(head);
+                auto l2 = sortList(another);
+                return mergeList(l1, l2);
+                
+            } // end sortList
+            
+            
+        } // end namespace _LinkedList
         
         
     } // end _LintDataStructures

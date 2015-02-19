@@ -171,6 +171,29 @@ namespace _lintcode {
         } // end namespace _BSTDeleteNode
         
         
+        namespace _LinkedList {
+            
+            // Remove Duplicates from Sorted List
+            ListNode *deleteDuplicates(ListNode *head);
+            
+            // Remove Duplicates from Sorted List II
+            ListNode *deleteDuplicates2(ListNode *head);
+            
+            // Reverse Linked List I, in place, O(n)
+            ListNode *reverse(ListNode *head);
+            
+            // Reverse Linked List II, in place, O(n)
+            ListNode *reverseBetween(ListNode *head, int m, int n);
+            
+            // Partition List, partition linked list by value x, in place, O(n)
+            ListNode *partition(ListNode *head, int x);
+            
+            // Sort List
+            ListNode *sortList(ListNode *head);
+            
+        } // end namespace _LinkedList
+        
+        
     }
     
 }
