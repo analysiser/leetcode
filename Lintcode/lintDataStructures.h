@@ -171,6 +171,7 @@ namespace _lintcode {
         } // end namespace _BSTDeleteNode
         
         
+#pragma mark - LinkedList
         namespace _LinkedList {
             
             // Remove Duplicates from Sorted List
