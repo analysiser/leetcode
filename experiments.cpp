@@ -10,7 +10,7 @@
 
 namespace _exp {
     
-    // operator overload experiements
+    ///// operator overload experiements
     class MyInt {
     public:
         MyInt() { v = 0; }
@@ -39,7 +39,7 @@ namespace _exp {
     }
     
     
-    // placement new
+    //// placement new
     class Widget {
     public:
         Widget(int size) {
@@ -66,6 +66,57 @@ namespace _exp {
     }
     
     
+    //// auto_ptr
+    class DataProcessor{
+    public:
+        DataProcessor() { }
+        ~DataProcessor() { }
+        void doProcess() {
+            
+            int test = rand() % 5;
+            cout << "value = "<< test << endl;
+
+            bool sometingWrong = (test == 0);
+            if (sometingWrong) {
+                throw (1 == 0);
+            }
+        }
+    };
+    
+    template <class T>
+    class AutoPtr {
+    public:
+        AutoPtr(T * p = 0) : ptr(p) { }
+        ~AutoPtr() { delete ptr; }
+        T* operator->() {
+            return ptr;
+        }
+        
+        T *ptr;
+        
+    };
+
+    // preprocessing, returns a pointer
+    DataProcessor *readData(int dataSource) {
+        return new DataProcessor();
+    }
+
+    void processData(int dataSource) {
+        cout<<"data is being processed"<<endl;
+        
+        if (dataSource) {
+            AutoPtr<DataProcessor> ds(readData(dataSource));
+            try {
+                ds->doProcess();
+            } catch (...) {
+                cout<<"I caught an exception LOL"<<endl;
+            }
+        }
+    }
+    
+
+    
+    
     // experiment functions entrance
     void expMain() {
         
@@ -77,13 +128,21 @@ namespace _exp {
         cout<<"Postfix = "<<postfix.v<<endl;
         
         void *buffer = operator new (sizeof(Widget));
-//        Widget *myWidget = initializeWidget(buffer, 10);
-        Widget *myWidget = new (buffer) Widget(10);
+        Widget *myWidget = initializeWidget(buffer, 10);
 
         myWidget->printSomething();
 
         myWidget->~Widget();
 
         operator delete (buffer);
+        
+        cout<<"========================="<<endl;
+        for (int i = 9; i >= 0; i--) {
+            processData(i);
+        }
+        cout<<"========================="<<endl;
+
+        
+        
     }
 }
