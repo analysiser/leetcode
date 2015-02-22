@@ -788,6 +788,38 @@ namespace _lintcode {
                 
             } // end mergeKLists
             
+            TreeNode *getRoot(ListNode **list, int size) {
+                if (size == 0) {
+                    return nullptr;
+                }
+                
+                TreeNode *root = new TreeNode(0);
+                root->left = getRoot(list, size/2);
+                
+                root->val = (*list)->val;
+                (*list) = (*list)->next;
+                
+                root->right = getRoot(list, size - size/2 - 1);
+                return root;
+            }
+            
+            // Convert Sorted List to Binary Search Tree
+            TreeNode *sortedListToBST(ListNode *head) {
+                // write your code here
+                if (!head) {
+                    return nullptr;
+                }
+                
+                auto p = head;
+                int size = 0;
+                while (p) {
+                    ++size;
+                    p = p->next;
+                }
+                
+                return getRoot(&head, size);
+            } // end sortedListToBST
+            
             
         } // end namespace _LinkedList
         

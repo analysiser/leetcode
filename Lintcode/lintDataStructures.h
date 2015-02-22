@@ -201,6 +201,9 @@ namespace _lintcode {
             // Merge k sorted list, heap implementation
             ListNode *mergeKLists(vector<ListNode *> &lists);
             
+            // Convert Sorted List to Binary Search Tree
+            TreeNode *sortedListToBST(ListNode *head);
+            
         } // end namespace _LinkedList
         
         
