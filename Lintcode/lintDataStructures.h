@@ -198,6 +198,9 @@ namespace _lintcode {
             // Copy List with Random Pointer, deep copy a linked list
             RandomListNode *copyRandomList(RandomListNode *head);
             
+            // Merge k sorted list, heap implementation
+            ListNode *mergeKLists(vector<ListNode *> &lists);
+            
         } // end namespace _LinkedList
         
         

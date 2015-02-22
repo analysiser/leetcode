@@ -105,6 +105,18 @@ int main(int argc, const char * argv[]) {
     vector<int> nums = {2147483646,-2147483647,0,2,2147483644,-2147483645,2147483645};
     cout<<"128: "<<_hard::_128::longestConsecutive(nums)<<endl;
     
+    ListNode *l1 = new ListNode(2);
+    ListNode *l2 = nullptr;
+    ListNode *l3 = new ListNode(-1);
+    vector<ListNode *> lists = {l1, l2, l3};
+    ListNode *ll = _lintcode::_LintDataStructures::_LinkedList::mergeKLists(lists);
+    
+    cout<<"!!!!!!!!!"<<endl;
+    auto p = ll;
+    while (p) {
+        cout<<p->val<<", ";
+        p = p->next;
+    }
     
 //    _exp::expMain();
     

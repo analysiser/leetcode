@@ -739,6 +739,55 @@ namespace _lintcode {
                 return newHead;
             } // end copyRandomList
             
+            struct ListNodeComparator{
+                bool operator()(const ListNode *n1, const ListNode *n2) {
+                    if (!n2) {
+                        return false;
+                    }
+                    if (!n1) {
+                        return true;
+                    }
+                    return n1->val > n2->val;
+                }
+            };
+            
+            // Merge k sorted list, heap implementation
+            ListNode *mergeKLists(vector<ListNode *> &lists) {
+                if (lists.size() == 0) {
+                    return nullptr;
+                }
+                
+                priority_queue<ListNode *, vector<ListNode *>, ListNodeComparator> minHeap;
+                for (ListNode * l : lists) {
+                    if (l) {
+                        minHeap.push(l);
+                    }
+                }
+
+                ListNode *dummy = new ListNode(0);
+                ListNode *cur = dummy;
+
+                while (!minHeap.empty()) {
+                    ListNode *next = minHeap.top();
+                    minHeap.pop();
+                    
+                    cur->next = next;
+                    
+                    if (next->next) {
+                        minHeap.push(next->next);
+                    }
+                    
+                    cur = cur->next;
+                }
+                
+//                cur->next = nullptr;
+                
+                ListNode *newHead = dummy->next;
+                delete dummy;
+                return newHead;
+                
+            } // end mergeKLists
+            
             
         } // end namespace _LinkedList
         
