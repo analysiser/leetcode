@@ -41,6 +41,12 @@ struct ListNode {
     ListNode(int x) : val(x), next(NULL) {}
 };
 
+struct RandomListNode {
+    int label;
+    RandomListNode *next, *random;
+    RandomListNode(int x) : label(x), next(NULL), random(NULL) {}
+};
+
 struct TreeNode {
     int val;
     TreeNode *left;

@@ -660,6 +660,86 @@ namespace _lintcode {
             } // end sortList
             
             
+            // Reordered List
+            void reorderList(ListNode *head) {
+                
+                if (!head || !head->next || !head->next->next) {
+                    return;
+                }
+                
+                vector<ListNode *> vec;
+                auto p = head;
+                while (p) {
+                    vec.push_back(p);
+                    p = p->next;
+                }
+                
+                int t = vec.size()/2;
+                vec[vec.size()-t-1]->next = nullptr;
+                auto cur = head;
+                for (int i = 0; i < t; i++) {
+                    int idx = vec.size()-1-i;
+                    vec[idx]->next = cur->next;
+                    cur->next = vec[idx];
+                    cur = cur->next->next;
+                }
+                
+//                if (!head || !head->next || !head->next->next) {
+//                    return;
+//                }
+//                // write your code here
+//                auto cur = head;
+//                while (cur && cur->next) {
+//                    auto tail = cur->next;
+//                    auto prev = cur;
+//                    while (tail->next) {
+//                        prev = tail;
+//                        tail = tail->next;
+//                    }
+//                    prev->next = nullptr;
+//                    tail->next = cur->next;
+//                    cur->next = tail;
+//                    cur = cur->next->next;
+//                }
+                
+            } // end reorderList
+            
+            
+            RandomListNode *copyRandomList(RandomListNode *head) {
+                
+                if (!head) {
+                    return head;
+                }
+
+                auto curt = head;
+                while(curt) {
+                    RandomListNode *copyNode = new RandomListNode(curt->label);
+                    copyNode->next = curt->next;
+                    curt->next = copyNode;
+                    curt = curt->next->next;
+                }
+                
+                curt = head;
+                while (curt && curt->next) {
+                    curt->next->random = (curt->random != nullptr) ? curt->random->next : nullptr;
+                    curt = curt->next->next;
+                }
+                
+                curt = head;
+                auto newHead = head->next;
+                auto p = newHead;
+                
+                while (curt) {
+                    curt->next = p->next;
+                    curt = curt->next;
+                    p->next = curt != nullptr ? curt->next : curt;
+                    p = p->next;
+                }
+                
+                return newHead;
+            } // end copyRandomList
+            
+            
         } // end namespace _LinkedList
         
         

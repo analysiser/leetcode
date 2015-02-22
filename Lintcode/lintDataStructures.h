@@ -192,6 +192,12 @@ namespace _lintcode {
             // Sort List
             ListNode *sortList(ListNode *head);
             
+            // Reordered List
+            void reorderList(ListNode *head);
+            
+            // Copy List with Random Pointer, deep copy a linked list
+            RandomListNode *copyRandomList(RandomListNode *head);
+            
         } // end namespace _LinkedList
         
         

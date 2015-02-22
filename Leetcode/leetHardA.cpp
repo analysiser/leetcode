@@ -1109,6 +1109,36 @@ namespace _hard {
         }
         
     } // end namespace _128
+    
+    namespace _138 {
+        
+        // deep copy a linked list, nodes have random pointers
+        RandomListNode *copyRandomList(RandomListNode *head) {
+            
+            if (!head) {
+                return head;
+            }
+            
+            unordered_map<RandomListNode *, RandomListNode *> listLUT;
+            
+            auto cur = head;
+            while (cur) {
+                RandomListNode *copyNode = new RandomListNode(cur->label);
+                listLUT.insert(make_pair(cur, copyNode));
+                cur = cur->next;
+            }
+            
+            for (auto it = listLUT.begin(); it != listLUT.end(); it++) {
+                auto node = it->first;
+                auto curCopy = it->second;
+                
+                curCopy->next = (node->next == nullptr) ? nullptr : (listLUT.find(node->next))->second;
+                curCopy->random = (node->random == nullptr) ? nullptr : (listLUT.find(node->random))->second;
+            }
+            
+            return listLUT.find(head)->second;
+        }
+    }
 
 } // end namepace _leethard
 

@@ -146,6 +146,13 @@ namespace _hard {
         
     }
     
+    namespace _138 {
+        
+        // 138  Copy List with Random Pointer, 119 ms, without hashtable
+        // 144 ms, with hashtable, 1 sub, another solution is in lintDataStructures
+        RandomListNode *copyRandomList(RandomListNode *head);
+    }
+    
 }
 
 
