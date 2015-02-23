@@ -204,6 +204,24 @@ namespace _lintcode {
             // Convert Sorted List to Binary Search Tree
             TreeNode *sortedListToBST(ListNode *head);
             
+            // Nth to Last Node in List
+            ListNode *nthToLast(ListNode *head, int n);
+            
+            // Remove Nth Node From End of List
+            ListNode *removeNthFromEnd(ListNode *head, int n);
+            
+            // Linked List Cycle
+            bool hasCycle(ListNode *head);
+            
+            // Linked List Cycle II
+            ListNode *detectCycle(ListNode *head);
+            
+            // Add up of two linked lists
+            ListNode *addLists(ListNode *l1, ListNode *l2);
+            
+            // Rotate List
+            ListNode *rotateRight(ListNode *head, int k);
+            
         } // end namespace _LinkedList
         
         

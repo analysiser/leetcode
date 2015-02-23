@@ -780,8 +780,6 @@ namespace _lintcode {
                     cur = cur->next;
                 }
                 
-//                cur->next = nullptr;
-                
                 ListNode *newHead = dummy->next;
                 delete dummy;
                 return newHead;
@@ -819,6 +817,190 @@ namespace _lintcode {
                 
                 return getRoot(&head, size);
             } // end sortedListToBST
+            
+            
+            ListNode *nthToLast(ListNode *head, int n) {
+                
+                if (!head) {
+                    return head;
+                }
+                // write your code here
+                auto p = head;
+                auto q = head;
+                int count = 1;
+                while(q) {
+                    if (count == n) {
+                        break;
+                    }
+                    ++count;
+                    q = q->next;
+                }
+                
+                if (count < n) {
+                    return nullptr;
+                }
+                
+                while (q->next) {
+                    q = q->next;
+                    p = p->next;
+                }
+                
+                return p;
+                
+            } // end nthToLast
+            
+            
+            ListNode *removeNthFromEnd(ListNode *head, int n) {
+                
+                if (!head || n == 0) {
+                    return head;
+                }
+                
+                ListNode *dummy = new ListNode(0);
+                dummy->next = head;
+                auto p = dummy;
+                int cnt = 0;
+                while(p->next) {
+                    p = p->next;
+                    cnt++;
+                    if (cnt == n) {
+                        break;
+                    }
+                }
+                
+                auto q = dummy;
+                while(p->next) {
+                    p = p->next;
+                    q = q->next;
+                }
+                
+                p = q->next;
+                q->next = p->next;
+                head = dummy->next;
+                
+                delete p;
+                delete dummy;
+                
+                return head;
+            } // end removeNthFromEnd
+            
+            bool hasCycle(ListNode *head) {
+                
+                auto p = head;
+                auto q = head;
+                
+                while (q && q->next && q->next->next) {
+                    p = p->next;
+                    q = q->next->next;
+                    if (p == q) {
+                        return true;
+                    }
+                }
+                
+                return false;
+                
+            } // end hasCycle
+            
+            ListNode *detectCycle(ListNode *head) {
+                
+                auto p = head;
+                auto q = head;
+                
+                bool cycle = false;
+                while (q && q->next && q->next->next) {
+                    p = p->next;
+                    q = q->next->next;
+                    if (p == q) {
+                        cycle = true;
+                        break;
+                    }
+                }
+                if (!cycle) {
+                    return nullptr;
+                }
+                
+                p = head;
+                while (p != q) {
+                    p = p->next;
+                    q = q->next;
+                }
+                return p;
+                
+            } // end detectCycle
+            
+            ListNode *addLists(ListNode *l1, ListNode *l2) {
+                if (!l1) {
+                    return l2;
+                }
+                if (!l2) {
+                    return l1;
+                }
+                
+                ListNode *dummy = new ListNode(0);
+                auto cur = dummy;
+                int carry = 0;
+                while (l1 || l2) {
+                    int v1 = l1 != nullptr? l1->val : 0;
+                    int v2 = l2 != nullptr? l2->val : 0;
+                    
+                    int v = (v1 + v2 + carry)%10;
+                    carry = (v1 + v2 + carry)/10;
+                    
+                    ListNode *node = new ListNode(v);
+                    
+                    cur->next = node;
+                    cur = cur->next;
+                    
+                    if (l1) {
+                        l1 = l1->next;
+                    }
+                    if (l2) {
+                        l2 = l2->next;
+                    }
+                }
+                
+                if (carry) {
+                    ListNode *node = new ListNode(carry);
+                    cur->next = node;
+                }
+                
+                auto newHead = dummy->next;
+                delete dummy;
+                return newHead;
+                
+            } // end addLists
+            
+            // rotate list to the right by k
+            ListNode *rotateRight(ListNode *head, int k) {
+                if (!head || k == 0) {
+                    return head;
+                }
+                
+                int size = 1;
+                auto p = head;
+                while (p->next) {
+                    ++size;
+                    p = p->next;
+                }
+                
+                k = k % size;
+                if (k == 0) {
+                    return head;
+                }
+                
+                k = size - k;
+                auto tail = p;
+                p = head;
+                for (int i = 1; i < k; i++) {
+                    p = p->next;
+                }
+                
+                tail->next = head;
+                head = p->next;
+                p->next = nullptr;
+                
+                return head;
+            }
             
             
         } // end namespace _LinkedList
