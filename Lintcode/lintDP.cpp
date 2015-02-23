@@ -31,6 +31,80 @@ namespace _lintcode {
             return triangle[0][0];
         }
         
+        // Matrix DP, top-bottom
+        int minPathSum(vector<vector<int> > &grid) {
+            if (grid.size() == 0 || grid[0].size() == 0) {
+                return 0;
+            }
+            
+            int m = grid.size();
+            int n = grid[0].size();
+            
+            // init
+            vector<int> line(n, 0);
+            vector<vector<int> > f(m, line);
+            
+            f[0][0] = grid[0][0];
+            
+            for (int i = 1; i < n; i++) {
+                f[0][i] = grid[0][i] + f[0][i-1];
+            }
+            for (int j = 1; j < m; j++) {
+                f[j][0] = grid[j][0] + f[j-1][0];
+            }
+            
+            for (int i = 1; i < m; i++) {
+                for (int j = 1; j < n; j++) {
+                    f[i][j] = min(f[i-1][j], f[i][j-1]) + grid[i][j];
+                }
+            }
+            
+            return f[m-1][n-1];
+        }
+        
+        //
+        int uniquePaths(int m, int n) {
+            // wirte your code here
+            if ((m == 0) || (n == 0)) {
+                return 0;
+            }
+            if ((m == 1) || (n == 1)) {
+                return 1;
+            }
+            
+            // to save space lol
+            if (m < n) {
+                return uniquePaths(n, m);
+            }
+            
+            // n space
+            int path[n];
+            fill_n(path, n, 1);
+            for (int i = 1; i < m; i++) {
+                for (int j = 1; j < n; j++) {
+                    path[j] += path[j-1];
+                }
+            }
+            
+            return path[n-1];
+            
+            // mxn space
+//            int f[m][n];
+//            for (int i = 0; i < m; i++) {
+//                f[i][0] = 1;
+//            }
+//            for (int j = 0; j < n; j++) {
+//                f[0][j] = 1;
+//            }
+//            
+//            for (int i = 1; i < m; i++) {
+//                for (int j = 1; j < n; j++) {
+//                    f[i][j] = f[i-1][j] + f[i][j-1];
+//                }
+//            }
+//            
+//            return f[m-1][n-1];
+        }
     }
     
 } // end namespace _lintcode

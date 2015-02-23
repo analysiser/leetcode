@@ -16,8 +16,16 @@ namespace _lintcode {
     
     namespace _DP {
         
+#pragma mark - Matrix
+        // Matrix DP
         // Triangle numbers
         int minimumTotal(vector<vector<int> > &triangle);
+        
+        // Minimum Path Sum of a mxn matrix
+        int minPathSum(vector<vector<int> > &grid);
+        
+        // Unique Paths : from top-left to bottom-right, how many unique paths
+        int uniquePaths(int m, int n);
     }
     
 } // end namespace _lintcode
