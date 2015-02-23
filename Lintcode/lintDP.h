@@ -26,6 +26,9 @@ namespace _lintcode {
         
         // Unique Paths : from top-left to bottom-right, how many unique paths
         int uniquePaths(int m, int n);
+        
+        // Unique Paths II : with obstacles
+        int uniquePathsWithObstacles(vector<vector<int> > &obstacleGrid);
     }
     
 } // end namespace _lintcode
