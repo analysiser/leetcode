@@ -29,6 +29,11 @@ namespace _lintcode {
         
         // Unique Paths II : with obstacles
         int uniquePathsWithObstacles(vector<vector<int> > &obstacleGrid);
+        
+        
+#pragma mark - Sequence
+        // Climbing Stairs
+        int climbStairs(int n);
     }
     
 } // end namespace _lintcode

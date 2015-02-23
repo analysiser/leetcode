@@ -132,6 +132,24 @@ namespace _lintcode {
             return f[m-1][n-1];
             
         } // end uniquePathsWithObstacles
+        
+        
+        // Climb stairs
+        int climbStairs(int n) {
+            if (n < 2) {
+                return n;
+            }
+            
+            int s[n+1];
+            s[0] = 1;
+            s[1] = 1;
+            for (int i = 2; i <= n; i++) {
+                s[i] = s[i-1] + s[i-2];
+            }
+            
+            return s[n];
+            
+        } // end climbStairs
     }
     
 } // end namespace _lintcode
