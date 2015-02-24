@@ -153,6 +153,16 @@ namespace _hard {
         RandomListNode *copyRandomList(RandomListNode *head);
     }
     
+    namespace _099 {
+        // Recover Binary Search Tree, O(n) space, 5 sub, 78 ms
+        void recoverTree(TreeNode *root);
+    }
+    
+    namespace _099_2 {
+        // Recover Binary Search Tree, O(1) space, morris, 3 sub, 67 ms
+        void recoverTree(TreeNode *root);
+    }
+    
 }
 
 

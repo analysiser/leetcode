@@ -59,4 +59,12 @@ char *strtok(char *str, const char *delimiters) {
 }
 
 
+void preorderTraversalHelper(TreeNode *node) {
+    if (node) {
+        preorderTraversalHelper(node->left);
+        std::cout<<node->val<<std::endl;
+        preorderTraversalHelper(node->right);
+    }
+}
+
 #endif

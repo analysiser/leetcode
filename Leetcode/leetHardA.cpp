@@ -1139,6 +1139,102 @@ namespace _hard {
             return listLUT.find(head)->second;
         }
     }
+    
+    namespace _099 {
+        
+        void dfs(TreeNode *root, vector<TreeNode *> &vec) {
+            if (root->left) {
+                dfs(root->left, vec);
+            }
+            vec.push_back(root);
+            if (root->right) {
+                dfs(root->right, vec);
+            }
+        }
+        
+        // Recover Binary Search Tree
+        void recoverTree(TreeNode *root) {
+            vector<TreeNode *> vec;
+            dfs(root, vec);
+            
+            TreeNode *l = nullptr, *r = nullptr;
+            for (int i = 0; i < vec.size() - 1; i++) {
+                if (vec[i]->val > vec[i+1]->val) {
+                    l = vec[i];
+                    break;
+                }
+            }
+            
+            for (int i = vec.size() - 1; i > 0; i--) {
+                if (vec[i]->val < vec[i-1]->val) {
+                    r = vec[i];
+                    break;
+                }
+            }
+            
+            if (l && r) {
+                swap(l->val, r->val);
+            }
+            else {
+                assert(l && r);
+            }
+        } // end recoverTree
+        
+    } // end namespace _099
+    
+    namespace _099_2 {
+        
+        void recoverTree(TreeNode *root) {
+            auto p = root;
+            TreeNode *left = nullptr, *right = nullptr;
+            TreeNode *last = nullptr;
+            
+            while (p) {
+                auto tmp = p->left;
+                if (tmp) {
+                    while (tmp->right && tmp->right != p) {
+                        tmp = tmp->right;
+                    }
+                    if (!tmp->right) {
+                        tmp->right = p;
+                        p = p->left;
+                    }
+                    else {
+                        if (last && last->val > p->val) {
+                            if (!left) {
+                                left = last;
+                            }
+                            right = p;
+                            
+                        }
+                        
+                        last = p;
+                        tmp->right = nullptr;
+                        p = p->right;
+                        
+                    }
+                }
+                else {
+                    if (last && last->val > p->val) {
+                        if (!left) {
+                            left = last;
+                        }
+                        right = p;
+                    }
+                    
+                    last = p;
+                    p = p->right;
+                }
+            }
+            
+            if (left && right) {
+                swap(left->val, right->val);
+            }
+        } // end recoverTree
+        
+    } // end namespace _099_2
+    
+    
 
 } // end namepace _leethard
 

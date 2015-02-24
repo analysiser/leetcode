@@ -118,6 +118,17 @@ int main(int argc, const char * argv[]) {
         p = p->next;
     }
     
+    
+    cout<<endl<<"--- leetcode 99 ---"<<endl;
+    TreeNode *recoverRoot= new TreeNode(2);
+    recoverRoot->left = new TreeNode(3);
+    recoverRoot->right = new TreeNode(1);
+    
+    _hard::_099::recoverTree(recoverRoot);
+    
+    preorderTraversalHelper(recoverRoot);
+    
+    
 //    _exp::expMain();
     
     return 0;
