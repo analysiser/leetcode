@@ -34,6 +34,12 @@ namespace _lintcode {
 #pragma mark - Sequence
         // Climbing Stairs
         int climbStairs(int n);
+        
+        // Jump game, judge if can jump
+        bool canJump(vector<int> A);
+        
+        // Jump Game II
+        int jump(vector<int> A);
     }
     
 } // end namespace _lintcode

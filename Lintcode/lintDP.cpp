@@ -150,6 +150,81 @@ namespace _lintcode {
             return s[n];
             
         } // end climbStairs
+        
+        
+        bool canJump(vector<int> A) {
+            // write you code here
+            int n = A.size();
+            if (n == 0) {
+                return false;
+            }
+            if (n == 1) {
+                return true;
+            }
+            int far = A[0];
+            for (int i = 1; i < n; i++) {
+                if (i > far) {
+                    break;
+                }
+                int end = i + A[i];
+                if (end >= n-1) {
+                    return true;
+                }
+                if (end > far) {
+                    far = end;
+                }
+            }
+            return false;
+        } // end canJump
+        
+        
+        int jump(vector<int> A) {
+            
+            // greedy
+            if (A.size() == 0) {
+                return 0;
+            }
+            
+            int n = static_cast<int>(A.size());
+            int s[n];
+            fill_n(s, n, INT_MAX);
+            s[0] = 0;
+            
+            int front = 0;
+            for (int i = 0; i < n; i++) {
+                int end = i + A[i];
+                if (end > front) {
+                    end = end < n ? end : n-1;
+                    fill_n(s + front + 1, end - front, s[i] + 1);
+                    if (end == n-1) {
+                        break;
+                    }
+                    front = end;
+                }
+            }
+            
+            return s[n-1];
+            
+            // DP
+//            if (A.size() == 0) {
+//                return 0;
+//            }
+//            
+//            int n = static_cast<int>(A.size());
+//            int s[n];
+//            fill_n(s, n, INT_MAX);
+//            s[0] = 0;
+//            
+//            for (int i = 1; i < n; i++) {
+//                for (int j = 0; j < i; j++) {
+//                    if ((s[j] + 1 < s[i]) && (j + A[j] >= i)) {
+//                        s[i] = s[j] + 1;
+//                    }
+//                }
+//            }
+//            
+//            return s[n-1];
+        } // end jump
     }
     
 } // end namespace _lintcode
