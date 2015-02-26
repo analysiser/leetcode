@@ -20,6 +20,7 @@
 #include "Lintcode/lintArrayStringTwoPointer.h"
 #include "Lintcode/lintDaC.h"
 #include "Lintcode/lintDataStructures.h"
+#include "Lintcode/lintDP.h"
 
 // C style functions
 int strcmp(const char *s1, const char *s2) {

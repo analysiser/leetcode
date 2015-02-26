@@ -225,6 +225,51 @@ namespace _lintcode {
 //            
 //            return s[n-1];
         } // end jump
+        
+        
+        int minCut(string s) {
+            
+            if (s.size() < 2) {
+                return 0;
+            }
+            
+            int n = s.size();
+            int f[n + 1];
+            for (int i = 0; i < n+1; i++) {
+                f[i] = i - 1;
+            }
+            
+            bool lut[n][n];
+            memset(lut, 0, sizeof(bool) * n * n);
+            for (int i = 0; i < n - 1; i++) {
+                lut[i][i] = true;
+                lut[i][i+1] = s[i] == s[i+1];
+            }
+            lut[n-1][n-1] = true;
+            
+            for (int l = 2; l <= n; l++) {
+                for (int i = 0; i < n; i++) {
+                    int j = i + l - 1;
+                    if (j > n - 1) {
+                        break;
+                    }
+                    if ((s[i] == s[j]) && lut[i+1][j-1]) {
+                        lut[i][j] = true;
+                    }
+                }
+            }
+            
+            for (int i = 1; i <= n; i++) {
+                for (int j = 0; j < i; j++) {
+                    if ((f[j] + 1 < f[i]) && lut[j][i-1]) {
+                        f[i] = f[j] + 1;    
+                    }
+                }
+            }
+            
+            return f[n];
+            
+        } // end minCut aka Palindrom Partitioning II
     }
     
 } // end namespace _lintcode

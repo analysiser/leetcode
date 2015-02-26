@@ -40,6 +40,9 @@ namespace _lintcode {
         
         // Jump Game II
         int jump(vector<int> A);
+        
+        // Palindrome Partitioning II
+        int minCut(string s);
     }
     
 } // end namespace _lintcode

@@ -129,6 +129,10 @@ int main(int argc, const char * argv[]) {
     preorderTraversalHelper(recoverRoot);
     
     
+    cout<<"min cut"<<endl;
+    cout<<_lintcode::_DP::minCut("abcccb")<<endl;
+    
+    
 //    _exp::expMain();
     
     return 0;

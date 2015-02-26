@@ -976,65 +976,48 @@ namespace _hard {
     }
     
     namespace _132 {
-        bool isPalindrome(string s, int l, int r) {
-            while (l < r) {
-                if (s[l] != s[r]) {
-                    return false;
-                }
-                l++;
-                r--;
-            }
-            return true;
-        }
-        
-        pair<int, int> longestPalindrome(string s) {
-            if (s.size() == 0) {
-                return make_pair(0, 0);
-            }
-            if (s.size() == 1) {
-                return make_pair(0, 1);
-            }
-            
-            int i = 0;
-            int l = 0;
-            for (int j = 0; j < s.size(); j++) {
-                if ((j-l-1) >= 0 && isPalindrome(s, j-l-1, j)) {
-                    i = j-l-1;
-                    l += 2;
-                }
-                else if (isPalindrome(s, j-l, j)) {
-                    i = j-l;
-                    l += 1;
-                }
-            }
-            return make_pair(i, i+l-1);
-        }
         
         int minCut(string s) {
             if (s.size() < 2) {
                 return 0;
             }
-            pair<int, int> info = longestPalindrome(s);
-            int count = 2;
-            // left
-            if (info.first == 0) {
-                count -= 1;
-            }
-            else {
-                count += minCut(s.substr(0, info.first));
-            }
-            //right
-            if (info.second == s.size()-1) {
-                count -= 1;
-            }
-            else {
-                count += minCut(s.substr(info.second+1, s.size()-info.second-1));
-            }
-            return count;
             
+            int n = s.size();
+            int f[n + 1];
+            for (int i = 0; i < n+1; i++) {
+                f[i] = i - 1;
+            }
+            
+            bool lut[n][n];
+            memset(lut, 0, sizeof(bool) * n * n);
+            for (int i = 0; i < n - 1; i++) {
+                lut[i][i] = true;
+                lut[i][i+1] = s[i] == s[i+1];
+            }
+            lut[n-1][n-1] = true;
+            
+            for (int l = 2; l <= n; l++) {
+                for (int i = 0; i < n; i++) {
+                    int j = i + l - 1;
+                    if (j > n - 1) {
+                        break;
+                    }
+                    if ((s[i] == s[j]) && lut[i+1][j-1]) {
+                        lut[i][j] = true;
+                    }
+                }
+            }
+            
+            for (int i = 1; i <= n; i++) {
+                for (int j = 0; j < i; j++) {
+                    if ((f[j] + 1 < f[i]) && lut[j][i-1]) {
+                        f[i] = f[j] + 1;
+                    }
+                }
+            }
+            
+            return f[n];
         }
-        
-        
         
     } // end namesapce
     
