@@ -22,6 +22,9 @@ namespace _lintcode {
         // Remove Duplicates from Sorted Array
         int removeDuplicates(vector<int> &nums);
         
+        // Remove Duplicates from Sorted Array II
+        int removeDuplicates2(vector<int> &nums);
+        
         // Merge two sorted array I
         vector<int> mergeSortedArray(vector<int> &A, vector<int> &B);
         

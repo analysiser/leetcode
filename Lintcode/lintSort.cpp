@@ -27,6 +27,31 @@ namespace _lintcode {
             return size + 1;
         } // end removeDuplicates
         
+        
+        int removeDuplicates2(vector<int> &nums) {
+            // write your code here
+            if (nums.size() < 3) {
+                return nums.size();
+            }
+            
+            int size = 0;
+            int cnt = 0;
+            for (int i = 1; i < nums.size(); i++) {
+                if (nums[i] != nums[size]) {
+                    nums[++size] = nums[i];
+                    cnt = 0;
+                }
+                else {
+                    if (cnt < 1) {
+                        nums[++size] = nums[i];
+                        cnt += 1;
+                    }
+                }
+            }
+            
+            return size+1;
+        }
+        
         vector<int> mergeSortedArray(vector<int> &A, vector<int> &B) {
             // write your code here
             if (A.size() == 0) {

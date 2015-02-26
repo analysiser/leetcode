@@ -12,6 +12,51 @@ namespace _lintcode {
     
     namespace _LintArrayStringTwoPointer {
         
+        int singleNumberII(vector<int> &A) {
+            
+            int bits[32];
+            fill_n(bits, 32, 0);
+            for (int num : A) {
+                for (int i = 0; i < 32; i++) {
+                    if (num & (1 << i)) {
+                        bits[i] += 1;
+                    }
+                }
+            }
+            
+            int res = 0;
+            for (int i = 0; i < 32; i++) {
+                if (bits[i] % 3) {
+                    res |= 1 << bits[i];
+                }
+            }
+            
+            return res;
+        } // end singleNumberII
+        
+        
+        vector<int> singleNumberIII(vector<int> &A) {
+            int t = 0;
+            for (const auto v : A) {
+                t ^= v;
+            }
+            
+            int mask = t & ~(t - 1); // mask for least significant bit
+            int x = 0, y = 0;
+            for (auto const v : A) {
+                if (v & mask) {
+                    x ^= v;
+                }
+                else {
+                    y ^= v;
+                }
+            }
+            
+            vector<int> res = { x, y };
+            return res;
+            
+        } // end singleNumberIII
+        
         vector<vector<int> > threeSum(vector<int> &num) {
             
             vector<vector<int> > ret;
