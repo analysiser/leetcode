@@ -15,9 +15,11 @@
 
 #include <algorithm>
 
+#include <chrono>
 #include <typeinfo>
 #include <memory>
 #include <thread>
+#include <time.h>
 
 
 #include <deque>
@@ -133,6 +135,30 @@ public:
     
 //private:
     AVLNode *root;
+};
+
+
+class ChronoTimer {
+public:
+    ChronoTimer() { }
+    void begin() {
+       start_ = std::chrono::high_resolution_clock::now();
+    }
+    
+    void stop() {
+        end_ = std::chrono::high_resolution_clock::now();
+    }
+    
+    void PrintDuration() {
+        auto duration = end_ - start_;
+        auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+        std::cout<<"duration = "<<ms<<std::endl;
+    }
+    
+private:
+    
+    std::chrono::steady_clock::time_point start_;
+    std::chrono::steady_clock::time_point end_;
 };
 
 

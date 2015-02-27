@@ -270,6 +270,53 @@ namespace _lintcode {
             return f[n];
             
         } // end minCut aka Palindrom Partitioning II
+        
+        
+        vector<int> subarraySum(vector<int> nums) {
+//            vector<int> res;
+//            int n = nums.size();
+//            
+//            vector<int> line(n, 0);
+//            vector<vector<int> > sums(n, line);
+//            
+//            for (int i = 0; i < n; i++) {
+//                sums[i][i] = nums[i];
+//                if (sums[i][i] == 0) {
+//                    res = {i, i};
+//                    return res;
+//                }
+//            }
+//            
+//            for (int l = 2; l <= n; l++) {
+//                for (int i = 0; i < n - l + 1; i++) {
+//                    int j = i + l - 1;
+//                    sums[i][j] = sums[i][j-1] + nums[j];
+//                    if (sums[i][j] == 0) {
+//                        res = {i, j};
+//                        return res;
+//                    }
+//                }
+//            }
+//            
+//            return res;            
+            
+            vector<int> res;
+            
+            for (int i = 0; i < nums.size(); i++) {
+                int sum = 0;
+                for (int j = i; j < nums.size(); j++) {
+                    sum += nums[j];
+                    if (sum == 0) {
+                        res = {i, j};
+                        return res;
+                    }
+                }
+            }
+            
+            return res;
+            
+            
+        } // end subarraySum
     }
     
 } // end namespace _lintcode

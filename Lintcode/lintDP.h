@@ -43,6 +43,9 @@ namespace _lintcode {
         
         // Palindrome Partitioning II
         int minCut(string s);
+        
+        
+        vector<int> subarraySum(vector<int> nums);
     }
     
 } // end namespace _lintcode
