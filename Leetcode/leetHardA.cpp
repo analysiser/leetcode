@@ -1217,6 +1217,63 @@ namespace _hard {
         
     } // end namespace _099_2
     
+    namespace _140 {
+        
+        void dfsHelper(string &s, vector<vector<bool> > &lut, vector<string> &aSol, string current, int words, int index, int &minLen, int &maxLen) {
+            if (current.size() - words == s.size()) {
+                aSol.push_back(current.substr(0, current.size() - 1));
+            }
+            else {
+                for (int i = index; i < s.size(); i++) {
+                    for (int l = minLen; (l <= maxLen) && (i + l <= s.size()); l++) {
+                        int j = i + l - 1;
+                        if (lut[i][j]) {
+                            string seg = s.substr(i, l);
+                            dfsHelper(s, lut, aSol, current + seg + " ", words + 1, i + l, minLen, maxLen);
+                        }
+                    }
+                }
+            }
+        }
+        
+        // 140	Word Break II
+        vector<string> wordBreak(string s, unordered_set<string> &dict) {
+            int n = s.size();
+            int minLen = n + 1, maxLen = 0;
+            for (const auto word : dict) {
+                minLen = word.size() < minLen ? word.size() : minLen;
+                maxLen = word.size() > maxLen ? word.size() : maxLen;
+            }
+            
+            bool f[n+1];
+            fill_n(f, n+1, false);
+            f[0] = true;
+            
+            vector<bool> line(n, false);
+            vector<vector<bool> > lut(n, line);
+            
+            for (int i = 0; i <= n - minLen; i++) {
+                if (f[i]) {
+                    for (int l = minLen; (l <= maxLen) && (i + l <= n); l++) {
+                        string seg = s.substr(i, l);
+                        if (dict.find(seg) != dict.end()) {
+                            f[i+l] = true;
+                            lut[i][i+l-1] = true;
+                        }
+                    }
+                }
+            }
+            
+            vector<string> ret;
+            if (f[n]) {
+                dfsHelper(s, lut, ret, "", 0, 0, minLen, maxLen);
+            }
+            
+            return ret;
+        } // end wordBreak
+        
+    } // end namespace _140
+    
     
 
 } // end namepace _leethard

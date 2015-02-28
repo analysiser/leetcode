@@ -141,7 +141,16 @@ int main(int argc, const char * argv[]) {
 //    vector<int> subarrayRes = _lintcode::_DP::subarraySum(subarrayTest);
 //    timer.stop();
 //    timer.PrintDuration();
-    _exp::expMain();
+    
+    unordered_set<string> dict = {"cat", "cats", "and", "sand", "dog"};
+    vector<string> result = _hard::_140::wordBreak("catsanddog", dict);
+    for (const auto str : result) {
+        cout<<str<<endl;
+    }
+    
+//    _exp::expMain();
+    
+
     
     return 0;
 }

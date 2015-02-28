@@ -163,6 +163,12 @@ namespace _hard {
         void recoverTree(TreeNode *root);
     }
     
+    namespace _140 {
+        
+        // 140	Word Break II
+        vector<string> wordBreak(string s, unordered_set<string> &dict);
+    }
+    
 }
 
 
