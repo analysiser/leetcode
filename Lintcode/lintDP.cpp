@@ -298,7 +298,7 @@ namespace _lintcode {
 //                }
 //            }
 //            
-//            return res;            
+//            return res;
             
             vector<int> res;
             
@@ -317,6 +317,36 @@ namespace _lintcode {
             
             
         } // end subarraySum
-    }
+        
+        bool wordSegmentation(string s, unordered_set<string> &dict) {
+            int n = s.size();
+            int minLen = n + 1, maxLen = 0;
+            for (auto it = dict.begin(); it != dict.end(); it++) {
+                minLen = (*it).size() < minLen ? (*it).size() : minLen;
+                maxLen = (*it).size() > maxLen ? (*it).size() : maxLen;
+            }
+            
+            bool f[n+1];
+            fill_n(f, n+1, false);
+            f[0] = true;
+            
+            for (int i = 0; i <= n-minLen; i++) {
+                if (f[i]) {
+                    for (int l = minLen; (l <= maxLen) && (i + l <= n); l++) {
+                        string seg = s.substr(i, l);
+                        if (dict.find(seg) != dict.end()) {
+                            f[i+l] = true;
+                        }
+                    }
+                }
+            }
+            
+            return f[n];
+        } // end wordSegmentation
+        
+        
+        
+        
+    } // end namespace _DP
     
 } // end namespace _lintcode

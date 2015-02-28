@@ -46,6 +46,9 @@ namespace _lintcode {
         
         
         vector<int> subarraySum(vector<int> nums);
+        
+        // Word Segmentation: tell if s can be segmented to words in dict
+        bool wordSegmentation(string s, unordered_set<string> &dict);
     }
     
 } // end namespace _lintcode
