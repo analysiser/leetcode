@@ -49,6 +49,10 @@ namespace _lintcode {
         
         // Word Segmentation: tell if s can be segmented to words in dict
         bool wordSegmentation(string s, unordered_set<string> &dict);
+        
+        
+        // Longest Increasing Subsequence
+        int longestIncreasingSubsequence(vector<int> nums);
     }
     
 } // end namespace _lintcode

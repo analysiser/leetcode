@@ -344,8 +344,30 @@ namespace _lintcode {
             return f[n];
         } // end wordSegmentation
         
+        // Longest Increasing Subsequence
+        int longestIncreasingSubsequence(vector<int> nums) {
+            int n = nums.size();
+            if (n == 0) {
+                return 0;
+            }
+            int f[n];
         
-        
+            fill_n(f, n, 1);
+            
+            int longest = 0;
+            for (int i = 1; i < n; i++) {
+                for (int j = 0; j < i; j++) {
+                    if ((nums[i] >= nums[j]) && (f[j] + 1 > f[i])) {
+                        f[i] = f[j] + 1;
+                        if (f[i] > longest) {
+                            longest = f[i];
+                        }
+                    }
+                }
+            }
+            
+            return longest;
+        } // end namespace longestIncreasingSubsequence
         
     } // end namespace _DP
     
