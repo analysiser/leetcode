@@ -369,6 +369,93 @@ namespace _lintcode {
             return longest;
         } // end namespace longestIncreasingSubsequence
         
+        
+        int longestCommonSubsequence(string A, string B) {
+            if (A.size() == 0 || B.size() == 0) {
+                return 0;
+            }
+            
+            int m = A.size();
+            int n = B.size();
+            int f[m + 1][n + 1];
+            
+            for (int i = 1; i <= m; i++) {
+                for (int j = 1; j <= n; j++) {
+                    f[i][j] = 0;
+                    if ((A[i-1] == B [j-1]) && (f[i-1][j-1] + 1 > f[i][j])) {
+                        f[i][j] = f[i-1][j-1] + 1;
+                    }
+                    else {
+                        int v = max(f[i-1][j], f[i][j-1]);
+                        if (v > f[i][j]) {
+                            f[i][j] = v;
+                        }
+                    }
+                }
+            }
+            
+            return f[m][n];
+        } // end longestCommonSubsequence
+        
+        // 
+        int longestCommonSubstring(string &A, string &B) {
+            if (A.size() == 0 || B.size() == 0) {
+                return 0;
+            }
+            // write your code here
+            int m = A.size();
+            int n = B.size();
+            int len = min(m, n);
+            int f[m][n][len + 1];
+            
+            memset(f, 0, sizeof(int) * m * n * (len + 1));
+            
+            int longest = 0;
+            for (int k = 1; k <= len; k++) {
+                for (int i = 0; i <= m - k; i++) {
+                    for (int j = 0;j <= n - k; j++) {
+                        if (A[i+k-1] == B[j+k-1] && f[i][j][k-1] + 1 > f[i][j][k]) {
+                            f[i][j][k] = f[i][j][k-1] + 1;
+                            longest = f[i][j][k] > longest ? f[i][j][k] : longest;
+                        }
+                    }
+                }
+            }
+            
+            return longest;
+        } // end longestCommonSubstring
+        
+        int minDistance(string word1, string word2) {
+            if (word1.size() == 0) {
+                return word2.size();
+            }
+            if (word2.size() == 0) {
+                return word1.size();
+            }
+            // write your code here
+            int m = word1.size();
+            int n = word2.size();
+            
+            int f[m+1][n+1];
+            memset(f, 0, sizeof(int) * (m + 1) * (n + 1));
+            for (int i = 0; i <= m; i++) {
+                f[i][0] = i;
+            }
+            for (int j = 0; j <= n; j++) {
+                f[0][j] = j;
+            }
+            
+            for (int i = 1; i <= m; i++) {
+                for (int j = 1; j <= n; j++) {
+                    int cost1 = min(f[i-1][j], f[i][j-1]) + 1;
+                    int cost2 = f[i-1][j-1] + (word1[i-1] == word2[j-1] ? 0 : 1);
+                    f[i][j] = min(cost1, cost2);
+                }
+            }
+            
+            return f[m][n];
+        } // end minDistance
+        
     } // end namespace _DP
     
 } // end namespace _lintcode

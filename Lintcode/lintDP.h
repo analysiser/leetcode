@@ -53,6 +53,17 @@ namespace _lintcode {
         
         // Longest Increasing Subsequence
         int longestIncreasingSubsequence(vector<int> nums);
+        
+        
+#pragma mark - 2D Sequence
+        // Longest Common Subsequence
+        int longestCommonSubsequence(string A, string B);
+        
+        // Longest Common Substring : 3D
+        int longestCommonSubstring(string &A, string &B);
+        
+        // Min Edit Distance
+        int minDistance(string word1, string word2);
     }
     
 } // end namespace _lintcode
