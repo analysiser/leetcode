@@ -1006,5 +1006,48 @@ namespace _lintcode {
         } // end namespace _LinkedList
         
         
+        // clone Graph
+        typedef UndirectedGraphNode UGN;
+        UndirectedGraphNode *cloneGraph(UndirectedGraphNode *node) {
+            if (!node) {
+                return node;
+            }
+            
+            vector<UGN *> nodes, next;
+            unordered_map<UGN *, UGN *> lut;
+            nodes.push_back(node);
+            
+            while (!nodes.empty()) {
+                for (auto current : nodes) {
+                    if (lut.find(current) == lut.end()) {
+                        UGN *clonedCurrent = new UGN(current->label);
+                        lut.insert(make_pair(current, clonedCurrent));
+                        
+                        for (auto neighbor : current->neighbors) {
+                            next.push_back(neighbor);
+                        }
+                    }
+                }
+                
+                nodes.clear();
+                nodes = next;
+                next.clear();
+            }
+            
+            for (auto it = lut.begin(); it != lut.end(); it++) {
+                auto oriNode = it->first;
+                auto clnNode = it->second;
+                
+                for (auto neighbor : oriNode->neighbors) {
+                    clnNode->neighbors.push_back(lut.find(neighbor)->second);
+                }
+            }
+            
+            auto root = lut.find(node)->second;
+            lut.clear();
+            return root;
+        } // end cloneGraph
+        
+        
     } // end _LintDataStructures
 }

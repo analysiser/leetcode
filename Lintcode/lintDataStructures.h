@@ -224,7 +224,10 @@ namespace _lintcode {
             
         } // end namespace _LinkedList
         
+#pragma mark - Graph
         
+        // Clone graph
+        UndirectedGraphNode *cloneGraph(UndirectedGraphNode *node);
     }
     
 }
