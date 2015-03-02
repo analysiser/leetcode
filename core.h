@@ -70,6 +70,12 @@ struct UndirectedGraphNode {
     UndirectedGraphNode(int x) : label(x) {};
 };
 
+struct DirectedGraphNode {
+    int label;
+    vector<DirectedGraphNode *> neighbors;
+    DirectedGraphNode(int x) : label(x) {};
+};
+
 struct Interval {
     int start;
     int end;

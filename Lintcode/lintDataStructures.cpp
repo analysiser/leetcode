@@ -1049,5 +1049,47 @@ namespace _lintcode {
         } // end cloneGraph
         
         
+        typedef DirectedGraphNode DGN;
+        vector<DirectedGraphNode*> topSort(vector<DirectedGraphNode*> graph) {
+            vector<DGN *> ret;
+            unordered_map<DGN *, int> lut;  // lut for indegree
+            if (graph.size() == 0) {
+                return ret;
+            }
+            
+            for (const auto node : graph) {
+                auto itNode = lut.find(node);
+                if (itNode == lut.end()) {
+                    lut.insert(make_pair(node, 0));
+                }
+                for (const auto neighbor : node->neighbors) {
+                    auto itN = lut.find(neighbor);
+                    if (itN == lut.end()) {
+                        lut.insert(make_pair(neighbor, 1));
+                    }
+                    else {
+                        itN->second += 1;
+                    }
+                }
+            }
+            
+            while (!lut.empty()) {
+                auto it = lut.begin();
+                while ((it != lut.end()) && (it->second > 0)) {
+                    it++;
+                }
+                
+                ret.push_back(it->first);
+                for (const auto neighbor : it->first->neighbors) {
+                    auto itN = lut.find(neighbor);
+                    itN->second -= 1;
+                }
+                lut.erase(it);
+            }
+            
+            return ret;
+        } // end topSort
+        
+        
     } // end _LintDataStructures
 }

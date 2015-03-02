@@ -228,6 +228,9 @@ namespace _lintcode {
         
         // Clone graph
         UndirectedGraphNode *cloneGraph(UndirectedGraphNode *node);
+        
+        // Topological sorting, using indegree
+        vector<DirectedGraphNode*> topSort(vector<DirectedGraphNode*> graph);
     }
     
 }
