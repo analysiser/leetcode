@@ -114,6 +114,69 @@ namespace _lintcode {
         }
         
         
+        namespace _Subsets {
+            // Subsets I
+            void dfsHelper(vector<vector<int> > &results, vector<int> &aSol, vector<int> &nums, int num, int index) {
+                if (aSol.size() == num) {
+                    results.push_back(aSol);
+                }
+                else {
+                    for (int i = index; i < nums.size(); i++) {
+                        aSol.push_back(nums[i]);
+                        dfsHelper(results, aSol, nums, num, i + 1);
+                        aSol.pop_back();
+                    }
+                }
+            }
+            
+            vector<vector<int> > subsets(vector<int> &nums) {
+                // write your code here
+                vector<vector<int> > results;
+                
+                int n = nums.size();
+                for (int i = 0; i <= n; i++) {
+                    vector<int> aSol;
+                    dfsHelper(results, aSol, nums, i, 0);
+                }
+                
+                return results;
+            } // end subsets
+            
+            
+            void dfsSubsetsWithDup(vector<vector<int> > &res,
+                                   vector<int> &sol, vector<int> &A,
+                                   int num, int index) {
+                if (sol.size() == num) {
+                    res.push_back(sol);
+                }
+                else {
+                    for (int i = index; i < A.size(); i++) {
+                        if (i != index && ( i > 0 && A[i] == A[i-1])) {
+                            continue;
+                        }
+                        sol.push_back(A[i]);
+                        dfsSubsetsWithDup(res, sol, A, num, i+1);
+                        sol.pop_back();
+                    }
+                }
+            }
+            
+            vector<vector<int> > subsetsWithDup(const vector<int> &S) {
+                // write your code here
+                vector<int> A(S.begin(), S.end());
+                sort(A.begin(), A.end());
+                vector<vector<int> > res;
+                vector<int> sol;
+                
+                for (int k = 0; k <= A.size(); k++) {
+                    dfsSubsetsWithDup(res, sol, A, k, 0);
+                }
+                return res;
+            } // end subsetsWithDup
+            
+            
+            
+        } // end namespace _Subsets
         
         
     }

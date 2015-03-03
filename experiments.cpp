@@ -239,6 +239,49 @@ namespace _exp {
         p++;
     }
     
+    bool isOverlap(pair<int, int> &a, pair<int, int> b) {
+        return !((a.second < b.first) || (a.first > b.second));
+    }
+    
+    pair<int, int> mergeRange(pair<int, int> &a, pair<int, int> b) {
+        return make_pair(min(a.first, b.first), max(a.second, b.second));
+    }
+    
+    
+    // given ranges: [1, 3], [10, 100], [7, 9], [11, 12], [2, 4], each manifest a range
+    // find the unique range that doesn't overlapping with others
+    pair<int, int> getUniqueRange(vector<pair<int, int> > ranges) {
+        
+        vector<pair<int, int> > next;
+        
+        while (ranges.size() > 1) {
+            
+            pair<int, int> current = ranges.front();
+            bool overlapped = false;
+            
+            for (auto it = ranges.begin() + 1; it != ranges.end(); it++) {
+                
+                if (isOverlap(current, *it)) {
+                    current = mergeRange(current, *it);
+                    overlapped = true;
+                }
+                else {
+                    next.push_back(*it);
+                }
+            }
+            
+            if (!overlapped) {
+                return current;
+            }
+            
+            
+            ranges = next;
+            next.clear();
+        }
+        
+        return ranges[0];
+    }
+    
     
     // experiment functions entrance
     void expMain() {
@@ -285,5 +328,12 @@ namespace _exp {
         char a[] = "abcdefg";
         movePtr(a);
         cout<<*a<<endl;
+        
+//        pair<int, int> 
+        
+        vector<pair<int, int> > testcase = {{7, 9}, {1, 3}, {10, 100}, {11, 12}, {2, 4}};
+        auto res = getUniqueRange(testcase);
+        cout<<res.first<<" "<<res.second<<endl;
+        
     }
 }

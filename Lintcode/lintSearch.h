@@ -29,6 +29,14 @@ namespace _lintcode {
         
         // Find the previous permutation in ascending order with array with duplicates
         vector<int> previousPermuation(vector<int> &nums);
+        
+        namespace _Subsets {
+            // Subsets I
+            vector<vector<int> > subsets(vector<int> &nums);
+            
+            // Subsets II: with duplicates
+            vector<vector<int> > subsetsWithDup(const vector<int> &S);
+        } // end namespace _Subsets
     }
     
 }

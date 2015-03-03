@@ -142,13 +142,13 @@ int main(int argc, const char * argv[]) {
 //    timer.stop();
 //    timer.PrintDuration();
     
-    unordered_set<string> dict = {"cat", "cats", "and", "sand", "dog"};
-    vector<string> result = _hard::_140::wordBreak("catsanddog", dict);
-    for (const auto str : result) {
-        cout<<str<<endl;
-    }
+//    unordered_set<string> dict = {"cat", "cats", "and", "sand", "dog"};
+//    vector<string> result = _hard::_140::wordBreak("catsanddog", dict);
+//    for (const auto str : result) {
+//        cout<<str<<endl;
+//    }
     
-//    _exp::expMain();
+    _exp::expMain();
     
 
     
