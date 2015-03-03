@@ -64,6 +64,9 @@ namespace _lintcode {
         
         // Min Edit Distance
         int minDistance(string word1, string word2);
+        
+#pragma mark - Backpack
+        int backPack(int m, vector<int> A);
     }
     
 } // end namespace _lintcode

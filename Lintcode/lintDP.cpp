@@ -456,6 +456,29 @@ namespace _lintcode {
             return f[m][n];
         } // end minDistance
         
+        
+        int backPack(int m, vector<int> A) {
+            // write your code here
+            bool f[m+1];
+            fill_n(f, m+1, false);
+            f[0] = true;
+            
+            for (int j = 0; j < A.size(); j++) {
+                for (int i = m; i >= A[j]; i--) {
+                    f[i] = f[i] || f[i-A[j]];
+                }
+            }
+            
+            for (int i = m; i >= 0; i--) {
+                if (f[i]) {
+                    return i;
+                }
+            }
+            
+            return 0;
+            
+        } // end backPack
+        
     } // end namespace _DP
     
 } // end namespace _lintcode
