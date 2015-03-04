@@ -70,6 +70,9 @@ namespace _lintcode {
         // Search for mid, when mid has 4 states
         int findPeak(vector<int> A);
         
+        // Find median of unsored array
+        int median(vector<int> &nums);
+        
         
         /****** Hard: hard to think out ******/
         // Find median of two sorted array, with complexity of O(log(m+n))

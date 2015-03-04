@@ -251,22 +251,24 @@ namespace _exp {
     // given ranges: [1, 3], [10, 100], [7, 9], [11, 12], [2, 4], each manifest a range
     // find the unique range that doesn't overlapping with others
     pair<int, int> getUniqueRange(vector<pair<int, int> > ranges) {
+        if (ranges.size() == 1) {
+            return ranges[0];
+        }
         
         vector<pair<int, int> > next;
-        
         while (ranges.size() > 1) {
             
-            pair<int, int> current = ranges.front();
+            pair<int, int> current = ranges[0];
             bool overlapped = false;
             
-            for (auto it = ranges.begin() + 1; it != ranges.end(); it++) {
+            for (int i = 1; i < ranges.size(); i++) {
                 
-                if (isOverlap(current, *it)) {
-                    current = mergeRange(current, *it);
+                if (isOverlap(current, ranges[i])) {
+                    current = mergeRange(current, ranges[i]);
                     overlapped = true;
                 }
                 else {
-                    next.push_back(*it);
+                    next.push_back(ranges[i]);
                 }
             }
             
@@ -279,61 +281,88 @@ namespace _exp {
             next.clear();
         }
         
-        return ranges[0];
+        if (ranges.size() == 1) {
+            return ranges[0];
+        }
+        else {
+            throw "No unique range";
+        }
+        
+    }
+    
+    // try to return the real position of given index
+    int partition(vector<int> &nums, int l, int r, int pivotIndex) {
+        int pivot = nums[pivotIndex];
+        swap(nums[r], nums[pivotIndex]);
+        int storeIndex = l;
+        for (int i = l; i < r; i++) {
+            if (nums[i] < pivot) {
+                swap(nums[i], nums[storeIndex++]);
+            }
+        }
+        swap(nums[storeIndex], nums[r]);
+        return storeIndex;
     }
     
     
     // experiment functions entrance
     void expMain() {
         
-        MyInt i;
-        MyInt prefix = i++;
-        cout<<"Prefix = "<<prefix.v<<endl;
+//        MyInt i;
+//        MyInt prefix = i++;
+//        cout<<"Prefix = "<<prefix.v<<endl;
+//        
+//        MyInt postfix = ++i;
+//        cout<<"Postfix = "<<postfix.v<<endl;
+//        
+//        void *buffer = operator new (sizeof(Widget));
+//        Widget *myWidget = initializeWidget(buffer, 10);
+//
+//        myWidget->printSomething();
+//
+//        myWidget->~Widget();
+//
+//        operator delete (buffer);
+//        
+//        cout<<"========================="<<endl;
+//        for (int i = 9; i >= 0; i--) {
+//            processData(i);
+//        }
+//        cout<<"========================="<<endl;
+//        
+//        parseMessage("22");
+//        parseMessage("23");
+//        parseMessage("223");
+//        parseMessage("22#2");
+//        parseMessage("3#33");
+//        parseMessage("2222");
+//        parseMessage("2222#2");
+//        parseMessage("22222");
+//        parseMessage("222222");
+//        parseMessage("#33#44#");
+//        parseMessage("#44#444");
+//        parseMessage("#4*222#");
+//        parseMessage("33*222*4");
+//        parseMessage("1111111");
+//        parseMessage("22**#*#*#**#**11");
+//        
+//        
+//        char a[] = "abcdefg";
+//        movePtr(a);
+//        cout<<*a<<endl;
+//        
+////        pair<int, int> 
+//        
+//        vector<pair<int, int> > testcase = {{7, 9}, {1, 3}, {10, 100}, {11, 12}, {2, 4}};
+//        auto res = getUniqueRange(testcase);
+//        cout<<res.first<<" "<<res.second<<endl;
         
-        MyInt postfix = ++i;
-        cout<<"Postfix = "<<postfix.v<<endl;
         
-        void *buffer = operator new (sizeof(Widget));
-        Widget *myWidget = initializeWidget(buffer, 10);
-
-        myWidget->printSomething();
-
-        myWidget->~Widget();
-
-        operator delete (buffer);
-        
-        cout<<"========================="<<endl;
-        for (int i = 9; i >= 0; i--) {
-            processData(i);
+        vector<int> cands = {2, 4, 1, 3, 7, 6, 5};
+        cout<<partition(cands, 0, cands.size()-1, 3)<<endl;;
+        for (int i = 0; i < cands.size(); i++) {
+            cout<<"v after = "<<cands[i]<<endl;
         }
-        cout<<"========================="<<endl;
-        
-        parseMessage("22");
-        parseMessage("23");
-        parseMessage("223");
-        parseMessage("22#2");
-        parseMessage("3#33");
-        parseMessage("2222");
-        parseMessage("2222#2");
-        parseMessage("22222");
-        parseMessage("222222");
-        parseMessage("#33#44#");
-        parseMessage("#44#444");
-        parseMessage("#4*222#");
-        parseMessage("33*222*4");
-        parseMessage("1111111");
-        parseMessage("22**#*#*#**#**11");
-        
-        
-        char a[] = "abcdefg";
-        movePtr(a);
-        cout<<*a<<endl;
-        
-//        pair<int, int> 
-        
-        vector<pair<int, int> > testcase = {{7, 9}, {1, 3}, {10, 100}, {11, 12}, {2, 4}};
-        auto res = getUniqueRange(testcase);
-        cout<<res.first<<" "<<res.second<<endl;
         
     }
 }

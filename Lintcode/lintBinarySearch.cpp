@@ -459,6 +459,63 @@ namespace _lintcode {
             return -1;
         }
         
+        int partition(vector<int> &nums, int l, int r, int pivotIndex) {
+            if (l == r) {
+                return l;
+            }
+            if (l > r) {
+                return partition(nums, r, l, pivotIndex);
+            }
+            
+            int pivot = nums[pivotIndex];
+            swap(nums[pivotIndex], nums[r]);
+            
+            int storeIndex = l;
+            for (int i = l; i < r; i++) {
+                if (nums[i] < pivot) {
+                    swap(nums[i], nums[storeIndex++]);
+                }
+            }
+            
+            swap(nums[storeIndex], nums[r]);
+            return storeIndex;
+        }
+        
+    
+        int quickSelect(vector<int> &nums, int lo, int hi, int nth) {
+            if (lo == hi) {
+                return nums[lo];
+            }
+            if (lo > hi) {
+                return quickSelect(nums, hi, lo, nth);
+            }
+            
+            int index = partition(nums, lo, hi, nth);
+            if (index == nth) {
+                return nums[index];
+            }
+            else if (nth < index) {
+                return quickSelect(nums, lo, index-1, nth);
+            }
+            else {
+                return quickSelect(nums, index+1, hi, nth);
+            }
+        }
+        
+        
+        // Find median of unsorted array
+        int median(vector<int> &nums) {
+            int n = static_cast<int>(nums.size());
+            if (n == 0) {
+                return 0;
+            }
+            if (n == 1) {
+                return nums[0];
+            }
+            int target = n % 2 ? n/2 : n/2-1;
+            return quickSelect(nums, 0, n-1, target);
+        }
+        
         // find the first kth element in A, B
         double findKthElement(vector<int> &A, int startA, vector<int> &B, int startB, int k) {
             if (startA >= A.size()) {
