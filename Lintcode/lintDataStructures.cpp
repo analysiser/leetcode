@@ -1091,5 +1091,32 @@ namespace _lintcode {
         } // end topSort
         
         
+        
+        vector<string> anagrams(vector<string> &strs) {
+            vector<string> result;
+            unordered_map<string, vector<string> > lut;
+            for (auto str : strs) {
+                auto sorted = str;
+                sort(sorted.begin(), sorted.end());
+                auto it = lut.find(sorted);
+                if (it == lut.end()) {
+                    vector<string> tmp = {str};
+                    lut.insert(make_pair(sorted, tmp));
+                }
+                else {
+                    it->second.push_back(str);
+                }
+            }
+            
+            for (auto it = lut.begin(); it != lut.end(); it++) {
+                if (it->second.size() > 1) {
+                    result.insert(result.end(), it->second.begin(), it->second.end());
+                }
+            }
+            
+            return result;
+        } // end anagrams
+        
+        
     } // end _LintDataStructures
 }

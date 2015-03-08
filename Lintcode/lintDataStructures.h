@@ -231,6 +231,11 @@ namespace _lintcode {
         
         // Topological sorting, using indegree
         vector<DirectedGraphNode*> topSort(vector<DirectedGraphNode*> graph);
+        
+        
+#pragma mark - Hash Table
+        // Given an array of strings, return all groups of strings that are anagrams.
+        vector<string> anagrams(vector<string> &strs);
     }
     
 }
