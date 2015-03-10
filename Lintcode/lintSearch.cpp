@@ -178,6 +178,50 @@ namespace _lintcode {
             
         } // end namespace _Subsets
         
+        void partitionDfsHelper(string &s, vector<string> &sol, vector<vector<string> > &res, vector<vector<bool> > &f, int index) {
+            if (index >= s.size()) {
+                res.push_back(sol);
+            }
+            else {
+                for (int i = index; i < s.size(); i++) {
+                    if (f[index][i]) {
+                        sol.push_back(s.substr(index, i - index + 1));
+                        partitionDfsHelper(s, sol, res, f, i+1);
+                        sol.pop_back();
+                    }
+                }
+            }
+        }
+        
+        
+        vector<vector<string>> partition(string s) {
+            int n = s.size();
+            vector<bool> line(n, false);
+            vector<vector<bool> > f(n, line);
+            vector<vector<string> > ret;
+            vector<string> sol;
+            if (n == 0) {
+                return ret;
+            }
+            
+            for (int i = 0; i < n; i++) {
+                f[i][i] = true;
+            }
+            
+            for (int l = 2; l <= n; l++) {
+                for (int i = 0; i < n - l + 1; i++) {
+                    int j = i + l - 1;
+                    if ((s[i] == s[j]) && !f[i][j]) {
+                        f[i][j] = ((j-i == 1) || f[i+1][j-1]);
+                    }
+                }
+            }
+            
+            partitionDfsHelper(s, sol, ret, f, 0);
+            
+            return ret;
+        }
+        
         
     }
     

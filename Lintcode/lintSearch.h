@@ -37,6 +37,9 @@ namespace _lintcode {
             // Subsets II: with duplicates
             vector<vector<int> > subsetsWithDup(const vector<int> &S);
         } // end namespace _Subsets
+        
+        // Palindrome Partitioning : DP + DFS
+        vector<vector<string>> partition(string s);
     }
     
 }
