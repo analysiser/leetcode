@@ -57,6 +57,34 @@ namespace _lintcode {
             
         } // end singleNumberIII
         
+        
+        vector<long long> productExcludeItself(vector<int> &nums) {
+            
+            vector<long long> ret;
+            if (nums.size() < 2) {
+                return ret;
+            }
+            
+            int n = nums.size();
+            int64_t left[n], right[n];
+            left[0] = 1;
+            for (int i = 1; i < nums.size(); i++) {
+                left[i] = left[i-1] * nums[i-1];
+            }
+            
+            right[n-1] = 1;
+            for (int i = n-2; i >= 0; i--) {
+                right[i] = right[i+1] * nums[i+1];
+            }
+            
+            
+            for (int i = 0; i < n; i++) {
+                ret.push_back(left[i] * right[i]);
+            }
+            
+            return ret;
+        } // end productExcludeItself
+        
         vector<vector<int> > threeSum(vector<int> &num) {
             
             vector<vector<int> > ret;

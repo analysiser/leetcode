@@ -28,6 +28,9 @@ namespace _lintcode {
         // every numbers occurs twice except two, find them.
         vector<int> singleNumberIII(vector<int> &A);
         
+        // Product of Array Exclude Itself
+        vector<long long> productExcludeItself(vector<int> &nums);
+        
 #pragma mark - Two Pointers
         // 3 sum = 0
         vector<vector<int> > threeSum(vector<int> &nums);
