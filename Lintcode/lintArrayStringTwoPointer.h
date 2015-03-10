@@ -34,6 +34,9 @@ namespace _lintcode {
         
         // Reverse Words in a String
         string reverseWords(string s);
+        
+        // 3 sum closest : n sum problems, reduce complexity by 1, remember to sort
+        int threeSumClosest(vector<int> nums, int target);
     }
 }
 

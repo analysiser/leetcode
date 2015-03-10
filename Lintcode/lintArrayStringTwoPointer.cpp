@@ -184,6 +184,52 @@ namespace _lintcode {
             }
             
             return ret.substr(0, ret.size()-1);
+        } // end reverseWords
+        
+        
+        // 3 sum closest
+        int threeSumClosest(vector<int> nums, int target) {
+            if (nums.size() <= 3) {
+                int total = 0;
+                for (const auto v : nums) {
+                    total += v;
+                }
+                return total;
+            }
+            
+            sort(nums.begin(), nums.end());
+            int closestSum = -1;
+            int minDiff = INT_MAX;
+            for (int i = 0; i < nums.size() - 2; i++) {
+                int v1 = nums[i];
+                int l = i+1;
+                int r = nums.size()-1;
+                while (l < r) {
+                    int v2 = nums[l];
+                    int v3 = nums[r];
+                    int sum = v1 + v2 + v3;
+                    
+                    if (sum == target) {
+                        return sum;
+                    }
+                    else if (sum > target) {
+                        r--;
+                    }
+                    else {
+                        l++;
+                    }
+                    
+                    int diff = abs(target - sum);
+                    if (diff < minDiff) {
+                        minDiff = diff;
+                        closestSum = sum;
+                    }
+                    
+                } // end while (l < r)
+                
+            } // end for
+            
+            return closestSum;
         }
     }
 }
