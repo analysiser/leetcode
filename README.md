@@ -14,13 +14,14 @@
 <br/><br/>
 <b>Files</b>
 <table>
+<tr>  <td rowspan="6">/  
 <tr>  <td>core            <td>Include file lists, mostly from STL, required data structure definitaion
 <tr>  <td>experiments     <td>Experiment codes for random interview questions and c++ features
 <tr>  <td>main		      <td>A mystery place where the program starts running
 <tr>  <td>reference       <td>A header file that enable linker links stuff together
 <tr>  <td>testcases	      <td>There is nothing in this file
 
-<tr>  <td rowspan="5">Leetcode/    
+<tr>  <td rowspan="5">/Leetcode/    
 			      		  <tr>  <td>leetEasy   <td>Easy problems based on OJ </tr>
 			      		  <tr>  <td>leetMedium <td>Medium problems based on OJ </tr>
                           <tr>  <td>leetHardA  <td>Hard problems based on OJ that I did myself </tr>
@@ -28,7 +29,7 @@
 
       
 
-<tr>  <td rowspan="8">Lintcode/
+<tr>  <td rowspan="8">/Lintcode/
 			      <tr>  <td>lintArrayStringTwoPointer   <td>Problems related to Array, String, Two pointer solutions
 			      <tr>  <td>lintBinarySearch            <td>Need O(logn) solution? Binary search, your best friend
 			      <tr>  <td>lintDP			    <td>Dynamic programming, the ultimate frontier of mystery and chaos
