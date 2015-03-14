@@ -21,10 +21,10 @@
 <tr>  <td>testcases	  <td>There is nothing in this file
 
 <tr>  <td>Leetcode/       <td>
-			      <tr>  <td>leetEasy   <td>Easy problems based on OJ
-			      <tr>  <td>leetMedium <td>Medium problems based on OJ
-                              <tr>  <td>leetHardA  <td>Hard problems based on OJ that I did myself
-	    		      <tr>  <td>leetHardB  <td>Hard problems that I have to look for solutions to figure out
+			      <tr>  <td>leetEasy   <td>Easy problems based on OJ </td>
+			      <tr>  <td>leetMedium <td>Medium problems based on OJ </td>
+                              <tr>  <td>leetHardA  <td>Hard problems based on OJ that I did myself </td>
+	    		      <tr>  <td>leetHardB  <td>Hard problems that I have to look for solutions to figure out </td>
                           </td>
 
 <tr>  <td>Lintcode/       <td>
