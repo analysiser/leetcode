@@ -16,18 +16,19 @@
 <table>
 <tr>  <td>core            <td>Include file lists, mostly from STL, required data structure definitaion
 <tr>  <td>experiments     <td>Experiment codes for random interview questions and c++ features
-<tr>  <td>main		  <td>A mystery place where the program starts running
+<tr>  <td>main		      <td>A mystery place where the program starts running
 <tr>  <td>reference       <td>A header file that enable linker links stuff together
-<tr>  <td>testcases	  <td>There is nothing in this file
+<tr>  <td>testcases	      <td>There is nothing in this file
 
-<tr>  <td>Leetcode/       <td><tr rowspan="4">
-			      <tr>  <td>leetEasy   <td>Easy problems based on OJ </td> </tr>
-			      <tr>  <td>leetMedium <td>Medium problems based on OJ </td> </tr>
-                              <tr>  <td>leetHardA  <td>Hard problems based on OJ that I did myself </td> </tr>
-	    		      <tr>  <td>leetHardB  <td>Hard problems that I have to look for solutions to figure out </td> </tr>
-                          </td></tr>
+<tr>  <td rowspan="5">Leetcode/    
+			      		  <tr>  <td>leetEasy   <td>Easy problems based on OJ </tr>
+			      		  <tr>  <td>leetMedium <td>Medium problems based on OJ </tr>
+                          <tr>  <td>leetHardA  <td>Hard problems based on OJ that I did myself </tr>
+	    		      	  <tr>  <td>leetHardB  <td>Hard problems that I have to look for solutions to figure out </tr>
 
-<tr>  <td>Lintcode/       <td>
+      
+
+<tr>  <td rowspan="8">Lintcode/
 			      <tr>  <td>lintArrayStringTwoPointer   <td>Problems related to Array, String, Two pointer solutions
 			      <tr>  <td>lintBinarySearch            <td>Need O(logn) solution? Binary search, your best friend
 			      <tr>  <td>lintDP			    <td>Dynamic programming, the ultimate frontier of mystery and chaos
@@ -35,7 +36,6 @@
                               <tr>  <td>lintDataStructures          <td>Linked list, Stack, BST, Heap, Graph, engineers' toolbox problems
 			      <tr>  <td>lintSearch		    <td>DFS, BFS, anything you need for trees, graphs, and problems for combinations and permutations
 			      <tr>  <td>lintSort		    <td>Quick sort, merge sort, quick selection. Only within O(nlogn) algorithms are allowed here
-			  </td>
 </table>
 
 
